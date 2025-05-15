@@ -1,35 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'Welcome to EquipShare'">EquipShare</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 40px;
-            background-color: #f4f4f4;
-            text-align: center;
-        }
-        h1 {
-            color: #333;
-        }
-        a {
-            display: inline-block;
-            margin: 15px;
-            padding: 10px 20px;
-            background-color: #0077cc;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        a:hover {
-            background-color: #005fa3;
-        }
-    </style>
+    <title>EquipShare Users</title>
 </head>
 <body>
-<h1>Welcome to EquipShare</h1>
-<p>A platform to share and rent underutilized equipment.</p>
-
+<h1>All Registered Users</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Organiser?</th>
+        <th>Created At</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}">ID</td>
+        <td th:text="${user.firstName}">First Name</td>
+        <td th:text="${user.lastName}">Last Name</td>
+        <td th:text="${user.email}">Email</td>
+        <td th:text="${user.isOrganiser}">Organiser</td>
+        <td th:text="${user.createdAt}">Created At</td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
