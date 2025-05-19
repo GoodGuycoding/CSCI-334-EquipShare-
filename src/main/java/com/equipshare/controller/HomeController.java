@@ -23,6 +23,14 @@ public class HomeController {
     public String homePage(Model model) {
         List<User> users = userRepository.findAll();
         model.addAttribute("users", users);
-        return "index"; // Thymeleaf will render templates/index.html
+        return "signup"; // whatever html page name is written here would be the starting point of our app.
+    }
+    //This method maps the /login URL to show the login.html page.
+    //Spring Boot uses Thymeleaf to find and render that file from the templates folder.
+    //It is done to keep the logic and HTML separate.
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login"; // renders login.html from templates
     }
 }
