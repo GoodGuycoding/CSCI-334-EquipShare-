@@ -19,8 +19,11 @@ public class User {
     private String email;
     private String password;
 
-    @Column(name = "is_organiser")
-    private Boolean isOrganiser;
+    @Column(name = "is_owner")
+    private Boolean isOwner;
+
+    @Column(name = "is_borrower")
+    private Boolean isBorrower;
 
     @Column(name = "profile_photo_url")
     private String profilePhotoUrl;
@@ -52,8 +55,12 @@ public class User {
         return password;
     }
 
-    public Boolean getIsOrganiser() {
-        return isOrganiser;
+    public Boolean getIsOwner() {
+        return isOwner;
+    }
+
+    public Boolean getIsBorrower() {
+        return isBorrower;
     }
 
     public String getProfilePhotoUrl() {
@@ -85,8 +92,12 @@ public class User {
         this.password = password;
     }
 
-    public void setIsOrganiser(Boolean isOrganiser) {
-        this.isOrganiser = isOrganiser;
+    public void setIsOwner(Boolean isOwner) {
+        this.isOwner = isOwner;
+    }
+
+    public void setIsBorrower(Boolean isBorrower) {
+        this.isBorrower = isBorrower;
     }
 
     public void setProfilePhotoUrl(String profilePhotoUrl) {
