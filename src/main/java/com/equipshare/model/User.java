@@ -1,13 +1,19 @@
 package com.equipshare.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.sql.Timestamp;
+
 
 @Entity
 @Table(name = "user")
 public class User {
 
     @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(updatable = false, nullable = false)
     private String id;
 
     @Column(name = "first_name")
@@ -17,6 +23,7 @@ public class User {
     private String lastName;
 
     private String email;
+    @Column(name = "password")
     private String password;
 
     @Column(name = "is_owner")

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>View Cart – EquipShare</title>
+    <link rel="stylesheet" th:href="@{/css/cart.css}" />
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+    <div class="navbar-container">
+        <!-- Logo on the far left -->
+        <a th:href="@{/}" class="brand">
+            <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image">
+        </a>
+
+        <!-- All links & buttons grouped on the right -->
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a th:href="@{/about}">About Us</a></li>
+                <li class="active"><a th:href="@{/tools}">Tools</a></li>
+                <li><a th:href="@{/contact}">Contact Us</a></li>
+                <li><a th:href="@{/profile}">Profile Page</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a th:href="@{/login}" class="btn-login">Log In</a>
+                <a th:href="@{/signup}" class="btn-signup">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main-content">
+    <h1>View Cart</h1>
+    <p class="subtitle">Your Cart:</p>
+    <div class="cart-card">
+        <p>Power saw – $200</p>
+        <p>Hammer – $20</p>
+        <hr>
+        <p class="total">Total = $220</p>
+        <button class="btn btn-primary payment-btn" th:onclick="'location.href=\'' + @{/payment} + '\''">
+            Payment
+        </button>
+    </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-stripe"></div>
+    <div class="footer-content">
+        <div class="brand-info">
+            <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image" />
+        </div>
+        <div class="quick-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a th:href="@{/about}">About Us</a></li>
+                <li><a th:href="@{/tools}">Tools</a></li>
+                <li><a th:href="@{/contact}">Contact Us</a></li>
+                <li><a th:href="@{/profile}">Profile Page</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 EquipShare. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="#" aria-label="Google">G</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="Facebook">f</a>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

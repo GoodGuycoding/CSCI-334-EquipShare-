@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Payment Information – EquipShare</title>
+  <link rel="stylesheet" th:href="@{/css/payment.css}" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a th:href="@{/}" class="brand">
+      <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image">
+    </a>
+    <div class="nav-right">
+      <ul class="nav-list">
+        <li><a th:href="@{/about}">About Us</a></li>
+        <li class="active"><a th:href="@{/tools}">Tools</a></li>
+        <li><a th:href="@{/contact}">Contact Us</a></li>
+        <li><a th:href="@{/profile}">Profile Page</a></li>
+      </ul>
+      <div class="auth">
+        <a th:href="@{/login}" class="btn-login">Log In</a>
+        <a th:href="@{/signup}" class="btn-signup">Sign Up</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main-content">
+  <div class="payment-card">
+    <h1>Payment Information</h1>
+    <form th:action="@{/payment/submit}" method="post">
+      <div class="form-grid">
+        <div class="column">
+          <label for="full-name">Full name</label>
+          <input id="full-name" name="fullName" type="text" placeholder="Type here" required>
+
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="Type here" required>
+
+          <label for="address">Address</label>
+          <input id="address" name="address" type="text" placeholder="Type here" required>
+
+          <small>Autofill using account details</small>
+        </div>
+        <div class="column">
+          <label for="method">Payment method</label>
+          <div class="select-wrap">
+            <select id="method" name="paymentMethod" required>
+              <option value="card">Credit Card</option>
+              <option value="paypal">PayPal</option>
+              <option value="google">Google Pay</option>
+            </select>
+            <span class="arrow">▾</span>
+          </div>
+        </div>
+      </div>
+      <div class="payment-actions">
+        <button type="submit" class="btn-next">Next</button>
+      </div>
+    </form>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-stripe"></div>
+  <div class="footer-content">
+    <div class="brand-info">
+      <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image">
+    </div>
+    <div class="quick-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a th:href="@{/about}">About Us</a></li>
+        <li><a th:href="@{/tools}">Tools</a></li>
+        <li><a th:href="@{/contact}">Contact Us</a></li>
+        <li><a th:href="@{/profile}">Profile Page</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 EquipShare. All rights reserved.</p>
+    <div class="social-icons">
+      <a href="#">G</a>
+      <a href="#">in</a>
+      <a href="#">f</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

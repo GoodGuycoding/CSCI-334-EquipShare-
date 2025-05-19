@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Sign Up - EquipShare</title>
+    <link rel="stylesheet" th:href="@{/css/signup.css}" />
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav>
+    <ul>
+        <li class="brand">
+            <a th:href="@{/}">
+                <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image"/>
+            </a>
+        </li>
+        <li><a th:href="@{/about}">About Us</a></li>
+        <li><a th:href="@{/tools}">Tools</a></li>
+        <li><a th:href="@{/contact}">Contact Us</a></li>
+        <li><a th:href="@{/profile}">Profile Page</a></li>
+        <li class="login-link"><a th:href="@{/login}" class="btn-login">Log In</a></li>
+        <li><a th:href="@{/signup}" class="btn-signup">Sign Up</a></li>
+    </ul>
+</nav>
+
+<!-- Main Content: Sign-Up Form -->
+<main>
+    <div class="card signup-card">
+        <div class="signup-header">
+            <span class="user-icon-small">👤</span>
+            <h2>Sign Up</h2>
+        </div>
+        <p>Please enter your details.</p>
+        <form th:action="@{/signup}" method="post" th:object="${user}">
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+            <div class="form-group">
+                <label for="first_name">First Name <span class="required">*</span></label>
+                <input type="text" id="first_name" th:field="*{firstName}" placeholder="Nick" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name <span class="required">*</span></label>
+                <input type="text" id="last_name" th:field="*{lastName}" placeholder="Rutherford" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email <span class="required">*</span></label>
+                <input type="email" id="email" th:field="*{email}" placeholder="nick@eqs.com" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password <span class="required">*</span></label>
+                <input type="password" id="password" th:field="*{password}" placeholder="********" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="isOrganiser">Sign up as:</label>
+                <select id="isOrganiser" name="isOrganiser" required>
+                    <option value="false">Borrower</option>
+                    <option value="true">Renter</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn primary">Create Account</button>
+        </form>
+
+        <p class="login-link-text">
+            Already have an account? <a th:href="@{/login}">Log in with existing account.</a>
+        </p>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-stripe"></div>
+    <div class="footer-content">
+        <div class="brand-info">
+            <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image"/>
+        </div>
+        <div class="quick-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a th:href="@{/about}">About Us</a></li>
+                <li><a th:href="@{/tools}">Tools</a></li>
+                <li><a th:href="@{/contact}">Contact Us</a></li>
+                <li><a th:href="@{/profile}">Profile Page</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2024 EquipShare. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="#">G</a>
+            <a href="#">in</a>
+            <a href="#">F</a>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
