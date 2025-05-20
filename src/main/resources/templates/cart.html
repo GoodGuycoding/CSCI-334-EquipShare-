@@ -4,32 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>View Cart – EquipShare</title>
-    <link rel="stylesheet" th:href="@{/css/cart.css}" />
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
 </head>
 <body>
 
 <!-- NAVIGATION -->
-<nav class="navbar">
-    <div class="navbar-container">
-        <!-- Logo on the far left -->
-        <a th:href="@{/}" class="brand">
-            <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image">
-        </a>
-
-        <!-- All links & buttons grouped on the right -->
-        <div class="nav-right">
-            <ul class="nav-links">
-                <li><a th:href="@{/about}">About Us</a></li>
-                <li class="active"><a th:href="@{/tools}">Tools</a></li>
-                <li><a th:href="@{/contact}">Contact Us</a></li>
-                <li><a th:href="@{/profile}">Profile Page</a></li>
-            </ul>
-            <div class="auth-buttons">
-                <a th:href="@{/login}" class="btn-login">Log In</a>
-                <a th:href="@{/signup}" class="btn-signup">Sign Up</a>
-            </div>
-        </div>
-    </div>
+<nav>
+    <ul>
+        <li class="brand">
+            <a th:href="@{/}">
+                <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image"/>
+            </a>
+        </li>
+        <li><a th:href="@{/about}">About Us</a></li>
+        <li><a th:href="@{/tools}">Tools</a></li>
+        <li><a th:href="@{/contact}">Contact Us</a></li>
+        <li><a th:href="@{/profile}">Profile Page</a></li>
+        <li><a th:href="@{/cart}">View Cart</a></li>
+        <li class="login-link"><a th:href="@{/login}" class="btn-login">Log In</a></li>
+        <li><a th:href="@{/signup}" class="btn-signup">Sign Up</a></li>
+    </ul>
 </nav>
 
 <!-- MAIN CONTENT -->

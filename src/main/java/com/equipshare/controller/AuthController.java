@@ -25,7 +25,7 @@ public class AuthController {
             @RequestParam(required = false) String error,
             @RequestParam(required = false) String email,
             Model model) {
-
+        System.out.println("GET /login triggered");
         if (error != null) {
             model.addAttribute("error", "Invalid credentials or role mismatch");
         }
@@ -34,17 +34,20 @@ public class AuthController {
         }
         return "login";
     }
-
-    @PostMapping("/login")
+    // made few changes here as well
+    @PostMapping("/user-login")
     public String loginUser(
             @RequestParam String email,
             @RequestParam String password,
             @RequestParam String role,
             Model model) {
 
+        System.out.println("Login POST hit!");
         var user = userService.authenticateUser(email, password, role);
+
         if (user.isPresent()) {
-            return "redirect:/" + ("borrower".equals(role) ? "borrowerDashboard" : "renterDashboard");
+
+            return "redirect:/" + ("borrower".equals(role) ? "borrowerDashboard" : "ownerDashboard");
         } else {
             model.addAttribute("error", "Invalid credentials or role mismatch");
             return "login";
@@ -75,5 +78,15 @@ public class AuthController {
             model.addAttribute("user", user);
             return "signup";
         }
+
+    }
+    @GetMapping("/borrowerDashboard")
+    public String borrowerDashboard(Model model) {
+        return "borrowerDashboard";
+    }
+
+    @GetMapping("/ownerDashboard")
+    public String ownerDashboard(Model model) {
+        return "ownerDashboard";
     }
 }

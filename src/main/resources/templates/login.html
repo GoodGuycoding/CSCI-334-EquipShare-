@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Login - EquipShare</title>
-    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
 </head>
 <body>
 
@@ -20,6 +20,7 @@
         <li><a th:href="@{/tools}">Tools</a></li>
         <li><a th:href="@{/contact}">Contact Us</a></li>
         <li><a th:href="@{/profile}">Profile Page</a></li>
+        <li><a th:href="@{/cart}">View Cart</a></li>
         <li class="login-link"><a th:href="@{/login}" class="btn-login">Log In</a></li>
         <li><a th:href="@{/signup}" class="btn-signup">Sign Up</a></li>
     </ul>
@@ -38,7 +39,7 @@
         <!-- Error message -->
         <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
 
-        <form th:action="@{/login}" method="post">
+        <form th:action="@{/user-login}" method="post">
             <div class="form-group">
                 <label for="login-email">Email</label>
                 <input type="email" id="login-email" name="email"
@@ -57,14 +58,23 @@
                 <a th:href="@{/forgot-password}" class="forgot-pw">Forgot Password?</a>
             </div>
 
-            <div class="role-buttons">
-                <button type="submit" name="role" value="borrower" class="btn primary">
-                    Login as Borrower
-                </button>
-                <button type="submit" name="role" value="owner" class="btn primary">
-                    Login as Renter
-                </button>
+            <div class="form-group">
+                <label>Select Role:</label><br/>
+                <input type="radio" id="role-borrower" name="role" value="borrower" checked />
+                <label for="role-borrower">Borrower</label><br/>
+                <input type="radio" id="role-owner" name="role" value="owner" />
+                <label for="role-owner">Owner</label>
             </div>
+
+            <button type="submit" class="btn primary">Log In</button>
+<!--            <div class="role-buttons">-->
+<!--                <button type="submit" name="role" value="borrower" class="btn primary">-->
+<!--                    Login as Borrower-->
+<!--                </button>-->
+<!--                <button type="submit" name="role" value="owner" class="btn primary">-->
+<!--                    Login as Renter-->
+<!--                </button>-->
+<!--            </div>-->
 
             <div class="signup-link">
                 <span>Don't have an account? </span>
