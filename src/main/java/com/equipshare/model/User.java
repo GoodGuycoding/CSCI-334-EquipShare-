@@ -1,8 +1,6 @@
 package com.equipshare.model;
-
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
-
 import java.sql.Timestamp;
 
 

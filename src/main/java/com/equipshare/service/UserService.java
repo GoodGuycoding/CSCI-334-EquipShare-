@@ -29,16 +29,16 @@ public class UserService {
             throw new RuntimeException("Email already in use");
         }
 
-        // Generate UUID and set as ID if not already set
         if (user.getId() == null || user.getId().isEmpty()) {
             user.setId(UUID.randomUUID().toString());
         }
 
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
     // kim just made some changes into this method it wasn't working on my system
-    // added some print statements to debug the code but it is working now
+    // added some print statements to debug the code, but it is working now
     public Optional<User> authenticateUser(String email, String password, String role) {
         System.out.println(" Authenticating user: " + email + " with role: " + role);
 
@@ -73,23 +73,8 @@ public class UserService {
     }
 
 
-//    public Optional<User> authenticateUser(String email, String password, String role) {
-//        System.out.println(" Authenticating user: " + email + " with role: " + role);
-//        Optional<User> userOptional = userRepository.findByEmail(email);
-//        if (userOptional.isPresent()) {
-//            User user = userOptional.get();
-//            System.out.println("✅ User found: " + user.getEmail());
-//            if (passwordEncoder.matches(password, user.getPassword())) {
-//                boolean isBorrower = "borrower".equalsIgnoreCase(role) && user.getIsBorrower();
-//                boolean isOwner = "owner".equalsIgnoreCase(role) && user.getIsOwner(); // <-- change here
-//                System.out.println("📌 Role check — isBorrower: " + isBorrower + ", isOwner: " + isOwner);
-//                if (isBorrower || isOwner) {
-//                    return Optional.of(user);
-//                }
-//            }
-//        }
-//        return Optional.empty();
-//    }
-
+    public Optional<User> getUserByEmail(String email) {
+        return email == null ? Optional.empty() : userRepository.findByEmail(email);
+    }
 }
 

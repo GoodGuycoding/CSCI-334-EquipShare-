@@ -41,16 +41,15 @@
 
         <form th:action="@{/user-login}" method="post">
             <div class="form-group">
-                <label for="login-email">Email</label>
-                <input type="email" id="login-email" name="email"
+                <label for="username">Email</label>
+                <input type="email" id="username" name="username"
                        placeholder="email@eqs.com" required
-                       th:value="${email != null ? email : ''}"
-                />
+                       th:value="${email != null ? email : ''}"/>
             </div>
 
             <div class="form-group">
-                <label for="login-password">Password</label>
-                <input type="password" id="login-password" name="password"
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password"
                        placeholder="********" required/>
             </div>
 
@@ -58,23 +57,20 @@
                 <a th:href="@{/forgot-password}" class="forgot-pw">Forgot Password?</a>
             </div>
 
+            <!-- Hidden role field that will be set by JavaScript -->
+            <input type="hidden" id="selectedRole" name="selectedRole" value="borrower"/>
+
             <div class="form-group">
                 <label>Select Role:</label><br/>
-                <input type="radio" id="role-borrower" name="role" value="borrower" checked />
+                <input type="radio" id="role-borrower" name="role" value="borrower" checked
+                       onclick="document.getElementById('selectedRole').value='borrower'"/>
                 <label for="role-borrower">Borrower</label><br/>
-                <input type="radio" id="role-owner" name="role" value="owner" />
+                <input type="radio" id="role-owner" name="role" value="owner"
+                       onclick="document.getElementById('selectedRole').value='owner'"/>
                 <label for="role-owner">Owner</label>
             </div>
 
             <button type="submit" class="btn primary">Log In</button>
-<!--            <div class="role-buttons">-->
-<!--                <button type="submit" name="role" value="borrower" class="btn primary">-->
-<!--                    Login as Borrower-->
-<!--                </button>-->
-<!--                <button type="submit" name="role" value="owner" class="btn primary">-->
-<!--                    Login as Renter-->
-<!--                </button>-->
-<!--            </div>-->
 
             <div class="signup-link">
                 <span>Don't have an account? </span>
@@ -112,3 +108,12 @@
 
 </body>
 </html>
+
+<script>
+    // Set the selected role when radio buttons change
+    document.querySelectorAll('input[name="role"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            document.getElementById('selectedRole').value = this.value;
+        });
+    });
+</script>

@@ -7,6 +7,123 @@
     <link rel="stylesheet" th:href="@{/css/global.css}" />
 </head>
 <body>
+
+<!-- ************************************ Profile Details and logo **************************************** -->
+<div id = "RentalProfileBody">
+    <div id = "RentalProfileD1">
+
+        <img id = "RentalProfileD1Logo" alt = "RentalProfileD1Logo" src="344logo.png">
+
+        <div id = "RentalProfileD1_1">
+            <h1>EQS for Owner</h1>
+        </div>
+
+        <div id = "RentalProfileD1ProfileImage">
+           <!-- <img th:src="${user != null and user.profilePhotoUrl != null ? user.profilePhotoUrl : '/images/default-profile.png'}"
+                 alt="Profile Image" class="profile-image" /> -->
+        </div>
+
+        <div id = "RentalProfileD1_2">
+            <h2>Welcome to your profile</h2>
+            <h3 th:text="${user.firstName + ' ' + user.lastName}"/>
+        </div>
+    </div>
+
+    <!-- ************************************ +Add new product for list **************************************** -->
+
+    <h1>+Add new item for list</h1>
+
+    <div id="RentalProfileBookingList_1">
+        <form id="UploadImageFortheItemButton" th:action="@{/owner/items/add}" method="post" enctype="multipart/form-data">
+            <div id="UploadImageFortheItem">
+                <p>image here</p>>
+            </div>
+            <div id="UploadImageFortheItemButtonDiv">
+                <p>image here</p>
+            </div>
+            <div id="ProductInputField">
+                <label for="title">Item Name:</label><br>
+                <input type="text" id="title" name="title" required><br><br>
+
+                <label for="isAvailable">Available:</label><br>
+                <input type="checkbox" id="isAvailable" name="isAvailable" checked><br><br>
+
+                <label for="pricePerDay">Price per day:</label><br>
+                <input type="number" id="pricePerDay" name="pricePerDay" step="0.01" required><br><br>
+
+                <!--  <label for="pick">Pick Up Location:</label><br> -->
+                <input type="text" id="location" name="location" required><br><br>
+
+                <label for="description">Description Of Item:</label><br>
+                <textarea id="description" name="description" rows="4" cols="50" placeholder="Item Description..." required></textarea>
+                <br>
+                <input id="uploadItemDetailButtton" type="submit" value="Upload Item">
+            </div>
+        </form>
+    </div>
+
+    <!-- ************************************ Active Items List for Rent **************************************** -->
+
+    <div class="section item-list">
+        <h2>Active Items for Rent</h2>
+        <div th:if="${#lists.isEmpty(availableItems)}">
+            <p>No Items available.</p>
+        </div>
+        <div th:each="item : ${availableItems}" class="Item" th:if="${item != null}">
+            <div>
+                <h3 th:text="${item.name}">Product Name</h3>
+                <p th:text="'$' + ${#numbers.formatDecimal(item.pricePerDay, 1, 2)} + ' per day'">Price</p>
+                <p><strong>Location:</strong> <span th:text="${item.location}">Location</span></p>
+                <p><strong>Available:</strong> <span th:text="${item.isAvailable} ? 'Yes' : 'No'">Yes</span></p>
+                <p th:text="${item.description}">Description</p>
+            </div>
+            <div>
+                <img th:src="${item.imageUrl ?: '/defaultUploadImage.png'}" alt="Item Image">
+                <form th:action="@{'/owner/item/delete/' + ${item.id}}" method="post">
+                    <button type="submit" class="button delete-btn">Delete</button>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Items on Rent -->
+    <h1>Item on Rent</h1>
+    <div th:if="${#lists.isEmpty(rentedItems)}">
+        <p>No items currently rented out.</p>
+    </div>
+    <div th:each="item : ${rentedItems}" class="Item">
+        <!-- need to add more -->
+    </div>
+
+    <!-- Personal Details -->
+    <h1>Personal Detail</h1>
+    <div id="RentalProfilePersonalDetails">
+        <form th:action="@{/owner/update}" method="post">
+            <div id="PersonalDetailField">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" th:value="${owner.firstName}" required>
+
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" th:value="${owner.lastName}" required><br><br>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" th:value="${owner.email}" required>
+
+                <!--   <label for="contact">Contact:</label>
+                   <input type="text" id="contact" name="contact" th:value="${owner.contact}"><br><br>
+
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" th:value="${owner.address}"> -->
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter new password to change"><br><br>
+
+                <button id="ButtonSaveChangeDetail" type="submit">Save Change Detail!</button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
-<p>This is the dashboard for owners</p>
+
 </html>
