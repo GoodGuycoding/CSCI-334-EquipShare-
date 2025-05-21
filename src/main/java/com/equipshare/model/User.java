@@ -36,6 +36,9 @@ public class User {
     @Column(name = "created_at")
     private Timestamp createdAt;
 
+   // private String contact;
+   // private String address;
+
     // Required by JPA
     public User() {}
 
@@ -65,16 +68,26 @@ public class User {
     }
 
     public Boolean getIsBorrower() {
+
         return isBorrower;
     }
 
     public String getProfilePhotoUrl() {
+
         return profilePhotoUrl;
     }
 
     public Timestamp getCreatedAt() {
+
         return createdAt;
     }
+   // public String getContact() {
+   //     return contact;
+   // }
+    //public String getAddress() {
+     //   return address;
+    //}
+
 
     // Setters
     public void setId(String id) {
@@ -110,6 +123,15 @@ public class User {
     }
 
     public void setCreatedAt(Timestamp createdAt) {
+
         this.createdAt = createdAt;
     }
+   // public void setContact(String contact) {
+   //     this.contact = contact;
+   // }
+   // public void setAddress(String address) {
+   //     this.address = address;
+   // }
+
+
 }

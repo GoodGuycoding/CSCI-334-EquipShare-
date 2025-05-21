@@ -2,8 +2,10 @@ package com.equipshare.controller;
 
 import com.equipshare.model.Item;
 import com.equipshare.model.User;
+import com.equipshare.security.CustomUserDetails;
 import com.equipshare.service.UserService;
 import com.equipshare.service.ItemService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -90,10 +92,6 @@ public class AuthController {
 
     }
 
-    @GetMapping("/borrowerDashboard")
-    public String borrowerDashboard(Model model) {
-        return "borrowerDashboard";
-    }
 
     @GetMapping("/ownerDashboard")
     public String ownerDashboard(Model model, Principal principal) {

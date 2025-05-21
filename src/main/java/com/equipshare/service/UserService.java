@@ -76,5 +76,21 @@ public class UserService {
     public Optional<User> getUserByEmail(String email) {
         return email == null ? Optional.empty() : userRepository.findByEmail(email);
     }
+
+    // updating users, called in BorrowerProflieController
+    public void updateUser(User user) {
+        User existingUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+       // existingUser.setContact(user.getContact());
+       // existingUser.setAddress(user.getAddress());
+
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        userRepository.save(existingUser);
+    }
 }
 
