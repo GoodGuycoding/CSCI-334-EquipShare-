@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+</head>
+<style>
+  /* Import fonts */
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+  /* Header Styles */
+  .header {
+    width: 1440px;
+    height: 71px;
+    background-color: #005989;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  /*Not really needed just for without image*/
+  .logo {
+    width: 182px;
+    height: 71px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /*Logo container with link*/
+  .logo a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    background-color: #00496f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Make logo fit inside container */
+  .logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  /* Header Links */
+  .header-links {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    gap: 90px;
+    flex: 1;
+    justify-content: flex-end;
+    margin-right: 70px;
+  }
+  /* For the links */
+  .header-links a {
+    color: white;
+    text-decoration: none;
+  }
+  /*Log in/Sign up container*/
+  .auth-container {
+    width: 354px;
+    height: 71px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
+  .auth-button {
+    width: 167px;
+    height: 71px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .login-btn {
+    background-color: #389375;
+    color: white;
+  }
+  .signup-btn {
+    background-color: #F2F7FC;
+    color: #005989;
+  }
+  body {
+    margin: 0;
+    font-family: 'JetBrains Mono', monospace;
+    background-color: #378BBE;
+  }
+  /*Title Card*/
+  .title-card {
+    width: 1440px;
+    height: 500px;
+    background-color: #378BBE;
+    margin: 0 auto;
+  }
+  .title-card h1 {
+    color: white;
+    font-size: 48px;
+    text-align: center;
+    padding-top: 200px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .title-card h2 {
+    color: white;
+    font-size: 36px;
+    text-align: left;
+    padding-top: 20px;
+    padding-left: 40px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .title-card-content {
+    width: 1440px;
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    padding-top: 40px;
+    gap: 40px;
+    padding-bottom: 60px;
+  }
+  .title-card-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  /*Key Achievements*/
+  .title-card-titles {
+    align-items: flex-end;
+    padding-right: 40px;
+  }
+  /*Smaller titles*/
+  .title-card-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 32px;
+    color: #fff;
+    margin-bottom: 40px;
+    text-align: left;
+    min-height: 48px;
+    /* Adjust min-height to match line height of description */
+  }
+  .title-card-title:last-child {
+    margin-bottom: 0;
+  }
+  .title-card-descriptions {
+    align-items: flex-start;
+    padding-left: 40px;
+  }
+  .title-card-description {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 40px;
+    text-align: left;
+    min-height: 48px;
+  }
+  .title-card-description:last-child {
+    margin-bottom: 0;
+  }
+  /* Footer CSS */
+  .footer {
+    width: 1440px;
+    height: 698px;
+    background-color: #374843;
+    margin-top: auto;
+    /*To make bottom text visible with icons*/
+    position: relative;
+  }
+  /* To align footer content */
+  .footer-columns {
+    display: flex;
+    height: 100%;
+    width: 100%;
+  }
+  .footer-col {
+    flex: 1;
+    /* Invisible columns, no border or background */
+  }
+  .footer-logo-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 70px;
+    padding-left: 70px;
+  }
+  .footer-logo-container a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 24px;
+    background: none;
+    display: inline-block;
+  }
+  .footer-links-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 70px; /* Align first link with logo */
+    padding-left: 0;
+    gap: 80px; /* 80px vertical space between links */
+  }
+  .footer-link {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+    background: none;
+    display: inline-block;
+  }
+  .footer-bottom-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10px;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    width: 100%;
+    pointer-events: none;
+    user-select: none;
+  }
+  .footer-social-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    height: 100%;
+    padding: 0 70px 60px 0;
+  }
+  .footer-social-row {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    /* Place at the bottom of the column */
+    margin-top: auto;
+  }
+  .social-logo-container {
+    width: 48px;
+    height: 48px;
+    padding: 30px;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <!-- Logo container with link -->
+    <a href="homepage.html">
+      <img src="Images/header-logo-icon.png" alt="Logo"  />
+    </a>
+  </div>
+  <!-- Header links Not sure if color or text decoration is needed-->
+  <nav class="header-links">
+    <a href="about-us.html" color="white" text-decoration="none">About Us</a>
+    <a href="tools.html" color="white" text-decoration="none">Tools</a>
+    <a href="contact-us.html" color="white" text-decoration="none">Contact Us</a>
+    <a href="profile-page.html" color="white" text-decoration="none">Profile Page</a>
+  </nav>
+  <!-- Log in/Sign up container -->
+  <div class="auth-container">
+    <button class="auth-button login-btn">Log in</button>
+    <button class="auth-button signup-btn">Sign up</button>
+  </div>
+</header>
+
+<!-- Title Card -->
+<div class="title-card">
+  <h1>Our Journey</h1>
+  <br /><br />
+  <h2>Key Achievements</h2>
+  <br />
+</div>
+<div class="title-card-content">
+  <div class="title-card-column title-card-titles">
+    <div class="title-card-title">Created Dash2Door - 2023</div>
+    <div class="title-card-title">Created Food4U - 2024</div>
+    <div class="title-card-title">Created EquipShare - 2025</div>
+  </div>
+  <div class="title-card-column title-card-descriptions">
+    <div class="title-card-description">
+      Dash to door was our first project that was focused around hiring delivery drivers to deliver fast food to our clients. The App was successful for a year before it closed down.
+    </div>
+    <div class="title-card-description">
+      Food sharing service allowing cooks to share recipes and ingredients with customers.
+    </div>
+    <div class="title-card-description">
+      Platform to allow users to borrow or rent out tools for specific projects.
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-columns">
+    <div class="footer-col footer-logo-col">
+      <!-- Logo container with link -->
+      <div class="footer-logo-container">
+        <a href="homepage.html">
+          <img src="Images/footer-logo-icon.png" alt="Footer Logo" style="width:100%; height:100%; object-fit:contain;" />
+        </a>
+      </div>
+    </div>
+    <div class="footer-col footer-links-col">
+      <!-- Footer links; Quick links doesn't need to be a link
+       but I made it as a link so it follows the same style -->
+      <a href="#" class="footer-link">Quick Links </a>
+      <a href="about-us.html" class="footer-link">About Us</a>
+      <a href="tools.html" class="footer-link">Tools</a>
+      <a href="contact-us.html" class="footer-link">Contact Us</a>
+      <a href="profile-page.html" class="footer-link">Profile Page</a>
+    </div>
+    <div class="footer-col"></div>
+    <div class="footer-col footer-social-col">
+      <div class="footer-social-row">
+        <div class="social-logo-container social-logo-google">
+          <img src="Images/Google-icon.png" alt="Social-Logo" />
+        </div>
+        <div class="social-logo-container">
+          <img src="Images/LinkedIn-icon.png" alt="Social-Logo" />
+        </div>
+        <div class="social-logo-container">
+          <img src="Images/Facebook-icon.png" alt="Social-Logo" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom-text">
+    © 2024 EquipShare. All rights reserved.
+  </div>
+</footer>
+
+</body>
+</html>

@@ -24,7 +24,7 @@ public class HomeController {
     public String homePage(Model model) {
         List<User> users = userRepository.findAll();
         model.addAttribute("users", users);
-        return "payment"; // whatever html page name is written here would be the starting point of our app.
+        return "homepage"; // whatever html page name is written here would be the starting point of our app.
     }
     @GetMapping("/cart")
     public String userCart(Model model) {

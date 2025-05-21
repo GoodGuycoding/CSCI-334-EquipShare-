@@ -6,7 +6,582 @@
     <title>Login - EquipShare</title>
     <link rel="stylesheet" th:href="@{/css/global.css}" />
 </head>
-<body>
+
+<body id = "RentalProfileBody">
+
+<div id = "RentalProfileD1">
+
+    <img id = "RentalProfileD1Logo" src="344logo.png"> </img>
+
+    <div id = "RentalProfileD1_1">
+        <h1>EQS for borrower</h1>
+    </div>
+
+    <div id = "RentalProfileD1ProfileImage">
+        <img  id = "RentalProfileD1ProfileImageReal" src="profileDemo2.png"> </img>
+    </div>
+
+    <div id = "RentalProfileD1_2">
+        <h2>Welcome to your profile</h2>
+        <h3>Nick Rutherford</h3>
+    </div>
+</div>
+
+
+<h1>Booking List</h1>
+
+<div id = "RentalProfileBookingList">
+
+
+
+    <div id = "RentalProfileBookingList1">
+        <div>
+            <table >
+                <tr>
+                    <th>Hammer</th>
+                </tr>
+                <tr>
+                    <td><img  id = "RentalItemImage1" src="profileDemo2.png"> </img></td>
+                </tr>
+            </table>
+
+            <!-- <h3 id = "RentalItemImage" > Hammer </h3>
+            <img  id = "RentalItemImage1" src="profileDemo2.png"> </img> -->
+
+            <table id = "RentalOwnerDetails">
+                <tr>
+                    <th>Owner Name:</th>
+                    <td>Tomar khan</td>
+                </tr>
+                <tr>
+                    <th>Booked:</th>
+                    <td>12/3/2025</td>
+                </tr>
+                <tr>
+                    <th>Duration:</th>
+                    <td>1 Months 12 days</td>
+                </tr>
+                <tr>
+                    <th>Location:</th>
+                    <td>14 Thirroul Station St.</td>
+                </tr>
+            </table>
+            <!-- <p id = "RentalOwnerDetails">
+                Owner: Tomar Khan<br>
+                Booked: 12/3/1025<br>
+                Duration: 1 month 12 days<br>
+                location: 14 Thirroul Station St.<br>
+            </p>  -->
+
+            <div id = "RentedItemPriceAndRating">
+
+                <table >
+                    <tr>
+                        <th>Price: $20 per day</th>
+                    </tr>
+                    <tr>
+                        <th><img  id = "RentedItemPriceAndRating1" src="pngfind.com-rating-png-transparent-6687141.png"> </img></th>
+                    <tr>
+                    <tr>
+                        <td>Rate from 1 to 5 below</td>
+                    </tr>
+                    <tr>
+
+                        <td>
+                            <input type="text" id="RentedItemPriceAndRating2" name="Email">
+                            <button  id = "RatingSubmitButton" type="button">Submit</button>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <!-- <p id = "RentedItemPriceAndRating">
+                  Price: $20 per day
+
+                  Rating:
+                  <img  id = "RentedItemPriceAndRating1" src="pngfind.com-rating-png-transparent-6687141.png"> </img>
+                  <label for="RentedItemPriceAndRating1" style="font-size: 15px; margin-left: -6px; ">Rate from 1 to 5 below:</label>
+                  <input type="text" id="RentedItemPriceAndRating2" name="Email">
+                </p>  -->
+            </div>
+
+            <div id = "RentalOwnerProfile">
+
+                <table >
+                    <tr>
+                        <td><img id = "RentalOwnerProfile1" src="profileDemo2.png" > </img> </td>
+                    </tr>
+
+                    <tr id = "RentalOwnerDetails2">
+                        <th>Owner<th>
+                    </tr>
+
+                    <tr id = "RentalOwnerDetails2">
+
+                        <td > Ram Prasad</td>
+                    </tr>
+
+                </table>
+                <!-- <img  id = "RentalOwnerProfile1"src="profileDemo2.png"> </img>
+
+                <p id = "RentalOwnerDetails2"> Owner: Ram Parsad</p> -->
+            </div>
+
+            <div id = "ButtonReturnNotic">
+
+                <table>
+                    <tr>
+                        <td> <button  id = "ButtonReturnNotic1" type="button">4 days left to return</button> </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <button  id = "ButtonReturnNotic2" type="📞 button">
+                                <img id ="call_Icon" src="toppng.com-hone-number-phone-logo-in-white-1224x1223.png" > </img>
+                                Contact
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id = "RentalProfileBookingList1">
+        <div>
+            <table >
+                <tr>
+                    <th>Hammer</th>
+                </tr>
+                <tr>
+                    <td><img  id = "RentalItemImage1" src="profileDemo2.png"> </img></td>
+                </tr>
+            </table>
+
+            <!-- <h3 id = "RentalItemImage" > Hammer </h3>
+            <img  id = "RentalItemImage1" src="profileDemo2.png"> </img> -->
+
+            <table id = "RentalOwnerDetails">
+                <tr>
+                    <th>Owner Name:</th>
+                    <td>Tomar khan</td>
+                </tr>
+                <tr>
+                    <th>Booked:</th>
+                    <td>12/3/2025</td>
+                </tr>
+                <tr>
+                    <th>Duration:</th>
+                    <td>1 Months 12 days</td>
+                </tr>
+                <tr>
+                    <th>Location:</th>
+                    <td>14 Thirroul Station St.</td>
+                </tr>
+            </table>
+            <!-- <p id = "RentalOwnerDetails">
+                Owner: Tomar Khan<br>
+                Booked: 12/3/1025<br>
+                Duration: 1 month 12 days<br>
+                location: 14 Thirroul Station St.<br>
+            </p>  -->
+
+            <div id = "RentedItemPriceAndRating">
+
+                <table >
+                    <tr>
+                        <th>Price: $20 per day</th>
+                    </tr>
+                    <tr>
+                        <th><img  id = "RentedItemPriceAndRating1" src="pngfind.com-rating-png-transparent-6687141.png"> </img></th>
+                    <tr>
+                    <tr>
+                        <td>Rate from 1 to 5 below</td>
+                    </tr>
+                    <tr>
+
+                        <td>
+                            <input type="text" id="RentedItemPriceAndRating2" name="Email">
+                            <button  id = "RatingSubmitButton" type="button">Submit</button>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <!-- <p id = "RentedItemPriceAndRating">
+                  Price: $20 per day
+
+                  Rating:
+                  <img  id = "RentedItemPriceAndRating1" src="pngfind.com-rating-png-transparent-6687141.png"> </img>
+                  <label for="RentedItemPriceAndRating1" style="font-size: 15px; margin-left: -6px; ">Rate from 1 to 5 below:</label>
+                  <input type="text" id="RentedItemPriceAndRating2" name="Email">
+                </p>  -->
+            </div>
+
+            <div id = "RentalOwnerProfile">
+
+                <table >
+                    <tr>
+                        <td><img id = "RentalOwnerProfile1" src="profileDemo2.png" > </img> </td>
+                    </tr>
+
+                    <tr id = "RentalOwnerDetails2">
+                        <th>Owner<th>
+                    </tr>
+
+                    <tr id = "RentalOwnerDetails2">
+
+                        <td > Ram Prasad</td>
+                    </tr>
+
+                </table>
+                <!-- <img  id = "RentalOwnerProfile1"src="profileDemo2.png"> </img>
+
+                <p id = "RentalOwnerDetails2"> Owner: Ram Parsad</p> -->
+            </div>
+
+            <div id = "ButtonReturnNotic">
+
+                <table>
+                    <tr>
+                        <td> <button  id = "ButtonReturnNotic1" type="button">4 days left to return</button> </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <button  id = "ButtonReturnNotic2" type="📞 button">
+                                <img id ="call_Icon" src="toppng.com-hone-number-phone-logo-in-white-1224x1223.png" > </img>
+                                Contact
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+            <div id = "ButtonReturnNotic">
+
+                <table>
+                    <tr>
+                        <td> <button  id = "ButtonReturnNotic1" type="button">4 days left to return</button> </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <button  id = "ButtonReturnNotic2" type="📞 button">
+                                <img id ="call_Icon" src="toppng.com-hone-number-phone-logo-in-white-1224x1223.png" > </img>
+                                Contact
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div id = "RentalProfileBookingList1">
+        <div>
+            <table >
+                <tr>
+                    <th>Hammer</th>
+                </tr>
+                <tr>
+                    <td><img  id = "RentalItemImage1" src="profileDemo2.png"> </img></td>
+                </tr>
+            </table>
+
+            <!-- <h3 id = "RentalItemImage" > Hammer </h3>
+            <img  id = "RentalItemImage1" src="profileDemo2.png"> </img> -->
+
+            <table id = "RentalOwnerDetails">
+                <tr>
+                    <th>Owner Name:</th>
+                    <td>Tomar khan</td>
+                </tr>
+                <tr>
+                    <th>Booked:</th>
+                    <td>12/3/2025</td>
+                </tr>
+                <tr>
+                    <th>Duration:</th>
+                    <td>1 Months 12 days</td>
+                </tr>
+                <tr>
+                    <th>Location:</th>
+                    <td>14 Thirroul Station St.</td>
+                </tr>
+            </table>
+            <!-- <p id = "RentalOwnerDetails">
+                Owner: Tomar Khan<br>
+                Booked: 12/3/1025<br>
+                Duration: 1 month 12 days<br>
+                location: 14 Thirroul Station St.<br>
+            </p>  -->
+
+            <div id = "RentedItemPriceAndRating">
+
+                <table >
+                    <tr>
+                        <th>Price: $20 per day</th>
+                    </tr>
+                    <tr>
+                        <th><img  id = "RentedItemPriceAndRating1" src="pngfind.com-rating-png-transparent-6687141.png"> </img></th>
+                    <tr>
+                    <tr>
+                        <td>Rate from 1 to 5 below</td>
+                    </tr>
+                    <tr>
+
+                        <td>
+                            <input type="text" id="RentedItemPriceAndRating2" name="Email">
+                            <button  id = "RatingSubmitButton" type="button">Submit</button>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <!-- <p id = "RentedItemPriceAndRating">
+                  Price: $20 per day
+
+                  Rating:
+                  <img  id = "RentedItemPriceAndRating1" src="pngfind.com-rating-png-transparent-6687141.png"> </img>
+                  <label for="RentedItemPriceAndRating1" style="font-size: 15px; margin-left: -6px; ">Rate from 1 to 5 below:</label>
+                  <input type="text" id="RentedItemPriceAndRating2" name="Email">
+                </p>  -->
+            </div>
+
+            <div id = "RentalOwnerProfile">
+
+                <table >
+                    <tr>
+                        <td><img id = "RentalOwnerProfile1" src="profileDemo2.png" > </img> </td>
+                    </tr>
+
+                    <tr id = "RentalOwnerDetails2">
+                        <th>Owner<th>
+                    </tr>
+
+                    <tr id = "RentalOwnerDetails2">
+
+                        <td > Ram Prasad</td>
+                    </tr>
+
+                </table>
+                <!-- <img  id = "RentalOwnerProfile1"src="profileDemo2.png"> </img>
+
+                <p id = "RentalOwnerDetails2"> Owner: Ram Parsad</p> -->
+            </div>
+
+            <div id = "ButtonReturnNotic">
+
+                <table>
+                    <tr>
+                        <td> <button  id = "ButtonReturnNotic1" type="button">4 days left to return</button> </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <button  id = "ButtonReturnNotic2" type="📞 button">
+                                <img id ="call_Icon" src="toppng.com-hone-number-phone-logo-in-white-1224x1223.png" > </img>
+                                Contact
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div id = "RentalProfileBookingList1">
+        <div>
+            <table >
+                <tr>
+                    <th>Hammer</th>
+                </tr>
+                <tr>
+                    <td><img  id = "RentalItemImage1" src="profileDemo2.png"> </img></td>
+                </tr>
+            </table>
+
+            <!-- <h3 id = "RentalItemImage" > Hammer </h3>
+            <img  id = "RentalItemImage1" src="profileDemo2.png"> </img> -->
+
+            <table id = "RentalOwnerDetails">
+                <tr>
+                    <th>Owner Name:</th>
+                    <td>Tomar khan</td>
+                </tr>
+                <tr>
+                    <th>Booked:</th>
+                    <td>12/3/2025</td>
+                </tr>
+                <tr>
+                    <th>Duration:</th>
+                    <td>1 Months 12 days</td>
+                </tr>
+                <tr>
+                    <th>Location:</th>
+                    <td>14 Thirroul Station St.</td>
+                </tr>
+            </table>
+            <!-- <p id = "RentalOwnerDetails">
+                Owner: Tomar Khan<br>
+                Booked: 12/3/1025<br>
+                Duration: 1 month 12 days<br>
+                location: 14 Thirroul Station St.<br>
+            </p>  -->
+
+            <div id = "RentedItemPriceAndRating">
+
+                <table >
+                    <tr>
+                        <th>Price: $20 per day</th>
+                    </tr>
+                    <tr>
+                        <th><img  id = "RentedItemPriceAndRating1" src="pngfind.com-rating-png-transparent-6687141.png"> </img></th>
+                    <tr>
+                    <tr>
+                        <td>Rate from 1 to 5 below</td>
+                    </tr>
+                    <tr>
+
+                        <td>
+                            <input type="text" id="RentedItemPriceAndRating2" name="Email">
+                            <button  id = "RatingSubmitButton" type="button">Submit</button>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <!-- <p id = "RentedItemPriceAndRating">
+                  Price: $20 per day
+
+                  Rating:
+                  <img  id = "RentedItemPriceAndRating1" src="pngfind.com-rating-png-transparent-6687141.png"> </img>
+                  <label for="RentedItemPriceAndRating1" style="font-size: 15px; margin-left: -6px; ">Rate from 1 to 5 below:</label>
+                  <input type="text" id="RentedItemPriceAndRating2" name="Email">
+                </p>  -->
+            </div>
+
+            <div id = "RentalOwnerProfile">
+
+                <table >
+                    <tr>
+                        <td><img id = "RentalOwnerProfile1" src="profileDemo2.png" > </img> </td>
+                    </tr>
+
+                    <tr id = "RentalOwnerDetails2">
+                        <th>Owner<th>
+                    </tr>
+
+                    <tr id = "RentalOwnerDetails2">
+
+                        <td > Ram Prasad</td>
+                    </tr>
+
+                </table>
+                <!-- <img  id = "RentalOwnerProfile1"src="profileDemo2.png"> </img>
+
+                <p id = "RentalOwnerDetails2"> Owner: Ram Parsad</p> -->
+            </div>
+
+            <div id = "ButtonReturnNotic">
+
+                <table>
+                    <tr>
+                        <td> <button  id = "ButtonReturnNotic1" type="button">4 days left to return</button> </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <button  id = "ButtonReturnNotic2" type="📞 button">
+                                <img id ="call_Icon" src="toppng.com-hone-number-phone-logo-in-white-1224x1223.png" > </img>
+                                Contact
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+<h1>Personal Detail</h1>
+<div id = "RentalProfilePersonalDetails">
+
+    <div id ="PersonalDetailField">
+
+        <label for="Uname">User name:</label>
+        <input type="text" id="Uname" name="Uname">
+
+        <label for="Gender">Gender:</label>
+        <input type="Gender" id="Gender" name="Gender"><br><br>
+
+        <label for="Email">Email:</label>
+        <input type="Email" id="Email" name="Email">
+
+        <label for="Contact">Contact:</label>
+        <input type="Contact" id="Contact" name="Contact"><br><br>
+
+        <label for="fname">Address:</label>
+        <input type="Address" id="Address" name="Address">
+
+        <label for="Password">Password:</label>
+        <input type="Password" id="Password" name="Password"><br><br>
+
+        <label for="DOB">DOB:</label>
+        <input type="date" id="DOB" name="DOB">
+
+        <button  id = "ButtonSaveChangeDetail" type="button">Save Change Detail!</button>
+
+    </div>
+
+</div>
+
+<div>
+
+</div>
+
+
+
+
+<p>My first paragraph.</p>
+
 </body>
-<p>This is the dashboard for borrowers</p>
 </html>

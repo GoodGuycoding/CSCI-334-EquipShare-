@@ -371,6 +371,264 @@
      .payment-btn:hover {
        background: #367951;
      }
+     /* borrower dashboard */
+h1
+{
+  color: white;
+  font-family: 'Trebuchet MS', sans-serif;
+  text-align: center;
+}
+h2,h3
+{
+  color: white;
+  font-family: 'Trebuchet MS', sans-serif;
+  text-align: left;
+}
+
+
+#RentalProfileBody
+{
+  background-color: #378BBE;
+}
+#RentalProfileD1
+{
+  /* width: 400px; */
+  padding-top: 40px;
+  height: 450px;
+  width: 1450px;
+  background-color: #005989;
+  border-radius: 40px;
+  margin: auto;
+}
+
+#RentalProfileD1_1
+{
+  color: white;
+  width: 300px;
+  height: 100px;
+  margin-left: 570px ;
+  /* text-align: center; */
+  font-family: 'Trebuchet MS', sans-serif;
+  /* background-color: rgb(216, 227, 216); */
+}
+
+#RentalProfileD1Logo
+{
+  margin-left: 550px ;
+  width: 250px;
+  height: 150px;
+
+}
+
+#RentalProfileD1ProfileImage
+{
+  margin-left: 50px ;
+  width: 150px;
+  height: 150px;
+  border-radius: 100px;
+  margin-left: 70px ;
+  background-color: white;
+}
+
+#RentalProfileD1ProfileImageReal
+{
+  margin-left: 0px ;
+  width: 155px;
+  height: 150px;
+  border-radius: 120px;
+  /* margin-left: 70px ; */
+}
+
+#RentalProfileD1_2
+{
+  color: white;
+  margin-left: 300px ;
+  margin-top: -120px;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+#RentalProfileBookingList
+{
+  padding-top: 20px;
+  height: 550px;
+  width: 1450px;
+  background-color: white;
+  border-radius: 40px;
+  overflow: auto;
+  margin: auto;
+}
+
+#RentalProfileBookingList1
+{
+  background-color: #F2F7FC;
+  height: 150px;
+  width: 1450px;
+  border-radius: 40px;
+  margin: auto;
+}
+
+#RentalOwnerProfile
+{
+  margin-left: 800px ;
+  margin-top: -150px;
+}
+
+#RentalOwnerProfile1
+{
+  margin-left: -10px ;
+  width: 100px;
+  height: 100px;
+  margin-top: 20px;
+  border-radius: 120px;
+}
+
+#RentalItemImage
+{
+  padding: 20px;
+  margin-left: 30px;
+  color: black;
+}
+
+#RentalOwnerDetails
+{
+  font-size: 18px;
+  margin-left: 170px;
+  margin-top: -130px;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+#RentalItemImage1
+{
+  /* padding: 20px; */
+  margin-left: 20px ;
+  margin-top: -5px;
+  width: 100px;
+  height: 100px;
+
+
+}
+
+#RentalOwnerDetails2
+{
+  font-size: 15px;
+  margin-left: -100px;
+  width: 300px;
+  margin-top: -10px;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+#RentedItemPriceAndRating
+{
+  font-size: 20px;
+  margin-left: 500px;
+  width: 250px;
+  margin-top: -100px;
+  font-family: 'Trebuchet MS', sans-serif;
+
+}
+
+#RentedItemPriceAndRating1
+{
+  margin-top: 5px;
+  height: 20px;
+  width: 120px;
+}
+
+#RentedItemPriceAndRating2
+{
+  margin-top: -100px;
+  margin-left: 50px;
+  font-size: 15px;
+  width: 15px;
+  height: 15px;
+
+}
+
+/* #RatingSubmitButton
+[
+
+] */
+
+
+#RentalProfilePersonalDetails
+{
+  padding: 100px;
+  padding-left: 200px;
+  padding-right: 200px;
+  padding-top: 40px;
+  height: 150px;
+  width: 1050px;
+  background-color: white;
+  border-radius: 40px;
+  margin: auto;
+}
+
+#ButtonReturnNotic
+{
+  height: 60px;
+  width: 300px;
+  margin-left: 1050px;
+  margin-top: -130px;
+}
+
+#ButtonReturnNotic1
+{
+  height: 40px;
+  width: 200px;
+  border-radius: 15px;
+  margin-top: 10px;
+  color: white;
+  font-size: 15px;
+  background-color: #378BBE;
+  font-family: 'Trebuchet MS', sans-serif;
+
+}
+
+#ButtonReturnNotic2
+{
+  height: 40px;
+  width: 150px;
+  border-radius: 15px;
+  margin-left: 25px;
+  margin-top: 10px;
+  color: white;
+  font-size: 15px;
+  background-color: #389375;
+  font-family: 'Trebuchet MS', sans-serif;
+
+}
+
+#call_Icon
+{
+  height: 25px;
+  width: 25px;
+  margin-left: -20px;
+}
+
+label
+{
+  padding-left: 50px;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+input
+{
+  height: 25px;
+  width: 300px;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+#ButtonSaveChangeDetail
+{
+  height: 60px;
+  width: 300px;
+  border-radius: 15px;
+  margin-left: 100px;
+  color: white;
+  font-size: 20px;
+  background-color: #378BBE;
+  font-family: 'Trebuchet MS', sans-serif;
+}
 
 
   
