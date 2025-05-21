@@ -28,14 +28,14 @@ public class UserController {
     }
 
     @GetMapping("/borrower/dashboard")
-    public String getBorrowerDashboard(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
-        // getting user details
-        User user = userDetails.getUser();
-
-        model.addAttribute("user", user);
-
-        // need to add bookings
-        // model.addAttribute("bookings", itemService.getBookingsByBorrower(user));
+    public String getBorrowerDashboard(Model model) {
+//        // getting user details
+//        User user = userDetails.getUser();
+//
+//        model.addAttribute("user", user);
+//
+//        // need to add bookings
+//        // model.addAttribute("bookings", itemService.getBookingsByBorrower(user));
 
         return "borrowerDashboard";
     }
