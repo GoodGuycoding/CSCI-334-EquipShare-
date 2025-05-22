@@ -1,530 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Header</title>
-  <style>
-
-    /* Header Styles */
-    .header {
-      width: 1440px;
-      height: 71px;
-      background-color: #005989;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    /*Not really needed just for without image*/
-    .logo {
-      width: 182px;
-      height: 71px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    /*Logo container with link*/
-    .logo a {
-      display: block;
-      width: 100%;
-      height: 100%;
-      text-decoration: none;
-      color: white;
-      font-weight: bold;
-      font-size: 18px;
-      background-color: #00496f; 
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    /* Make logo fit inside container */
-    .logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    /* Header Links */
-    .header-links {
-      color: white;
-      text-decoration: none;
-      display: flex;
-      gap: 90px; 
-      flex: 1;
-      justify-content: flex-end; 
-      margin-right: 70px; 
-    }
-    /* For the links */
-    .header-links a {
-      color: white;
-      text-decoration: none;
-    }
-    /*Log in/Sign up container*/
-    .auth-container {
-      width: 354px;
-      height: 71px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 20px;
-      padding-right: 20px;
-      box-sizing: border-box;
-    }
-    .auth-button {
-      width: 167px;
-      height: 71px;
-      border: none;
-      border-radius: 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .login-btn {
-      background-color: #389375;
-      color: white;
-    }
-    .signup-btn {
-      background-color: #F2F7FC;
-      color: #005989;
-    }
-    /* Body CSS */
-    .tools-content {
-      width: 1440px;
-      height: 600px;
-      background-color: #005989;
-      margin: 0 auto 0 auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      border-radius: 0;
-      box-sizing: border-box;
-      padding: 0 70px;
-    }
-    .tools-content-row {
-      width: 100%;
-      display: flex;
-      align-items: center;
-    }
-    .tools-content-row-top {
-      height: 50%;
-      justify-content: flex-start;
-      gap: 40px;
-      padding-top: 80px;
-    }
-    .tools-content-title {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 64px;
-      color: #fff;
-      font-weight: bold;
-      letter-spacing: 2px;
-    }
-    .tools-content-logo {
-      height: 80px;
-      width: auto;
-      object-fit: contain;
-      margin-left: 30px;
-    }
-    .tools-content-row-bottom {
-      height: 50%;
-      justify-content: flex-start;
-      gap: 30px;
-      padding-top: 40px;
-    }
-    .tools-search-bar {
-      width: 400px;
-      height: 56px;
-      border-radius: 12px;
-      border: none;
-      padding: 0 24px;
-      font-size: 20px;
-      font-family: 'JetBrains Mono', monospace;
-      outline: none;
-    }
-    .tools-filter-menu {
-      width: 220px;
-      height: 56px;
-      border-radius: 12px;
-      border: none;
-      font-size: 20px;
-      font-family: 'JetBrains Mono', monospace;
-      padding: 0 16px;
-      outline: none;
-      background: #F2F7FC;
-      color: #005989;
-    }
-    /*Start of Tools*/
-    .tools-grid {
-      width: 1440px;
-      height: 750px;
-      margin: 0px auto;
-      background-color: #378BBE;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(3, 1fr);
-      gap: 100px 100px; /* vertical and horizontal spacing */
-      box-sizing: border-box;
-      padding: 40px 70px;
-      overflow: auto;
-    }
-    .tool-card {
-      background: #fff;
-      border-radius: 24px;
-      min-height: 260px;
-      min-width: 0;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 24px;
-      color: #005989;
-      padding-top: 40px;    
-      padding-bottom: 40px;
-    }
-    /*Popular Tools*/
-    .popular-tools {
-      width: 1440px;
-      margin: 0px auto 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-      background-color: #005989;
-      padding: 30px 0px;
-    }
-    .popular-tools-title-row {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      padding-left: 70px;
-    }
-    .popular-tools-title {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 48px;
-      color: #fff;
-      font-weight: bold;
-      letter-spacing: 2px;
-    }
-    .popular-tools-grid {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 100px 100px;
-      box-sizing: border-box;
-      padding: 40px 70px;
-      background: #005989;
-    }
-    /*Category CSS*/
-    .category {
-      width: 1440px;
-      margin: 60px auto 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 40px;
-      background: none;
-      padding-bottom: 60px;
-    }
-    .category-header {
-      width: 100%;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    .category-title {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 48px;
-      color: #005989;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-    .category-subtext {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 22px;
-      color: #333;
-      margin-bottom: 0;
-    }
-    .category-cards-row {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      gap: 60px;
-      margin: 30px 0 0 0;
-    }
-    .category-card {
-      background: #374843;
-      border-radius: 24px;
-      min-height: 260px;
-      min-width: 0;
-      width: 320px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 28px;
-      color: #fff;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    .category-see-more-row {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin-top: 16px;
-    }
-    .category-see-more-btn {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 20px;
-      border: none;
-      border-radius: 12px;
-      padding: 16px 36px;
-      background-color: #389375;
-      color: #fff;
-      cursor: pointer;
-      font-weight: 700;
-      transition: background 0.2s, color 0.2s;
-    }
-    .category-submit-row {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 40px;
-      gap: 20px;
-    }
-    .category-submit-text {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 22px;
-      color: #005989;
-      text-align: center;
-      margin-bottom: 0;
-    }
-    .category-submit-btn {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 20px;
-      border: none;
-      border-radius: 12px;
-      padding: 16px 36px;
-      background-color: #389375;
-      color: #fff;
-      cursor: pointer;
-      font-weight: 700;
-      transition: background 0.2s, color 0.2s;
-    }
-    /* Footer CSS */
-    .footer {
-      width: 1440px;
-      height: 698px;
-      background-color: #374843;
-      margin-top: auto;
-      /*To make bottom text visible with icons*/
-      position: relative;
-    }
-    /* To align footer content */
-    .footer-columns {
-      display: flex;
-      height: 100%;
-      width: 100%;
-    }
-    .footer-col {
-      flex: 1;
-    }
-    .footer-logo-col {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding-top: 70px;
-      padding-left: 70px;
-    }
-    .footer-logo-container a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 24px;
-      background: none;
-      display: inline-block;
-    }
-    .footer-links-col {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      padding-top: 70px; /* Align first link with logo */
-      padding-left: 0;
-      gap: 80px; 
-    }
-    .footer-link {
-      color: white;
-      text-decoration: none;
-      font-size: 20px;
-      font-family: Arial, sans-serif;
-      font-weight: normal;
-      background: none;
-      display: inline-block;
-    }
-    .footer-bottom-text {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 10px;
-      color: #fff;
-      font-size: 16px;
-      text-align: center;
-      width: 100%;
-      pointer-events: none;
-      user-select: none;
-    } 
-    .footer-social-col {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      justify-content: flex-end;
-      height: 100%;
-      padding: 0 70px 60px 0;
-    }
-    .footer-social-row {
-      display: flex;
-      flex-direction: row;
-      gap: 30px;
-      /* Place at the bottom of the column */
-      margin-top: auto;
-    }
-    .social-logo-container {
-      width: 48px;
-      height: 48px;
-      padding: 30px;
-      background: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  </style>
+  <title>Tools – EquipShare</title>
+  <link rel="stylesheet" th:href="@{/css/global.css}" />
 </head>
 <body>
 
-  <header class="header">
-    <div class="logo">
-      <!-- Logo container with link -->
-      <a href="homepage.html">
-        <img src="Images/header-logo-icon.png" alt="Logo"  />
+<!-- NAVIGATION -->
+<nav>
+  <ul>
+    <li class="brand">
+      <a th:href="@{/}">
+        <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image"/>
       </a>
-    </div>
-    <!-- Header links Not sure if color or text decoration is needed-->
-    <nav class="header-links">
-      <a href="about-us.html" color="white" text-decoration="none">About Us</a>
-      <a href="tools.html" color="white" text-decoration="none">Tools</a>
-      <a href="contact-us.html" color="white" text-decoration="none">Contact Us</a>
-      <a href="profile-page.html" color="white" text-decoration="none">Profile Page</a>
-    </nav>
-    <!-- Log in/Sign up container -->
-    <div class="auth-container">
-      <button class="auth-button login-btn" onclick="window.location.href='login.html'">Log in</button>
-      <button class="auth-button signup-btn" onclick="window.location.href='signup.html'">Sign up</button>
-    </div>
-  </header>
-  <!-- Title + search bar -->
-  <div class="tools-content">
-    <div class="tools-content-row tools-content-row-top">
-      <span class="tools-content-title">Tools</span>
-      <img src="Images/header-logo-icon.png" alt="Logo" class="tools-content-logo" />
-    </div>
-    <div class="tools-content-row tools-content-row-bottom">
-      <input type="text" class="tools-search-bar" placeholder="Search tools..." />
-      <select class="tools-filter-menu">
-        <option value="">Filter by...</option>
-        <option value="category1">Price</option>
-        <option value="category2">Location</option>
-        <option value="category2">Rating</option>
-      </select>
-    </div>
-  </div>
-  <!-- Tools grid -->
-  <div class="tools-grid">
-    <div class="tool-card">Tool 1</div>
-    <div class="tool-card">Tool 2</div>
-    <div class="tool-card">Tool 3</div>
-    <div class="tool-card">Tool 4</div>
-    <div class="tool-card">Tool 5</div>
-    <div class="tool-card">Tool 6</div>
-    <div class="tool-card">Tool 7</div>
-    <div class="tool-card">Tool 8</div>
-    <div class="tool-card">Tool 9</div>
-    <div class="tool-card">Tool 7</div>
-    <div class="tool-card">Tool 8</div>
-    <div class="tool-card">Tool 9</div>
-  </div>
-  <!-- Popular tools -->
-  <div class="popular-tools">
-    <div class="popular-tools-title-row">
-      <span class="popular-tools-title">Popular Tools</span>
-    </div>
-    <div class="popular-tools-grid">
-      <div class="tool-card">Popular Tool 1</div>
-      <div class="tool-card">Popular Tool 2</div>
-      <div class="tool-card">Popular Tool 3</div>
-    </div>
-  </div>
-  <!-- Category section -->
-  <div class="category">
-    <!-- Row 1: Title and subtext -->
-    <div class="category-header">
-      <div class="category-title">Category</div>
-      <div class="category-subtext">Looking to rent a tool? Try our tool Catalogue here:</div>
-    </div>
-    <!-- Row 2: Category cards and see more button -->
-    <div class="category-cards-row">
-      <div class="category-card">Home Improvement</div>
-      <div class="category-card">Automotive</div>
-      <div class="category-card">Professional</div>
-    </div>
-    <div class="category-see-more-row">
-      <button class="category-see-more-btn">See more</button>
-    </div>
-    <!-- Row 3: Submit tool text and button -->
-    <div class="category-submit-row">
-      <div class="category-submit-text">
-        Looking to put your tools up for rent? Click the button below to submit your tool:
-      </div>
-      <button class="category-submit-btn">Submit tool</button>
-    </div>
-  </div>
+    </li>
+    <li><a th:href="@{/about}">About Us</a></li>
+    <li><a th:href="@{/tools}">Tools</a></li>
+    <li><a th:href="@{/contact}">Contact Us</a></li>
+    <li><a th:href="@{/profile}">Profile Page</a></li>
+    <li><a th:href="@{/cart}">View Cart</a></li>
+    <li class="login-link"><a th:href="@{/login}" class="btn-login">Log In</a></li>
+    <li><a th:href="@{/signup}" class="btn-signup">Sign Up</a></li>
+  </ul>
+</nav>
 
- <footer class="footer">
-  <div class="footer-columns">
-    <div class="footer-col footer-logo-col">
-      <!-- Logo container with link -->
-      <div class="footer-logo-container">
-        <a href="homepage.html">
-          <img src="Images/footer-logo-icon.png" alt="Footer Logo" style="width:100%; height:100%; object-fit:contain;" />
-        </a>
-      </div>
+<!--&lt;!&ndash; Search & Filter &ndash;&gt;-->
+<!--<div class="main-content">-->
+<!--  <h1 style="color:white; text-align:center;">Browse Tools</h1>-->
+<!--  <div style="display:flex; justify-content:space-between; align-items:center; margin: 20px 0;">-->
+<!--    <input type="text" class="tools-search-bar" placeholder="Search tools..." />-->
+<!--    <select class="tools-filter-menu">-->
+<!--      <option value="">Filter by...</option>-->
+<!--      <option value="price">Price</option>-->
+<!--      <option value="location">Location</option>-->
+<!--      <option value="rating">Rating</option>-->
+<!--    </select>-->
+<!--  </div>-->
+
+<div class="tools-grid">
+  <div class="tool-card" th:each="tool : ${tools}">
+    <a th:href="@{'/tool/' + ${tool.id}}" style="text-decoration:none; color:inherit;">
+      <img th:src="${tool.itemPhotoUrl}" alt="Tool image" />
+      <h3 th:text="${tool.title}" style="margin-top: 12px;">Tool Title</h3>
+<!--      <p th:text="${tool.category}">Category</p>-->
+      <p th:text="'$' + ${tool.pricePerDay} + ' / day'">Price</p>
+      <p th:text="${tool.location}">Location</p>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-stripe"></div>
+  <div class="footer-content">
+    <div class="brand-info">
+      <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image" />
     </div>
-    <div class="footer-col footer-links-col">
-      <!-- Footer links; Quick links doesn't need to be a link
-       but I made it as a link so it follows the same style -->
-      <a href="#" class="footer-link">Quick Links </a>
-      <a href="about-us.html" class="footer-link">About Us</a>
-      <a href="tools.html" class="footer-link">Tools</a>
-      <a href="contact-us.html" class="footer-link">Contact Us</a>
-      <a href="profile-page.html" class="footer-link">Profile Page</a>
-    </div>
-    <div class="footer-col"></div>
-    <div class="footer-col footer-social-col">
-      <div class="footer-social-row">
-        <div class="social-logo-container social-logo-google">
-          <img src="Images/Google-icon.png" alt="Social-Logo" />
-        </div>
-        <div class="social-logo-container">
-          <img src="Images/LinkedIn-icon.png" alt="Social-Logo" />
-        </div>
-        <div class="social-logo-container">
-          <img src="Images/Facebook-icon.png" alt="Social-Logo" />
-        </div>
-      </div>
+    <div class="quick-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a th:href="@{/about}">About Us</a></li>
+        <li><a th:href="@{/tools}">Tools</a></li>
+        <li><a th:href="@{/contact}">Contact Us</a></li>
+        <li><a th:href="@{/profile}">Profile Page</a></li>
+      </ul>
     </div>
   </div>
-  <div class="footer-bottom-text">
-    © 2024 EquipShare. All rights reserved.
+  <div class="footer-bottom">
+    <p>© 2025 EquipShare. All rights reserved.</p>
+    <div class="social-icons">
+      <a href="#" aria-label="Google">G</a>
+      <a href="#" aria-label="LinkedIn">in</a>
+      <a href="#" aria-label="Facebook">f</a>
+    </div>
   </div>
 </footer>
 

@@ -15,6 +15,10 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 
 
 @Service
@@ -125,6 +129,13 @@ public class ItemService {
         Item item = booking.getItem();
         item.setAvailable(false);
         itemRepository.save(item);
+    }
+    public List<Item> getAllItems() {
+        return itemRepository.findAll();
+    }
+    public Page<Item> getItemsPaged(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return itemRepository.findAll(pageable);
     }
 
 
