@@ -93,7 +93,7 @@ public class AuthController {
 
         user.setIsOwner(isOrganiser);
         user.setIsBorrower(!isOrganiser);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(user.getPassword());
 
         try {
             userService.registerUser(user);
