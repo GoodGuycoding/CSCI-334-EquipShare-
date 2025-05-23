@@ -3,127 +3,266 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Login - EquipShare</title>
+    <title>Owner Dashboard – EquipShare</title>
     <link rel="stylesheet" th:href="@{/css/global.css}" />
 </head>
 <body>
 
-<!-- ************************************ Profile Details and logo **************************************** -->
-<div id = "RentalProfileBody">
-    <div id = "RentalProfileD1">
+<!-- navigation tab -->
+<nav>
+    <ul>
+        <li class="brand">
+            <a th:href="@{/}">
+                <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image"/>
+            </a>
+        </li>
+        <li><a th:href="@{/about}">About Us</a></li>
+        <li><a th:href="@{/contact}">Contact Us</a></li>
+        <li class="login-link"><a th:href="@{/logout}" class="btn-login">Log Out</a></li>
+    </ul>
+</nav>
 
-        <img id = "RentalProfileD1Logo" alt = "RentalProfileD1Logo" src="344logo.png">
+<!-- Main Content -->
+<main class="main-content">
+    <section class="dashboard-header">
+        <h1>Owner Dashboard</h1>
+        <p class="subtitle" th:text="'Welcome, ' + ${user.firstName} + '!'">Welcome, Owner!</p>
+    </section>
 
-        <div id = "RentalProfileD1_1">
-            <h1>EQS for Owner</h1>
+    <!-- Add New Item Section -->
+    <section class="dashboard-section">
+        <h2>Add New Item</h2>
+        <form class="item-form" th:action="@{/owner/items/add}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Item Name:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pricePerDay">Price per day ($):</label>
+                    <input type="number" id="pricePerDay" name="pricePerDay" step="0.01" min="0" required>
+                </div>
+
+          <!--      <div class="form-group"> -->
+                <!--          <label for="location">Location:</label>  -->
+          <!--                <input type="text" id="location" name="location" required>  -->
+           <!--           </div>  -->
+          <!--        </div>  -->
+
+                  <div class="form-group">
+                      <label for="image">Item Image:</label>
+                      <input type="file" id="image" name="imageFile" accept="image/*">
+                  </div>
+
+                  <button type="submit" class="btn-primary">List Item</button>
+              </form>
+          </section>
+
+          <!-- Current Listings Section -->
+    <section class="dashboard-section">
+        <h2>Your Current Listings</h2>
+
+        <div th:if="${availableItems != null and !availableItems.empty}">
+            <div th:each="item : ${availableItems}" class="item-card">
+                <div class="item-header">
+                    <img th:src="${item.itemPhotoUrl != null} ? ${item.itemPhotoUrl} : '/images/default.png'" alt="Item Image" class="item-image"/>
+                    <div>
+                        <h3 th:text="${item.title}">Item Name</h3>
+                        <p th:text="${item.description}">Item description</p>
+                        <p><strong>Price:</strong> <span th:text="'$' + ${item.pricePerDay} + ' per day'">$0 per day</span></p>
+                        <p><strong>Status:</strong> <span th:text="${item.isAvailable} ? 'Available' : 'Rented'">Available</span></p>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="btn-secondary" th:onclick="'editItem(\'' + ${item.id} + '\')'">Edit</button>
+                    <form th:action="@{'/owner/item/delete/' + ${item.id}}" method="post"
+                          onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <button type="submit" class="btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <div id = "RentalProfileD1ProfileImage">
-           <!-- <img th:src="${user != null and user.profilePhotoUrl != null ? user.profilePhotoUrl : '/images/default-profile.png'}"
-                 alt="Profile Image" class="profile-image" /> -->
+        <div th:if="${availableItems == null or availableItems.empty}">
+            <p>You have no items listed at the moment.</p>
+        </div>
+    </section>
+
+    <!-- Current Bookings Section -->
+    <section class="dashboard-section">
+        <h2>Current Bookings</h2>
+
+        <div th:if="${bookings != null and !bookings.empty}">
+            <div th:each="booking : ${bookings}" class="booking-card">
+                <div class="booking-header">
+                    <img th:src="${booking.item.itemPhotoUrl != null} ? ${booking.item.itemPhotoUrl} : '/images/default.png'"
+                         alt="Item Image" class="item-image"/>
+                    <div>
+                        <h3 th:text="${booking.item.title}">Item Name</h3>
+                        <p><strong>Rented by:</strong> <span th:text="${booking.borrower.firstName + ' ' + booking.borrower.lastName}">Borrower Name</span></p>
+                        <p><strong>Dates:</strong> <span th:text="${#temporals.format(booking.startDate, 'MMM dd')} + ' to ' + ${#temporals.format(booking.endDate, 'MMM dd, yyyy')}">Dates</span></p>
+                        <p><strong>Status:</strong> <span th:text="${booking.status}">Status</span></p>
+                    </div>
+                </div>
+                <div class="booking-actions">
+                    <button class="btn-contact" onclick="showMessageModal('${booking.borrower.id}', '${booking.borrower.firstName}')">Message</button>
+                    <button th:if="${booking.status == 'PENDING'}" class="btn-approve"
+                            th:onclick="'approveBooking(\'' + ${booking.id} + '\')'">Approve</button>
+                    <button th:if="${booking.status == 'PENDING'}" class="btn-danger"
+                            th:onclick="'rejectBooking(\'' + ${booking.id} + '\')'">Reject</button>
+                </div>
+            </div>
         </div>
 
-        <div id = "RentalProfileD1_2">
-            <h2>Welcome to your profile</h2>
-            <h3 th:text="${user.firstName + ' ' + user.lastName}"/>
+        <div th:if="${bookings == null or bookings.empty}">
+            <p>You have no current bookings.</p>
+        </div>
+    </section>
+
+    <!-- Ratings Section -->
+    <section class="dashboard-section">
+        <h2>Your Ratings</h2>
+        <div th:if="${ratings != null and !ratings.empty}">
+            <div th:each="rating : ${ratings}" class="rating-card">
+                <div class="rating-header">
+                    <p><strong>Item:</strong> <span th:text="${rating.item.title}">Item Name</span></p>
+                    <div class="rating-stars">
+                        <span th:each="i : ${#numbers.sequence(1, 5)}">
+                            <span th:if="${i <= rating.score}">★</span>
+                            <span th:if="${i > rating.score}">☆</span>
+                        </span>
+                    </div>
+                </div>
+                <p th:text="${rating.comment} ?: 'No comment provided'">Rating comment</p>
+                <p><small th:text="'From ' + ${rating.borrower.firstName} + ' on ' + ${#temporals.format(rating.createdAt, 'MMM dd, yyyy')}">From User on Date</small></p>
+            </div>
+        </div>
+        <div th:if="${ratings == null or ratings.empty}">
+            <p>You have no ratings yet.</p>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-stripe"></div>
+    <div class="footer-content">
+        <div class="brand-info">
+            <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image" />
+        </div>
+        <div class="quick-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a th:href="@{/about}">About Us</a></li>
+                <li><a th:href="@{/tools}">Tools</a></li>
+                <li><a th:href="@{/contact}">Contact Us</a></li>
+                <li><a th:href="@{/profile}">Profile</a></li>
+            </ul>
         </div>
     </div>
+</footer>
 
-    <!-- ************************************ +Add new product for list **************************************** -->
-
-    <h1>+Add new item for list</h1>
-
-    <div id="RentalProfileBookingList_1">
-        <form id="UploadImageFortheItemButton" th:action="@{/owner/items/add}" method="post" enctype="multipart/form-data">
-            <div id="UploadImageFortheItem">
-                <p>image here</p>>
-            </div>
-            <div id="UploadImageFortheItemButtonDiv">
-                <p>image here</p>
-            </div>
-            <div id="ProductInputField">
-                <label for="title">Item Name:</label><br>
-                <input type="text" id="title" name="title" required><br><br>
-
-                <label for="isAvailable">Available:</label><br>
-                <input type="checkbox" id="isAvailable" name="isAvailable" checked><br><br>
-
-                <label for="pricePerDay">Price per day:</label><br>
-                <input type="number" id="pricePerDay" name="pricePerDay" step="0.01" required><br><br>
-
-                <!--  <label for="pick">Pick Up Location:</label><br> -->
-                <input type="text" id="location" name="location" required><br><br>
-
-                <label for="description">Description Of Item:</label><br>
-                <textarea id="description" name="description" rows="4" cols="50" placeholder="Item Description..." required></textarea>
-                <br>
-                <input id="uploadItemDetailButtton" type="submit" value="Upload Item">
-            </div>
-        </form>
-    </div>
-
-    <!-- ************************************ Active Items List for Rent **************************************** -->
-
-    <div class="section item-list">
-        <h2>Active Items for Rent</h2>
-        <div th:if="${#lists.isEmpty(availableItems)}">
-            <p>No Items available.</p>
-        </div>
-        <div th:each="item : ${availableItems}" class="Item" th:if="${item != null}">
-            <div>
-                <h3 th:text="${item.name}">Product Name</h3>
-                <p th:text="'$' + ${#numbers.formatDecimal(item.pricePerDay, 1, 2)} + ' per day'">Price</p>
-                <p><strong>Location:</strong> <span th:text="${item.location}">Location</span></p>
-                <p><strong>Available:</strong> <span th:text="${item.isAvailable} ? 'Yes' : 'No'">Yes</span></p>
-                <p th:text="${item.description}">Description</p>
-            </div>
-            <div>
-                <img th:src="${item.imageUrl ?: '/defaultUploadImage.png'}" alt="Item Image">
-                <form th:action="@{'/owner/item/delete/' + ${item.id}}" method="post">
-                    <button type="submit" class="button delete-btn">Delete</button>
-                </form>
-            </div>
-        </div>
-        </div>
-    </div>
-
-    <!-- Items on Rent -->
-    <h1>Item on Rent</h1>
-    <div th:if="${#lists.isEmpty(rentedItems)}">
-        <p>No items currently rented out.</p>
-    </div>
-    <div th:each="item : ${rentedItems}" class="Item">
-        <!-- need to add more -->
-    </div>
-
-    <!-- Personal Details -->
-    <h1>Personal Detail</h1>
-    <div id="RentalProfilePersonalDetails">
-        <form th:action="@{/owner/update}" method="post">
-            <div id="PersonalDetailField">
-                <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" th:value="${owner.firstName}" required>
-
-                <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="lastName" th:value="${owner.lastName}" required><br><br>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" th:value="${owner.email}" required>
-
-                <!--   <label for="contact">Contact:</label>
-                   <input type="text" id="contact" name="contact" th:value="${owner.contact}"><br><br>
-
-                <label for="address">Address:</label>
-                <input type="text" id="address" name="address" th:value="${owner.address}"> -->
-
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="Enter new password to change"><br><br>
-
-                <button id="ButtonSaveChangeDetail" type="submit">Save Change Detail!</button>
-            </div>
-        </form>
+<!-- Modal for messages-->
+<div id="messageModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3 id="modalRecipientName">Message to [Name]</h3>
+        <textarea id="modalMessageText" placeholder="Type your message here..."></textarea>
+        <button class="btn-primary" onclick="sendModalMessage()">Send</button>
     </div>
 </div>
-</body>
 
+<script>
+    // Booking
+    function approveBooking(bookingId) {
+        fetch('/api/bookings/' + bookingId + '/approve', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Failed to approve booking');
+                }
+            });
+    }
+
+    function rejectBooking(bookingId) {
+        if (confirm('Are you sure you want to reject this booking?')) {
+            fetch('/api/bookings/' + bookingId + '/reject', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Failed to reject booking');
+                    }
+                });
+        }
+    }
+
+    // Modal
+    function showMessageModal(borrowerId, borrowerName) {
+        document.getElementById('modalRecipientName').textContent = 'Message to ' + borrowerName;
+        document.getElementById('messageModal').style.display = 'block';
+        // Store borrowerId in a data attribute
+        document.getElementById('messageModal').setAttribute('data-borrower-id', borrowerId);
+    }
+
+    function closeModal() {
+        document.getElementById('messageModal').style.display = 'none';
+    }
+
+    function sendModalMessage() {
+        const borrowerId = document.getElementById('messageModal').getAttribute('data-borrower-id');
+        const messageText = document.getElementById('modalMessageText').value;
+
+        if (messageText.trim() === '') {
+            alert('Please enter a message');
+            return;
+        }
+
+        fetch('/api/messages/send', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                recipientId: borrowerId,
+                content: messageText
+            })
+        })
+            .then(response => {
+                if (response.ok) {
+                    closeModal();
+                    document.getElementById('modalMessageText').value = '';
+                    alert('Message sent successfully');
+                } else {
+                    alert('Failed to send message');
+                }
+            });
+    }
+
+    // Close modal when clicking outside it
+    window.onclick = function(event) {
+        const modal = document.getElementById('messageModal');
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+</script>
+</body>
 </html>
