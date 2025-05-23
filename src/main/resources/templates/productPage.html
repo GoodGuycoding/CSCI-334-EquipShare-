@@ -128,7 +128,9 @@
         </div>
 
         <div class="action-buttons">
-            <button class="btn-book">Book Now</button>
+            <a th:href="@{/payment(itemId=${item.id})}">
+                <button class="btn-book">Book Now</button>
+            </a>
             <button class="btn-contact">Contact Owner</button>
         </div>
 

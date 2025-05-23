@@ -23,4 +23,10 @@ public class ItemController {
         model.addAttribute("item", item);
         return "productPage"; // This matches product.html
     }
+    @GetMapping("/payment")
+    public String showPaymentPage(@RequestParam("itemId") String itemId, Model model) {
+        Item item = itemService.getItemById(itemId);
+        model.addAttribute("item", item);
+        return "payment"; // payment.html
+    }
 }

@@ -58,6 +58,11 @@
             </select>
             <span class="arrow">▾</span>
           </div>
+          <div style="margin-top: 80px; background-color: #F2F7FC; padding: 20px; border-radius: 12px; font-family: 'Space Mono', monospace; max-width: 400px;">
+            <h3 style="margin-bottom: 12px; color: #005989;">Payment Summary</h3>
+            <p><strong>Item:</strong> <span th:text="${item.title}">Hydraulic Trolley Jack</span></p>
+            <p><strong>Price:</strong> $<span th:text="${item.pricePerDay}">70.00</span> / day</p>
+          </div>
         </div>
       </div>
       <div class="payment-actions">
