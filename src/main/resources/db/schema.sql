@@ -6,6 +6,8 @@ DROP TABLE IF EXISTS `notification`;
 DROP TABLE IF EXISTS `booking`;
 DROP TABLE IF EXISTS `item`;
 DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `message`;
+DROP TABLE IF EXISTS `conversation`;
 
 -- Users Table
 CREATE TABLE `user` (
@@ -86,3 +88,38 @@ CREATE TABLE `review` (
   FOREIGN KEY (`booking_id`) REFERENCES `booking`(`id`),
   FOREIGN KEY (`reviewer_id`) REFERENCES `user`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Conversation Table
+CREATE TABLE `conversation` (
+                                `id` VARCHAR(36) NOT NULL,
+                                `user1_id` VARCHAR(36) NOT NULL,
+                                `user2_id` VARCHAR(36) NOT NULL,
+                                `booking_id` VARCHAR(36),
+                                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                                PRIMARY KEY (`id`),
+                                FOREIGN KEY (`user1_id`) REFERENCES `user`(`id`),
+                                FOREIGN KEY (`user2_id`) REFERENCES `user`(`id`),
+                                FOREIGN KEY (`booking_id`) REFERENCES `booking`(`id`),
+                                UNIQUE KEY `unique_conversation` (`user1_id`, `user2_id`, `booking_id`),
+                                CONSTRAINT `check_user_order` CHECK (`user1_id` < `user2_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Messages Table
+CREATE TABLE `message` (
+                           `id` VARCHAR(36) NOT NULL,
+                           `conversation_id` VARCHAR(36) NOT NULL,
+                           `sender_id` VARCHAR(36) NOT NULL,
+                           `content` TEXT NOT NULL,
+                           `read_status` TINYINT(1) DEFAULT 0,
+                           `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                           PRIMARY KEY (`id`),
+                           FOREIGN KEY (`conversation_id`) REFERENCES `conversation`(`id`),
+                           FOREIGN KEY (`sender_id`) REFERENCES `user`(`id`),
+                           INDEX `idx_conversation` (`conversation_id`),
+                           INDEX `idx_sender` (`sender_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Adding messae count to users
+ALTER TABLE `user`
+    ADD COLUMN `unread_message_count` INT DEFAULT 0;

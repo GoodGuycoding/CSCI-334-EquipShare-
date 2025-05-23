@@ -89,6 +89,27 @@ public class BookingController {
         return bookingRepository.save(booking);
     }
 
+    @PostMapping("/{bookingId}/reject")
+    public Booking rejectBooking(
+            @PathVariable String bookingId,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+        if (!booking.getItem().getOwner().getId().equals(userDetails.getUser().getId())) {
+            throw new RuntimeException("Not authorized to reject this booking");
+        }
+
+        booking.setStatus("REJECTED");
+        return bookingRepository.save(booking);
+    }
+
+    @GetMapping("/owner")
+    public List<Booking> getOwnerBookings(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        return bookingRepository.findByItemOwner(userDetails.getUser());
+    }
+
     @PostMapping("/{bookingId}/rate")
     public Booking rateBooking(
             @PathVariable String bookingId,
