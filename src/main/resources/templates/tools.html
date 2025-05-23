@@ -4,8 +4,29 @@
   <meta charset="UTF-8" />
   <title>Tools – EquipShare</title>
   <link rel="stylesheet" th:href="@{/css/global.css}" />
+
 </head>
+<style>
+  .tools-filter-menu {
+  margin-bottom: 13px;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 24px;
+  font-size: 1rem;
+  font-family: "Space Mono", monospace;
+  min-width: 250px;
+  background: #ffffff;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+.tools-filter-menu:focus {
+  outline: none;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+</style>
+
 <body>
+
 
 <!-- NAVIGATION -->
 <nav>
@@ -25,18 +46,25 @@
   </ul>
 </nav>
 
-<!--&lt;!&ndash; Search & Filter &ndash;&gt;-->
-<!--<div class="main-content">-->
-<!--  <h1 style="color:white; text-align:center;">Browse Tools</h1>-->
-<!--  <div style="display:flex; justify-content:space-between; align-items:center; margin: 20px 0;">-->
-<!--    <input type="text" class="tools-search-bar" placeholder="Search tools..." />-->
-<!--    <select class="tools-filter-menu">-->
-<!--      <option value="">Filter by...</option>-->
-<!--      <option value="price">Price</option>-->
-<!--      <option value="location">Location</option>-->
-<!--      <option value="rating">Rating</option>-->
-<!--    </select>-->
-<!--  </div>-->
+<!-- Search & Filter -->
+<div class="main-content">
+  <h1 style="color:white; text-align:center;">Browse Tools</h1>
+
+  <form th:action="@{/tools}" method="get" style="display:flex; justify-content:space-between; align-items:center; margin: 20px 0;">
+    <label style="color: white; font-style: bold; margin-bottom: 15px;">Search Items: </label>
+    <input type="text" name="keyword" class="tools-search-bar" placeholder="Search tools..." th:value="${param.keyword}" />
+
+    <select name="filter" class="tools-filter-menu">
+      <option value="">Filter by...</option>
+      <option value="price" th:selected="${param.filter == 'price'}">Price</option>
+      <option value="location" th:selected="${param.filter == 'location'}">Location</option>
+      <!-- Future -->
+      <!-- <option value="rating" th:selected="${param.filter == 'rating'}">Rating</option> -->
+    </select>
+
+    <button type="submit" class="btn-next" style="margin-left: 20px; margin-bottom: 12px;">Apply</button>
+  </form>
+</div>
 
 <div class="tools-grid">
   <div class="tool-card" th:each="tool : ${tools}">
@@ -48,6 +76,27 @@
       <p th:text="'Location: ' + ${tool.location}">Location</p>
       <p th:text="'Owner: ' + ${tool.owner.firstName + ' ' + tool.owner.lastName}">Owner Name</p>
     </a>
+  </div>
+</div>
+
+<!-- Pagination Controls -->
+<div style="text-align:center; margin: 40px 0;">
+  <div style="display: inline-flex; gap: 12px; align-items: center;">
+
+    <!-- Previous Button -->
+    <a th:if="${currentPage > 0}" th:href="@{/tools(page=${currentPage - 1})}" class="btn-login">Previous</a>
+
+    <!-- Page Numbers -->
+    <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+      <a th:href="@{/tools(page=${i})}"
+         th:text="${i + 1}"
+         th:classappend="${i == currentPage} ? 'btn-signup' : 'btn-login'"
+         style="padding: 8px 14px; border-radius: 8px; text-decoration: none;"></a>
+    </span>
+
+    <!-- Next Button -->
+    <a th:if="${currentPage + 1 < totalPages}" th:href="@{/tools(page=${currentPage + 1})}" class="btn-login">Next</a>
+
   </div>
 </div>
 

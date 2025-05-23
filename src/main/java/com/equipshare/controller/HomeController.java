@@ -44,17 +44,20 @@ public class HomeController {
     }
 
     @GetMapping("/tools")
-    public String viewToolsPage(@RequestParam(defaultValue = "0") int page,
-                                Model model) {
+    public String viewTools(@RequestParam(defaultValue = "0") int page,
+                            @RequestParam(required = false) String keyword,
+                            @RequestParam(required = false) String filter,
+                            Model model) {
 
         int pageSize = 12;
-        Page<Item> toolPage = itemService.getItemsPaged(page, pageSize);
+        Page<Item> toolPage = itemService.searchAndFilterPaged(keyword, filter, page, pageSize);
 
         model.addAttribute("tools", toolPage.getContent());
-        model.addAttribute("currentPage", page);
+        model.addAttribute("currentPage", toolPage.getNumber());
         model.addAttribute("totalPages", toolPage.getTotalPages());
 
-        return "tools"; // tools.html
+        return "tools";
     }
+
 
 }

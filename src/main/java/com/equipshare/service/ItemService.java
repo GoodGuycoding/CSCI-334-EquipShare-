@@ -143,4 +143,19 @@ public class ItemService {
                 .orElseThrow(() -> new RuntimeException("Item not found"));
     }
 
+    public Page<Item> searchAndFilterPaged(String keyword, String filter, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        if (keyword != null && !keyword.isEmpty()) {
+            return itemRepository.searchByKeyword(keyword.toLowerCase(), pageable);
+        }
+
+        if ("price".equals(filter)) {
+            return itemRepository.findAllByOrderByPricePerDayAsc(pageable);
+        } else if ("location".equals(filter)) {
+            return itemRepository.findAllByOrderByLocationAsc(pageable);
+        }
+
+        return itemRepository.findAll(pageable);
+    }
 }
