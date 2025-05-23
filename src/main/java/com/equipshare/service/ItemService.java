@@ -138,5 +138,9 @@ public class ItemService {
         return itemRepository.findAll(pageable);
     }
 
+    public Item getItemById(String id) {
+        return itemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+    }
 
 }

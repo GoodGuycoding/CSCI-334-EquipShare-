@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Product Info – EquipShare</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+
+    <style>
+        .product-wrapper {
+          max-width: 1200px;
+          margin: 40px auto;
+          display: flex;
+          gap: 40px;
+          align-items: flex-start;
+          padding: 0 24px;
+        }
+
+        .product-details {
+          flex: 1;
+        }
+
+        .product-details h1 {
+          font-size: 2.5rem;
+          color: white;
+          margin-bottom: 16px;
+        }
+
+        .product-info p {
+          font-size: 1.1rem;
+          margin-bottom: 8px;
+          color: white;
+          font-family: "Space Mono", monospace;
+        }
+
+        .product-image {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .product-image img {
+          max-width: 100%;
+          height: auto;
+          border-radius: 12px;
+          object-fit: cover;
+        }
+
+        .rating-stars {
+          margin: 16px 0;
+          font-size: 1.5rem;
+          color: gold;
+        }
+
+        .action-buttons {
+          display: flex;
+          gap: 16px;
+          margin-top: 16px;
+        }
+
+        .btn-book {
+          background: white;
+          color: black;
+          padding: 12px 24px;
+          border-radius: 12px;
+          font-weight: 600;
+          font-family: "Space Mono", monospace;
+          border: none;
+          cursor: pointer;
+        }
+
+        .btn-contact {
+          background: #3F8C5F; /* same as .btn-login */
+          color: white;
+          padding: 12px 24px;
+          border-radius: 12px;
+          font-weight: 600;
+          font-family: "Space Mono", monospace;
+          border: none;
+          cursor: pointer;
+        }
+
+        .product-description {
+          margin-top: 32px;
+          background: #005989;
+          padding: 24px;
+          border-radius: 12px;
+          color: white;
+          font-family: "Space Mono", monospace;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+    <ul>
+        <li class="brand">
+            <a th:href="@{/}">
+                <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image"/>
+            </a>
+        </li>
+        <li><a th:href="@{/about}">About Us</a></li>
+        <li><a th:href="@{/tools}">Tools</a></li>
+        <li><a th:href="@{/contact}">Contact Us</a></li>
+        <li><a th:href="@{/profile}">Profile Page</a></li>
+        <li><a th:href="@{/cart}">View Cart</a></li>
+        <li class="login-link"><a th:href="@{/login}" class="btn-login">Log In</a></li>
+        <li><a th:href="@{/signup}" class="btn-signup">Sign Up</a></li>
+    </ul>
+</nav>
+
+<!-- Product Info Section -->
+<div class="product-wrapper">
+    <div class="product-details">
+        <h1 th:text="${item.title}">Hydraulic Trolley Jack</h1>
+        <div class="product-info">
+            <p><strong>Price:</strong> $<span th:text="${item.pricePerDay}">70</span></p>
+            <p><strong>Available:</strong> <span th:text="${#dates.format(item.createdAt, 'd/M/yyyy')}">6/5/2025</span></p>
+<!--            <p><strong>Duration:</strong> <span th:text="${item.duration}">1 month</span></p>-->
+            <p><strong>Location:</strong> <span th:text="${item.location}">2 Central St, Helensburgh</span></p>
+            <p><strong>Owner:</strong> <span th:text="${item.owner.firstName + ' ' + item.owner.lastName}">William Smith</span></p>
+        </div>
+
+        <!-- Stars Placeholder -->
+        <div class="rating-stars">
+            ★★★★★
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn-book">Book Now</button>
+            <button class="btn-contact">Contact Owner</button>
+        </div>
+
+        <div class="product-description">
+            <h3>Product Info</h3>
+            <p th:text="${item.description}">
+                Hydraulic Trolley Jack is moveable and easy to carry anywhere because of its light weight 7kg...
+            </p>
+        </div>
+    </div>
+
+    <div class="product-image">
+        <img th:src="${item.itemPhotoUrl}" alt="Product Image" />
+    </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-stripe"></div>
+    <div class="footer-content">
+        <div class="brand-info">
+            <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image" />
+        </div>
+        <div class="quick-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a th:href="@{/about}">About Us</a></li>
+                <li><a th:href="@{/tools}">Tools</a></li>
+                <li><a th:href="@{/contact}">Contact Us</a></li>
+                <li><a th:href="@{/profile}">Profile Page</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 EquipShare. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="#" aria-label="Google">G</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="Facebook">f</a>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
