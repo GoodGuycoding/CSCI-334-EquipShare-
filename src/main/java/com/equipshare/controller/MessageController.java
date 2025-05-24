@@ -1,17 +1,22 @@
 package com.equipshare.controller;
+
 import com.equipshare.model.Message;
+import com.equipshare.model.User;
 import com.equipshare.repository.MessageRepository;
 import com.equipshare.repository.UserRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import java.util.List;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import com.equipshare.security.CustomUserDetails;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.util.List;
 
-@RestController
-@RequestMapping("/api/messages")
+@Controller
+@RequestMapping("/messages")
 public class MessageController {
+
     private final MessageRepository messageRepository;
     private final UserRepository userRepository;
 
@@ -20,21 +25,69 @@ public class MessageController {
         this.userRepository = userRepository;
     }
 
-  //  @GetMapping("/conversations")
-//    public <ConversationDTO> List<ConversationDTO> getConversations(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        // Return list of conversations for the current user
- //       return getConversations();
-//    }
+    // Show all users you've chatted with
+    @GetMapping
+    public String getConversations(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        String currentUserId = userDetails.getId();
+        User currentUser = userRepository.findById(currentUserId).orElseThrow();
 
-  //  @GetMapping("/{conversationId}")
- //   public List<Message> getMessages(@PathVariable String conversationId,
- //                                    @AuthenticationPrincipal CustomUserDetails userDetails) {
-        // Return messages for a specific conversation
-//    }
+        // Get user IDs of chat partners
+        List<String> userIds = messageRepository.findConversationPartnerIds(currentUserId);
+        List<User> conversationUsers = userRepository.findAllById(userIds);
 
- //   @PostMapping("/send")
- //   public Message sendMessage(@RequestBody MessageDTO messageDTO,
- //                              @AuthenticationPrincipal CustomUserDetails userDetails) {
-        // Save and send a new message
-//    }
+        // Enrich each user with last message and unread count
+        for (User user : conversationUsers) {
+            Message lastMessage = messageRepository.findLatestMessageBetweenUsers(currentUser, user)
+                    .stream()
+                    .findFirst()
+                    .orElse(null);
+            user.setLastMessage(lastMessage != null ? lastMessage.getContent() : "");
+
+            long unread = messageRepository.countUnreadBetween(currentUserId, user.getId());
+            user.setUnreadCount((int) unread);
+        }
+
+        model.addAttribute("conversationUsers", conversationUsers);
+        return "messages";
+    }
+
+    // Show messages with a specific user
+    @GetMapping("/conversation/{otherUserId}")
+    public String getConversation(@PathVariable String otherUserId,
+                                  Model model,
+                                  @AuthenticationPrincipal CustomUserDetails userDetails) {
+        String currentUserId = userDetails.getId();
+        List<Message> messages = messageRepository.findMessagesBetweenUsers(currentUserId, otherUserId);
+
+        // Mark messages as read
+        messageRepository.markMessagesAsRead(currentUserId, otherUserId);
+        User currentUser = userRepository.findById(currentUserId).orElseThrow();
+        User recipient = userRepository.findById(otherUserId).orElse(null);
+        model.addAttribute("messages", messages);
+        model.addAttribute("recipientId", otherUserId);
+        model.addAttribute("recipientName", recipient != null ? recipient.getFirstName() + " " + recipient.getLastName() : "User");
+        model.addAttribute("currentUserId", currentUserId);
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("recipient", recipient);
+        return "conversation";
+    }
+
+    // Send a message
+    @PostMapping("/send/{recipientId}")
+    public String sendMessage(@PathVariable String recipientId,
+                              @RequestParam String content,
+                              @AuthenticationPrincipal CustomUserDetails userDetails) {
+        User sender = userRepository.findById(userDetails.getId()).orElseThrow();
+        User recipient = userRepository.findById(recipientId).orElseThrow();
+
+        Message message = new Message();
+        message.setSender(sender);
+        message.setRecipient(recipient);
+        message.setContent(content);
+        message.setRead(false);
+        message.setTimestamp(new Timestamp(System.currentTimeMillis()));
+
+        messageRepository.save(message);
+        return "redirect:/messages/conversation/" + recipientId;
+    }
 }

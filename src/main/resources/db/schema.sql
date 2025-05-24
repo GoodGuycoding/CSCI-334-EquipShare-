@@ -120,6 +120,6 @@ CREATE TABLE `message` (
                            INDEX `idx_sender` (`sender_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Adding messae count to users
+-- Adding message count to users
 ALTER TABLE `user`
     ADD COLUMN `unread_message_count` INT DEFAULT 0;

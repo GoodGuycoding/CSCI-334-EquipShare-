@@ -21,15 +21,21 @@ public class Message {
     @JoinColumn(name = "recipient_id", nullable = false)
     private User recipient;
 
-    @ManyToOne
-    @JoinColumn(name = "booking_id")
-    private Booking booking;  // Optional, for messages related to a booking
+//    @ManyToOne
+//    @JoinColumn(name = "booking_id")
+//    private Booking booking;  // Optional, for messages related to a booking
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Column(nullable = false)
     private Timestamp timestamp;
+
+    @Transient
+    private String lastMessage;
+
+    @Transient
+    private int unreadCount;
 
     @Column(nullable = false)
     private boolean read = false;
@@ -49,9 +55,9 @@ public class Message {
         return recipient;
     }
 
-    public Booking getBooking() {
-        return booking;
-    }
+//    public Booking getBooking() {
+//        return booking;
+//    }
     public String getContent() {
         return content;
     }
@@ -78,9 +84,9 @@ public class Message {
         this.recipient = recipient;
     }
 
-    public void setBooking(Booking booking) {
-        this.booking = booking;
-    }
+//    public void setBooking(Booking booking) {
+//        this.booking = booking;
+//    }
 
     public void setContent(String content) {
         this.content = content;

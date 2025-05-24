@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Messages – EquipShare</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <style>
+        .messages-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .message-header {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #005989;
+        }
+
+        .conversation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .conversation-card {
+            display: flex;
+            align-items: center;
+            background-color: #f2f7fc;
+            border-radius: 10px;
+            padding: 12px 16px;
+            text-decoration: none;
+            color: inherit;
+            transition: background 0.2s ease;
+        }
+
+        .conversation-card:hover {
+            background-color: #e0efff;
+        }
+
+        .conversation-profile {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 16px;
+            border: 2px solid #ccc;
+        }
+
+        .conversation-details {
+            flex-grow: 1;
+        }
+
+        .conversation-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .conversation-preview {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .unread-badge {
+            background-color: #2e7d32;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+    <ul>
+        <li class="brand">
+            <a th:href="@{/}">
+                <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image"/>
+            </a>
+        </li>
+        <li><a th:href="@{/about}">About Us</a></li>
+        <li><a th:href="@{/tools}">Tools</a></li>
+        <li><a th:href="@{/contact}">Contact Us</a></li>
+        <li><a th:href="@{/profile}">Profile Page</a></li>
+        <li><a th:href="@{/cart}">View Cart</a></li>
+        <li class="login-link"><a th:href="@{/logout}" class="btn-login">Log Out</a></li>
+    </ul>
+</nav>
+
+<!-- MESSAGES CONTENT -->
+<div class="messages-container">
+    <h1 class="message-header">Your Conversations</h1>
+    <div class="conversation-list">
+        <a th:each="user : ${conversationUsers}"
+           th:href="@{'/messages/conversation/' + ${user.id}}"
+           class="conversation-card">
+            <img class="conversation-profile"
+                 th:src="${user.profilePhotoUrl != null} ? ${user.profilePhotoUrl} : '/images/defaultUserProfile.png'"
+                 alt="Profile Picture" />
+            <div class="conversation-details">
+                <div class="conversation-name" th:text="${user.firstName + ' ' + user.lastName}">User Name</div>
+                <div class="conversation-preview" th:text="${user.lastMessage}">Last message preview...</div>
+            </div>
+            <span class="unread-badge" th:if="${user.unreadCount > 0}" th:text="${user.unreadCount}">1</span>
+        </a>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-stripe"></div>
+    <div class="footer-content">
+        <div class="brand-info">
+            <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image" />
+        </div>
+        <div class="quick-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a th:href="@{/about}">About Us</a></li>
+                <li><a th:href="@{/tools}">Tools</a></li>
+                <li><a th:href="@{/contact}">Contact Us</a></li>
+                <li><a th:href="@{/profile}">Profile Page</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 EquipShare. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="#">G</a>
+            <a href="#">in</a>
+            <a href="#">f</a>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
