@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
     <title>Messages – EquipShare</title>
     <link rel="stylesheet" th:href="@{/css/global.css}" />
     <style>
@@ -115,7 +117,6 @@
                 <div class="conversation-name" th:text="${user.firstName + ' ' + user.lastName}">User Name</div>
                 <div class="conversation-preview" th:text="${user.lastMessage}">Last message preview...</div>
             </div>
-            <span class="unread-badge" th:if="${user.unreadCount > 0}" th:text="${user.unreadCount}">1</span>
         </a>
     </div>
 </div>

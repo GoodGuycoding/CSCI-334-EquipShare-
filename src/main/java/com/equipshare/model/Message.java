@@ -37,12 +37,13 @@ public class Message {
     @Transient
     private int unreadCount;
 
-    @Column(nullable = false)
-    private boolean read = false;
+    @Column(name = "is_read", nullable = false)
+    private boolean isRead = false;
 
     public Message() {
         this.timestamp = new Timestamp(System.currentTimeMillis());
     }
+
     // Getters and Setters
     public String getId() {
         return id;
@@ -64,8 +65,8 @@ public class Message {
     public Timestamp getTimestamp() {
         return timestamp;
     }
-    public boolean isRead() {
-        return read;
+    public boolean getIsRead() {
+        return isRead;
     }
 
 
@@ -94,7 +95,7 @@ public class Message {
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
-    public void setRead(boolean read) {
-        this.read = read;
+    public void setIsRead(boolean isRead) {
+        this.isRead = isRead;
     }
 }

@@ -36,11 +36,11 @@ public interface MessageRepository extends JpaRepository<Message, String> {
     List<String> findConversationPartnerIds(@Param("userId") String userId);
 
     // Count unread messages from any sender
-    @Query("SELECT COUNT(m) FROM Message m WHERE m.recipient.id = :userId AND m.read = false")
+    @Query("SELECT COUNT(m) FROM Message m WHERE m.recipient.id = :userId AND m.isRead = false")
     long countUnreadMessages(@Param("userId") String userId);
 
     // Count unread between two users
-    @Query("SELECT COUNT(m) FROM Message m WHERE m.recipient.id = :recipientId AND m.sender.id = :senderId AND m.read = false")
+    @Query("SELECT COUNT(m) FROM Message m WHERE m.recipient.id = :recipientId AND m.sender.id = :senderId AND m.isRead = false")
     long countUnreadBetween(@Param("recipientId") String recipientId, @Param("senderId") String senderId);
 
     // Mark messages as read
@@ -48,10 +48,10 @@ public interface MessageRepository extends JpaRepository<Message, String> {
     @Transactional
     @Query(value = """
     UPDATE message 
-    SET `read` = 1 
+    SET is_read = 1 
     WHERE recipient_id = :userId 
       AND sender_id = :senderId 
-      AND `read` = 0
+      AND is_read = 0
 """, nativeQuery = true)
     void markMessagesAsRead(@Param("userId") String userId, @Param("senderId") String senderId);
 
@@ -62,14 +62,4 @@ public interface MessageRepository extends JpaRepository<Message, String> {
             "ORDER BY m.timestamp DESC")
     List<Message> findLatestMessageBetweenUsers(@Param("user1") User user1,
                                                 @Param("user2") User user2);
-
-    // Optional: messages related to a booking
-//    @Query("SELECT m FROM Message m WHERE " +
-//            "((m.sender.id = :ownerId AND m.recipient.id = :borrowerId) OR " +
-//            "(m.sender.id = :borrowerId AND m.recipient.id = :ownerId)) " +
-//            "AND m.booking = :booking " +
-//            "ORDER BY m.timestamp ASC")
-//    List<Message> findMessagesByBooking(@Param("ownerId") String ownerId,
-//                                        @Param("borrowerId") String borrowerId,
-//                                        @Param("booking") Booking booking);
 }

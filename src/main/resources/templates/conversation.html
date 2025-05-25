@@ -94,6 +94,7 @@
 <div class="chat-container">
     <div class="chat-header">
         <div style="display: flex; align-items: center;">
+            <a th:href="@{'/messages/conversation/' + ${recipientId} + '?redirect=true'}" class="back-btn">← Back</a>
             <img th:src="${recipient != null and recipient.profilePhotoUrl != null} ? ${recipient.profilePhotoUrl} : @{/images/defaultUserProfile.png}" alt="User">
             <span th:text="${recipient.firstName}">John</span>
         </div>

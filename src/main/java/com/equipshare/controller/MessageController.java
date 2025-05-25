@@ -54,6 +54,7 @@ public class MessageController {
     // Show messages with a specific user
     @GetMapping("/conversation/{otherUserId}")
     public String getConversation(@PathVariable String otherUserId,
+                                  @RequestParam(value = "redirect", required = false) Boolean redirect,
                                   Model model,
                                   @AuthenticationPrincipal CustomUserDetails userDetails) {
         String currentUserId = userDetails.getId();
@@ -61,6 +62,11 @@ public class MessageController {
 
         // Mark messages as read
         messageRepository.markMessagesAsRead(currentUserId, otherUserId);
+
+        if (Boolean.TRUE.equals(redirect)) {
+            return "redirect:/messages"; // ✅ redirect back to list
+        }
+
         User currentUser = userRepository.findById(currentUserId).orElseThrow();
         User recipient = userRepository.findById(otherUserId).orElse(null);
         model.addAttribute("messages", messages);
@@ -84,7 +90,7 @@ public class MessageController {
         message.setSender(sender);
         message.setRecipient(recipient);
         message.setContent(content);
-        message.setRead(false);
+        message.setIsRead(false);
         message.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
         messageRepository.save(message);
