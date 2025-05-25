@@ -6,6 +6,99 @@
     <title>Borrower Dashboard – EquipShare</title>
     <link rel="stylesheet" th:href="@{/css/global.css}" />
 </head>
+<style>
+    .booking-list-wrapper {
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .booking-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .booking-card {
+      justify-content: space-between;
+      padding: 16px;
+      border-radius: 10px;
+      background-color: #f8f8f8;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .booking-item-section {
+      flex: 1;
+      margin-right: 20px;
+    }
+
+    .booking-item-image {
+      width: 200px;
+      height: 150px;
+      border-radius: 6px;
+      object-fit: cover;
+      margin-top: 8px;
+    }
+
+    .booking-details-section {
+      flex: 2;
+      padding: 0 20px;
+    }
+
+    .booking-owner-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .booking-owner-image img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ccc;
+    }
+
+    .booking-action-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .booking-status-badge {
+      background-color: #1e88e5;
+      color: #fff;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+
+    .booking-contact-button {
+      background-color: #2e7d32;
+      color: #fff;
+      font-weight: bold;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .booking-contact-button img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .booking-price {
+      font-weight: bold;
+      color: #000;
+    }
+</style>
 <body>
 
 <!-- navigation tab -->
@@ -25,30 +118,53 @@
     </ul>
 </nav>
 
-<!-- profile -->
+<!-- Profile Header -->
 <main class="main-content">
-    <section class="dashboard-header">
-        <h1>Welcome to your Dashboard</h1>
-
-        <p class="subtitle" th:text="'Hello, ' + ${user.firstName} + ' ' + ${user.lastName} + '!'">Hello, John Doe!</p>
-    </section>
-
-    <h1>Booking List</h1>
-
-    <div th:if="${bookings != null and !bookings.empty}">
-        <div th:each="booking : ${bookings}" class="booking-card">
-            <div class="item-header">
-                <img th:src="${booking.item.itemPhotoUrl != null} ? ${booking.item.itemPhotoUrl} : '/images/default.png'" alt="Item Image" class="item-image"/>
-                <div>
-                    <h2 th:text="${booking.item.title}">Item Name</h2>
-                    <p><strong>Owner:</strong> <span th:text="${booking.item.owner.firstName + ' ' + booking.item.owner.lastName}">Tomar Khan</span></p>
-                    <p th:text="${booking.startDate}"></p>
-                    <p th:text="${booking.startDate}"></p>
+    <div class="dashboard-header">
+        <h1>EQS for borrower</h1>
+        <p class="subtitle">Welcome to your profile</p>
+        <div class="profile-image">
+            <img th:src="${user.profilePhotoUrl != null} ? ${user.profilePhotoUrl} : @{/images/defaultUserProfile.png}" alt="Profile Image" class="profile-pic" />
+        </div>
+        <h2 th:text="${user.firstName + ' ' + user.lastName}">Nick Rutherford</h2>
+    </div>
+    <!-- Borrower Dashboard: Updated Layout with Consistent Class Names -->
+    <div class="booking-list-wrapper">
+        <h2 style="color: #378BBE;">Booking List</h2>
+        <div class="booking-list">
+            <div class="booking-card" th:each="booking : ${bookings}">
+                <a th:href="@{'/tool/' + ${booking.item.id}}" style="display: flex; text-decoration: none; color: inherit;">
+                <div class="booking-item-section">
+                    <h3 style="color: #378BBE;" th:text="${booking.item.title}" >Tool Name</h3>
+                    <img class="booking-item-image"
+                         th:src="${booking.item.itemPhotoUrl != null} ? ${booking.item.itemPhotoUrl} : '/images/default.png'"
+                         alt="Tool Image">
                 </div>
-            </div>
-            <div class="item-footer">
-                <p th:text="'$' + ${booking.item.pricePerDay} + ' per day'">$0 per day</p>
-                <button>Contact</button>
+
+                <!-- Owner and Booking Details -->
+                <div class="booking-details-section">
+                    <p><strong>Owner:</strong> <span th:text="${booking.item.owner.firstName + ' ' + booking.item.owner.lastName}">Name</span></p>
+                    <p><strong>Booked:</strong> <span th:text="${#temporals.format(booking.startDate, 'dd/MM/yyyy')}">Date</span></p>
+                    <p><strong>Location:</strong> <span th:text="${booking.item.location}">Location</span></p>
+                    <p><strong>Duration:</strong> <span th:text="${T(java.time.temporal.ChronoUnit).DAYS.between(booking.startDate, booking.endDate)} + ' days'"></span></p>
+                </div>
+
+                <!-- Owner Image -->
+                <div class="booking-owner-image">
+                    <img th:src="${booking.item.owner.profilePhotoUrl != null} ? ${booking.item.owner.profilePhotoUrl} : '/images/defaultUserProfile.png'"
+                         alt="Owner Image">
+                </div>
+
+                <!-- Status + Contact + Price -->
+                <div class="booking-action-section">
+                    <div class="booking-status-badge">4 days left to return</div>
+                    <button class="booking-contact-button">
+                        <img th:src="@{/images/phoneIcon.png}" alt="Call Icon">
+                        Contact
+                    </button>
+                    <p class="booking-price" th:text="'$' + ${booking.item.pricePerDay} + ' per day'">$10 per day</p>
+                </div>
+                </a>
             </div>
         </div>
     </div>
@@ -57,16 +173,36 @@
         <p>You have no rented items at the moment.</p>
     </div>
 
+    <!-- Personal Details -->
     <section class="dashboard-overview">
         <div class="card">
-            <h2>Your Info</h2>
-            <p><strong>Email:</strong> <span th:text="${user.email}">user@example.com</span></p>
-            <p><strong>Account Created:</strong> <span th:text="${#dates.format(user.createdAt, 'dd MMM yyyy')}">01 Jan 2025</span></p>
+            <h2>Personal Details</h2>
+            <form th:action="@{/borrower/update-profile}" method="post">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" th:value="${user.firstName}" />
+
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" th:value="${user.lastName}" />
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" th:value="${user.email}" readonly />
+
+<!--                <label for="contact">Contact:</label>-->
+<!--                <input type="text" id="contact" name="contact" th:value="${user.contact}" />-->
+
+<!--                <label for="address">Address:</label>-->
+<!--                <input type="text" id="address" name="address" th:value="${user.address}" />-->
+
+                <label for="password">New Password (optional):</label>
+                <input type="password" id="password" name="password" />
+
+                <button class="btn-next" type="submit">Save Changes</button>
+            </form>
         </div>
     </section>
 </main>
 
-<!-- foooter section -->
+<!-- Footer -->
 <footer>
     <div class="footer-stripe"></div>
     <div class="footer-content">
@@ -83,199 +219,16 @@
             </ul>
         </div>
     </div>
+    <div class="footer-bottom">
+        <p>© 2025 EquipShare. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="#">G</a>
+            <a href="#">in</a>
+            <a href="#">f</a>
+        </div>
+    </div>
 </footer>
 
-    <!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8" />-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>-->
-<!--    <title>Borrower Dashboard - EquipShare</title>-->
-<!--    <link rel="stylesheet" th:href="@{/css/global.css}" />-->
-<!--</head>-->
+</body>
+</html>
 
-
-<!--<body id="RentalProfileBody">-->
-
-<!--<div id="RentalProfileD1">-->
-<!--    <img id="RentalProfileD1Logo" src="/images/344logo.png" alt="Logo">-->
-
-<!--    <div id="RentalProfileD1_1">-->
-<!--        <h1>EQS for borrower</h1>-->
-<!--    </div>-->
-
-<!--    <div id="RentalProfileD1ProfileImage">-->
-<!--        <img id="RentalProfileD1ProfileImageReal"-->
-<!--             th:src="${user.profilePhotoUrl != null} ? ${user.profilePhotoUrl} : '/images/profileDemo2.png'"-->
-<!--             alt="Profile Image">-->
-<!--    </div>-->
-
-<!--    <div id="RentalProfileD1_2">-->
-<!--        <h2>Welcome to your profile</h2>-->
-<!--        <h3 th:text="${user.firstName + ' ' + user.lastName}">Nick Rutherford</h3>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<h1>Booking List</h1>-->
-
-<!--<div id="RentalProfileBookingList" th:if="${bookings != null and !bookings.empty}">-->
-<!--    <div class="RentalProfileBookingList1" th:each="booking : ${bookings}">-->
-<!--        <div>-->
-<!--            <table>-->
-<!--                <tr>-->
-<!--                    <th th:text="${booking.item.title}">Hammer</th>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td>-->
-<!--                        <img class="RentalItemImage1"-->
-<!--                             th:src="${booking.item.itemPhotoUrl != null} ? ${booking.item.itemPhotoUrl} : '/images/profileDemo2.png'"-->
-<!--                             alt="Item Image">-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--            </table>-->
-
-<!--            <table class="RentalOwnerDetails">-->
-<!--                <tr>-->
-<!--                    <th>Owner Name:</th>-->
-<!--                    <td th:text="${booking.item.owner.firstName + ' ' + booking.item.owner.lastName}">Tomar khan</td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <th>Booked:</th>-->
-<!--                    <td th:text="${#temporals.format(booking.startDate, 'dd/MM/yyyy')}">12/3/2025</td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <th>Duration:</th>-->
-<!--                    <td th:text="${#temporals.daysBetween(booking.startDate, booking.endDate) + ' days'}">1 Months 12 days</td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <th>Location:</th>-->
-<!--                    <td th:text="${booking.item.location}">14 Thirroul Station St.</td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <th>Status:</th>-->
-<!--                    <td th:text="${booking.status}">APPROVED</td>-->
-<!--                </tr>-->
-<!--            </table>-->
-
-<!--            <div class="RentedItemPriceAndRating">-->
-<!--                <table>-->
-<!--                    <tr>-->
-<!--                        <th th:text="'Price: $' + ${booking.item.pricePerDay} + ' per day'">Price: $20 per day</th>-->
-<!--                    </tr>-->
-<!--                    <tr th:if="${booking.status == 'COMPLETED'}">-->
-<!--                        <th><img class="RentedItemPriceAndRating1" src="/images/rating.png" alt="Rating"></th>-->
-<!--                    </tr>-->
-<!--                    <tr th:if="${booking.status == 'COMPLETED'}">-->
-<!--                        <td>Rate from 1 to 5 below</td>-->
-<!--                    </tr>-->
-<!--                    <tr th:if="${booking.status == 'COMPLETED'}">-->
-<!--                        <td>-->
-<!--                            <input type="number" class="RentedItemPriceAndRating2" name="rating" min="1" max="5">-->
-<!--                            <button class="RatingSubmitButton" type="button"-->
-<!--                                    th:onclick="'submitRating(\'' + ${booking.id} + '\', this.previousElementSibling.value)'">Submit</button>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                </table>-->
-<!--            </div>-->
-
-<!--            <div class="ButtonReturnNotic">-->
-<!--                <table>-->
-<!--                    <tr th:if="${booking.status == 'APPROVED'}">-->
-<!--                        <td>-->
-<!--                            <button class="ButtonReturnNotic1" type="button"-->
-<!--                                    th:text="${'Due in ' + #temporals.daysBetween(#dates.createNow(), booking.endDate) + ' days'}">-->
-<!--                                4 days left to return-->
-<!--                            </button>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td>-->
-<!--                            <button class="ButtonReturnNotic2" type="button">-->
-<!--                                <img class="call_Icon" src="/images/phone-icon.png" alt="Call">-->
-<!--                                Contact-->
-<!--                            </button>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                    <tr th:if="${booking.status == 'APPROVED'}">-->
-<!--                        <td>-->
-<!--                            <button class="ButtonReturnItem" type="button"-->
-<!--                                    th:onclick="'returnItem(\'' + ${booking.id} + '\')'">-->
-<!--                                Mark as Returned-->
-<!--                            </button>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                </table>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<div th:if="${bookings == null or bookings.empty}">-->
-<!--    <p>You have no bookings yet.</p>-->
-<!--</div>-->
-
-<!--<h1>Personal Detail</h1>-->
-<!--<div id="RentalProfilePersonalDetails">-->
-<!--    <div id="PersonalDetailField">-->
-<!--        <form th:action="@{/borrower/update-profile}" method="post">-->
-<!--            <label for="firstName">First Name:</label>-->
-<!--            <input type="text" id="firstName" name="firstName" th:value="${user.firstName}">-->
-
-<!--            <label for="lastName">Last Name:</label>-->
-<!--            <input type="text" id="lastName" name="lastName" th:value="${user.lastName}"><br><br>-->
-
-<!--            <label for="email">Email:</label>-->
-<!--            <input type="email" id="email" name="email" th:value="${user.email}" readonly>-->
-
-<!--            <label for="contact">Contact:</label>-->
-<!--            <input type="text" id="contact" name="contact" th:value="${user.contact}"><br><br>-->
-
-<!--            <label for="address">Address:</label>-->
-<!--            <input type="text" id="address" name="address" th:value="${user.address}">-->
-
-<!--            <label for="password">New Password (leave blank to keep current):</label>-->
-<!--            <input type="password" id="password" name="password"><br><br>-->
-
-<!--            <button id="ButtonSaveChangeDetail" type="submit">Save Changes</button>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<script>-->
-<!--    function submitRating(bookingId, rating) {-->
-<!--        fetch('/api/bookings/' + bookingId + '/rate', {-->
-<!--            method: 'POST',-->
-<!--            headers: {-->
-<!--                'Content-Type': 'application/json',-->
-<!--            },-->
-<!--            body: JSON.stringify({ rating: rating })-->
-<!--        })-->
-<!--            .then(response => response.json())-->
-<!--            .then(data => {-->
-<!--                alert('Rating submitted!');-->
-<!--                location.reload();-->
-<!--            })-->
-<!--            .catch(error => {-->
-<!--                console.error('Error:', error);-->
-<!--            });-->
-<!--    }-->
-
-<!--    function returnItem(bookingId) {-->
-<!--        if (confirm('Are you sure you want to mark this item as returned?')) {-->
-<!--            fetch('/api/bookings/' + bookingId + '/return', {-->
-<!--                method: 'POST'-->
-<!--            })-->
-<!--                .then(response => response.json())-->
-<!--                .then(data => {-->
-<!--                    alert('Item marked as returned!');-->
-<!--                    location.reload();-->
-<!--                })-->
-<!--                .catch(error => {-->
-<!--                    console.error('Error:', error);-->
-<!--                });-->
-<!--        }-->
-<!--    }-->
-<!--</script>-->
-
-<!--</body>-->
-<!--</html>-->

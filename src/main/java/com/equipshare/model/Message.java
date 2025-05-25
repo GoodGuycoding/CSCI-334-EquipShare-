@@ -21,9 +21,9 @@ public class Message {
     @JoinColumn(name = "recipient_id", nullable = false)
     private User recipient;
 
-    @ManyToOne
-    @JoinColumn(name = "booking_id")
-    private Booking booking;  // Optional, for messages related to a booking
+//    @ManyToOne
+//    @JoinColumn(name = "booking_id")
+//    private Booking booking;  // Optional, for messages related to a booking
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
@@ -31,12 +31,19 @@ public class Message {
     @Column(nullable = false)
     private Timestamp timestamp;
 
-    @Column(nullable = false)
-    private boolean read = false;
+    @Transient
+    private String lastMessage;
+
+    @Transient
+    private int unreadCount;
+
+    @Column(name = "is_read", nullable = false)
+    private boolean isRead = false;
 
     public Message() {
         this.timestamp = new Timestamp(System.currentTimeMillis());
     }
+
     // Getters and Setters
     public String getId() {
         return id;
@@ -49,17 +56,17 @@ public class Message {
         return recipient;
     }
 
-    public Booking getBooking() {
-        return booking;
-    }
+//    public Booking getBooking() {
+//        return booking;
+//    }
     public String getContent() {
         return content;
     }
     public Timestamp getTimestamp() {
         return timestamp;
     }
-    public boolean isRead() {
-        return read;
+    public boolean getIsRead() {
+        return isRead;
     }
 
 
@@ -78,9 +85,9 @@ public class Message {
         this.recipient = recipient;
     }
 
-    public void setBooking(Booking booking) {
-        this.booking = booking;
-    }
+//    public void setBooking(Booking booking) {
+//        this.booking = booking;
+//    }
 
     public void setContent(String content) {
         this.content = content;
@@ -88,7 +95,7 @@ public class Message {
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
-    public void setRead(boolean read) {
-        this.read = read;
+    public void setIsRead(boolean isRead) {
+        this.isRead = isRead;
     }
 }

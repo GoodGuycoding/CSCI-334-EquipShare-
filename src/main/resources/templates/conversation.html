@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversation – EquipShare</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <style>
+        .chat-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #3282B8;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+        }
+
+        .chat-header {
+            background-color: #045B7D;
+            color: #fff;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-message {
+            background-color: #2CA58D;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            max-width: 70%;
+            margin-bottom: 10px;
+            align-self: flex-end;
+        }
+
+        .chat-message.from-other {
+            align-self: flex-start;
+            background-color: #eeeeee;
+            color: black;
+        }
+
+        .chat-footer {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #045B7D;
+        }
+
+        .chat-footer input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            margin: 0 10px;
+        }
+
+        .chat-footer button {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            cursor: pointer;
+        }
+
+        .chat-footer img {
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">
+        <div style="display: flex; align-items: center;">
+            <a th:href="@{'/messages/conversation/' + ${recipientId} + '?redirect=true'}" class="back-btn">← Back</a>
+            <img th:src="${recipient != null and recipient.profilePhotoUrl != null} ? ${recipient.profilePhotoUrl} : @{/images/defaultUserProfile.png}" alt="User">
+            <span th:text="${recipient.firstName}">John</span>
+        </div>
+        <div>
+            <img src="/images/call-icon.png" alt="Call" style="margin-right: 10px;">
+            <img src="/images/video-icon.png" alt="Video">
+        </div>
+    </div>
+    <div class="chat-body">
+        <div th:each="msg : ${messages}" th:classappend="${msg.sender.id == currentUser.id} ? 'chat-message' : 'chat-message from-other'">
+            <span th:text="${msg.content}">Hi</span><br>
+            <small th:text="${#dates.format(msg.timestamp, 'HH:mm')}">12:00</small>
+        </div>
+    </div>
+    <form class="chat-footer" th:action="@{'/messages/send/' + ${recipient.id}}" method="post">
+        <input type="text" name="content" placeholder="Type here..." required>
+        <button type="submit">
+            <img src="/images/send-icon.png" alt="Send">
+        </button>
+    </form>
+</div>
+
+</body>
+</html>

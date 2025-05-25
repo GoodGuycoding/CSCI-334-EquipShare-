@@ -30,6 +30,12 @@ public class User {
     @Column(name = "is_borrower")
     private Boolean isBorrower;
 
+    @Transient
+    private String lastMessage;
+
+    @Transient
+    private int unreadCount;
+
     @Column(name = "profile_photo_url")
     private String profilePhotoUrl;
 
@@ -81,6 +87,12 @@ public class User {
 
         return createdAt;
     }
+    public String getLastMessage() {
+        return lastMessage;
+    }
+    public int getUnreadCount() {
+        return unreadCount;
+    }
    // public String getContact() {
    //     return contact;
    // }
@@ -101,6 +113,14 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public void setUnreadCount(int unreadCount) {
+        this.unreadCount = unreadCount;
+    }
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
+    }
+
 
     public void setEmail(String email) {
         this.email = email;
