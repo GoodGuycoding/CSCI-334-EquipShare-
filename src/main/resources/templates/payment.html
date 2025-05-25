@@ -34,7 +34,16 @@
 <main class="main-content">
   <div class="payment-card">
     <h1>Payment Information</h1>
-    <form th:action="@{/payment/submit}" method="post">
+    <div th:if="${param.success}" style="position: fixed; top: 30%; left: 50%; transform: translate(-50%, -50%);
+            background: white; color: green; padding: 40px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            font-size: 1.5rem; text-align: center; z-index: 999;">
+      ✅ Booking Confirmed!
+    </div>
+    <form th:action="@{/confirm-booking}" method="post">
+      <input type="hidden" name="itemId" th:value="${item.id}" />
+      <input type="hidden" name="startDate" th:value="${startDate}" />
+      <input type="hidden" name="endDate" th:value="${endDate}" />
+
       <div class="form-grid">
         <div class="column">
           <label for="full-name">Full name</label>
@@ -46,31 +55,136 @@
           <label for="address">Address</label>
           <input id="address" name="address" type="text" placeholder="Type here" required>
 
-          <small>Autofill using account details</small>
+          <label>Cardholder Name:</label>
+          <input type="text" name="cardName" required class="input-field"/>
+
+          <label>Card Number:</label>
+          <input type="text" name="cardNumber" required maxlength="16" class="input-field"/>
+
+          <label>Expiry Date:</label>
+          <input type="month" name="expiry" required class="input-field"/>
+
+          <label>CVV:</label>
+          <input type="password" name="cvv" required maxlength="4" class="input-field"/>
+
+          <br><br>
+          <button type="submit" class="btn-login">Pay & Confirm</button>
         </div>
+
         <div class="column">
-          <label for="method">Payment method</label>
-          <div class="select-wrap">
-            <select id="method" name="paymentMethod" required>
-              <option value="card">Credit Card</option>
-              <option value="paypal">PayPal</option>
-              <option value="google">Google Pay</option>
-            </select>
-            <span class="arrow">▾</span>
-          </div>
-          <div style="margin-top: 80px; background-color: #F2F7FC; padding: 20px; border-radius: 12px; font-family: 'Space Mono', monospace; max-width: 400px;">
-            <h3 style="margin-bottom: 12px; color: #005989;">Payment Summary</h3>
-            <p><strong>Item:</strong> <span th:text="${item.title}">Hydraulic Trolley Jack</span></p>
-            <p><strong>Price:</strong> $<span th:text="${item.pricePerDay}">70.00</span> / day</p>
+          <div class="payment-summary" style="background:#003B5A; color:white; padding: 24px; border-radius: 12px; margin-top: 0;">
+            <h2>Booking Summary</h2>
+
+            <p><strong>Item:</strong> <span th:text="${item.title}">Cordless Drill</span></p>
+            <p><strong>Price per day:</strong> $<span th:text="${item.pricePerDay}">15</span></p>
+
+            <p><strong>Start Date:</strong> <span th:text="${startDate}">2025-05-30</span></p>
+            <p><strong>End Date:</strong> <span th:text="${endDate}">2025-06-02</span></p>
+
+            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid white;">
+              <p><strong>Total:</strong>
+                $<span th:text="${(T(java.time.temporal.ChronoUnit).DAYS.between(T(java.time.LocalDate).parse(startDate), T(java.time.LocalDate).parse(endDate)) + 1) * item.pricePerDay}">60</span>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="payment-actions">
-        <button type="submit" class="btn-next">Next</button>
       </div>
     </form>
   </div>
 </main>
+
+
+<!--&lt;!&ndash; MAIN CONTENT &ndash;&gt;-->
+<!--<main class="main-content">-->
+<!--  <div class="payment-card">-->
+<!--    <h1>Payment Information</h1>-->
+<!--    <form th:action="@{/payment/submit}" method="post">-->
+<!--      <div class="form-grid">-->
+<!--        <div class="column">-->
+<!--          <label for="full-name">Full name</label>-->
+<!--          <input id="full-name" name="fullName" type="text" placeholder="Type here" required>-->
+
+<!--          <label for="email">Email</label>-->
+<!--          <input id="email" name="email" type="email" placeholder="Type here" required>-->
+
+<!--          <label for="address">Address</label>-->
+<!--          <input id="address" name="address" type="text" placeholder="Type here" required>-->
+
+<!--          <small>Autofill using account details</small>-->
+<!--        </div>-->
+<!--        <div class="column">-->
+<!--          &lt;!&ndash; PAYMENT METHOD SELECTION FORM &ndash;&gt;-->
+<!--          <form th:action="@{/payment}" method="get" style="margin-bottom: 40px;">-->
+<!--            <input type="hidden" name="itemId" th:value="${item.id}" />-->
+<!--            <input type="hidden" name="startDate" th:value="${startDate}" />-->
+<!--            <input type="hidden" name="endDate" th:value="${endDate}" />-->
+
+<!--            <label for="method">Select Payment Method:</label>-->
+<!--            <select id="method" name="paymentMethod" required>-->
+<!--              <option value="">&#45;&#45; Select &#45;&#45;</option>-->
+<!--              <option value="card" th:selected="${paymentMethod == 'card'}">Credit Card</option>-->
+<!--            </select>-->
+
+<!--            <button type="submit" class="btn-login" style="margin-top:12px;">Continue</button>-->
+<!--          </form>-->
+<!--&lt;!&ndash;          <div class="select-wrap">&ndash;&gt;-->
+<!--&lt;!&ndash;            <select id="method" name="paymentMethod" required>&ndash;&gt;-->
+<!--&lt;!&ndash;              <option value="card">Credit Card</option>&ndash;&gt;-->
+<!--&lt;!&ndash;              <option value="paypal">PayPal</option>&ndash;&gt;-->
+<!--&lt;!&ndash;              <option value="google">Google Pay</option>&ndash;&gt;-->
+<!--&lt;!&ndash;            </select>&ndash;&gt;-->
+<!--&lt;!&ndash;            <span class="arrow">▾</span>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--          <div th:if="${paymentMethod == 'card'}"-->
+<!--               style="background:white; color:black; padding:24px; border-radius:12px; width:400px; margin:40px auto; box-shadow:0 0 20px rgba(0,0,0,0.4); text-align:left;">-->
+
+<!--            <h3>Enter Card Details</h3>-->
+
+<!--            <form th:action="@{/confirm-booking}" method="post">-->
+<!--              <input type="hidden" name="itemId" th:value="${item.id}" />-->
+<!--              <input type="hidden" name="startDate" th:value="${startDate}" />-->
+<!--              <input type="hidden" name="endDate" th:value="${endDate}" />-->
+
+<!--              <label>Cardholder Name:</label>-->
+<!--              <input type="text" name="cardName" required class="input-field"/>-->
+
+<!--              <label>Card Number:</label>-->
+<!--              <input type="text" name="cardNumber" required maxlength="16" class="input-field"/>-->
+
+<!--              <label>Expiry Date:</label>-->
+<!--              <input type="month" name="expiry" required class="input-field"/>-->
+
+<!--              <label>CVV:</label>-->
+<!--              <input type="password" name="cvv" required maxlength="4" class="input-field"/>-->
+
+<!--              <br><br>-->
+<!--              <button type="submit" class="btn-login">Pay & Confirm</button>-->
+<!--            </form>-->
+<!--          </div>-->
+
+<!--          <div class="payment-summary" style="background:#003B5A; color:white; padding: 24px; border-radius: 12px; margin-top: 70px;">-->
+<!--            <h2>Booking Summary</h2>-->
+
+<!--            <p><strong>Item:</strong> <span th:text="${item.title}">Cordless Drill</span></p>-->
+<!--            <p><strong>Price per day:</strong> $<span th:text="${item.pricePerDay}">15</span></p>-->
+
+<!--            <p><strong>Start Date:</strong> <span th:text="${startDate}">2025-05-30</span></p>-->
+<!--            <p><strong>End Date:</strong> <span th:text="${endDate}">2025-06-02</span></p>-->
+
+<!--            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid white;">-->
+<!--              <p><strong>Total:</strong>-->
+<!--                $<span th:text="${(T(java.time.temporal.ChronoUnit).DAYS.between(T(java.time.LocalDate).parse(startDate), T(java.time.LocalDate).parse(endDate)) + 1) * item.pricePerDay}">60</span>-->
+<!--              </p>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="payment-actions">-->
+<!--        <button type="submit" class="btn-next">Next</button>-->
+<!--      </div>-->
+<!--    </form>-->
+<!--  </div>-->
+<!--</main>-->
 
 <!-- FOOTER -->
 <footer>

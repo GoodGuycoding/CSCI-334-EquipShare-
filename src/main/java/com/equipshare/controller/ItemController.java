@@ -20,17 +20,29 @@ public class ItemController {
     }
 
     @GetMapping("/tool/{id}")
-    public String viewItemDetails(@PathVariable("id") String itemId, Model model) {
+    public String viewItemDetails(@PathVariable("id") String itemId,@RequestParam(required = false) String step,
+                                  @RequestParam(required = false) String startDate, Model model) {
         Item item = itemService.getItemById(itemId);
         model.addAttribute("item", item);
+        model.addAttribute("step", step); // "start" or "end"
+        model.addAttribute("startDate", startDate);
         return "productPage"; // This matches product.html
     }
+
     @GetMapping("/payment")
-    public String showPaymentPage(@RequestParam("itemId") String itemId, Model model) {
+    public String showPaymentPage(@RequestParam("itemId") String itemId, @RequestParam String startDate,
+                                  @RequestParam(required = false) String success,
+                                  @RequestParam String endDate, Model model) {
         Item item = itemService.getItemById(itemId);
         model.addAttribute("item", item);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        if ("true".equals(success)) {
+            model.addAttribute("success", true); // ✅ pass flag to show modal
+        }
         return "payment"; // payment.html
     }
+
 
     @PostMapping("/add")
     public String addItem(
