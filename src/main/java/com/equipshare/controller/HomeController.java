@@ -50,11 +50,21 @@ public class HomeController {
                             Model model) {
 
         int pageSize = 12;
+        int pageGroupSize = 5;
+
         Page<Item> toolPage = itemService.searchAndFilterPaged(keyword, filter, page, pageSize);
 
+        int currentPage = toolPage.getNumber();
+        int totalPages = toolPage.getTotalPages();
+
+        int startPage = (currentPage / pageGroupSize) * pageGroupSize;
+        int endPage = Math.min(startPage + pageGroupSize - 1, totalPages - 1);
+
         model.addAttribute("tools", toolPage.getContent());
-        model.addAttribute("currentPage", toolPage.getNumber());
-        model.addAttribute("totalPages", toolPage.getTotalPages());
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         return "tools";
     }

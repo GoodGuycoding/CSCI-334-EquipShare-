@@ -83,19 +83,23 @@
 <div style="text-align:center; margin: 40px 0;">
   <div style="display: inline-flex; gap: 12px; align-items: center;">
 
-    <!-- Previous Button -->
-    <a th:if="${currentPage > 0}" th:href="@{/tools(page=${currentPage - 1})}" class="btn-login">Previous</a>
+    <!-- Previous Group -->
+    <a th:if="${startPage > 0}"
+       th:href="@{/tools(page=${startPage - 1})}"
+       class="btn-login">Previous</a>
 
     <!-- Page Numbers -->
-    <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+    <span th:each="i : ${#numbers.sequence(startPage, endPage)}">
       <a th:href="@{/tools(page=${i})}"
          th:text="${i + 1}"
          th:classappend="${i == currentPage} ? 'btn-signup' : 'btn-login'"
          style="padding: 8px 14px; border-radius: 8px; text-decoration: none;"></a>
     </span>
 
-    <!-- Next Button -->
-    <a th:if="${currentPage + 1 < totalPages}" th:href="@{/tools(page=${currentPage + 1})}" class="btn-login">Next</a>
+    <!-- Next Group -->
+    <a th:if="${endPage + 1 < totalPages}"
+       th:href="@{/tools(page=${endPage + 1})}"
+       class="btn-login">Next</a>
 
   </div>
 </div>
