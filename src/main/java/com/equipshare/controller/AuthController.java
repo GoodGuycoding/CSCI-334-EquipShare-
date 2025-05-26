@@ -3,9 +3,12 @@ package com.equipshare.controller;
 import com.equipshare.model.Booking;
 import com.equipshare.model.Item;
 import com.equipshare.model.User;
+import com.equipshare.repository.BookingRepository;
 import com.equipshare.security.CustomUserDetails;
 import com.equipshare.service.UserService;
 import com.equipshare.service.ItemService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -105,6 +108,9 @@ public class AuthController {
         }
     }
 
+    @Autowired
+    private BookingRepository bookingRepository;
+
     @GetMapping("/ownerDashboard")
     public String ownerDashboard(Model model, Principal principal) {
         String email = principal.getName();
@@ -112,12 +118,11 @@ public class AuthController {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         List<Item> availableItems = itemService.getAvailableItemsByOwner(user);
-        List<Item> rentedItems = itemService.getRentedItemsByOwner(user);
+        List<Booking> bookedItems = bookingRepository.findByItemOwner(user); // updated
 
         model.addAttribute("user", user);
-        model.addAttribute("owner", user);
         model.addAttribute("availableItems", availableItems);
-        model.addAttribute("rentedItems", rentedItems);
+        model.addAttribute("bookedItems", bookedItems); // match view name
 
         return "ownerDashboard";
     }
@@ -137,6 +142,16 @@ public class AuthController {
         model.addAttribute("user", user);
         model.addAttribute("bookings", bookings);
         return "borrowerDashboard";
+    }
+
+    @GetMapping("/profile")
+    public String redirectToDashboard(Authentication authentication) {
+        if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_OWNER"))) {
+            return "redirect:/ownerDashboard";
+        } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_BORROWER"))) {
+            return "redirect:/borrowerDashboard";
+        }
+        return "redirect:/login";
     }
 }
 

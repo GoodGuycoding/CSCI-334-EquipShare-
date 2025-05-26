@@ -49,21 +49,17 @@ public class ItemService {
     }
 
     public List<Item> getAvailableItemsByOwner(User owner) {
-        return itemRepository.findByOwnerAndIsAvailable(owner, true);
+        List<Item> items = itemRepository.findByOwnerAndIsAvailable(owner, true);
+        System.out.println("Available items for owner " + owner.getEmail() + ": " + items);
+        return items;
     }
 
-    public Item addItem(Item item, MultipartFile imageFile, User owner) throws IOException {
-        // Handle image upload
-        if (imageFile != null && !imageFile.isEmpty()) {
-            String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
-            Path filePath = Paths.get(UPLOAD_DIR + fileName);
-            Files.copy(imageFile.getInputStream(), filePath);
-            item.setItemPhotoUrl("/" + UPLOAD_DIR + fileName);
-        }
-
+    public void addItem(Item item, User owner) {
         item.setOwner(owner);
         item.setCreatedAt(Timestamp.from(Instant.now()));
-        return itemRepository.save(item);
+        item.setAvailable(true); // default to available
+
+         itemRepository.save(item);
     }
 
     public void deleteItem(String itemId, User owner) {

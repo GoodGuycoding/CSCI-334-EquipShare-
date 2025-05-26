@@ -18,6 +18,7 @@
         </li>
         <li><a th:href="@{/about}">About Us</a></li>
         <li><a th:href="@{/contact}">Contact Us</a></li>
+        <li><a th:href="@{/add-item}">Add a new Item</a></li>
         <li class="login-link"><a th:href="@{/logout}" class="btn-login">Log Out</a></li>
     </ul>
 </nav>
@@ -29,124 +30,70 @@
         <p class="subtitle" th:text="'Welcome, ' + ${user.firstName} + '!'">Welcome, Owner!</p>
     </section>
 
-    <!-- Add New Item Section -->
-    <section class="dashboard-section">
-        <h2>Add New Item</h2>
-        <form class="item-form" th:action="@{/owner/items/add}" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="title">Item Name:</label>
-                <input type="text" id="title" name="title" required>
-            </div>
+        <div class="booking-list-wrapper">
+            <h2 style="color: #378BBE;">Your Active Listings</h2>
+            <div class="booking-list">
+                <div class="booking-card" th:each="item : ${availableItems}">
+                    <a th:href="@{'/tool/' + ${item.id}}" style="display: flex; text-decoration: none; color: inherit;">
+                        <div class="booking-item-section">
+                            <h3 style="color: #378BBE;" th:text="${item.title}">Tool Name</h3>
+                            <img class="booking-item-image"
+                                 th:src="${item.itemPhotoUrl != null} ? item.itemPhotoUrl : '/images/defaultToolImage.png'"
+                                 alt="Tool Image">
+                        </div>
 
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea id="description" name="description" rows="4" required></textarea>
-            </div>
+                        <div class="booking-details-section">
+                            <span th:text="${#dates.format(item.createdAt, 'dd/MM/yyyy')}">Date</span>
+                            <p><strong>Location:</strong> <span th:text="${item.location}">Location</span></p>
+                            <p><strong>Category:</strong> <span th:text="${item.category}">Category</span></p>
+                        </div>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="pricePerDay">Price per day ($):</label>
-                    <input type="number" id="pricePerDay" name="pricePerDay" step="0.01" min="0" required>
+                        <div class="booking-owner-image">
+                            <img th:src="${user.profilePhotoUrl != null} ? ${user.profilePhotoUrl} : '/images/defaultUserProfile.png'"
+                                 alt="Owner Image">
+                        </div>
+
+                        <div class="booking-action-section">
+                            <div class="booking-status-badge" style="background-color: #4CAF50;">Available</div>
+                            <p class="booking-price" th:text="'$' + ${item.pricePerDay} + ' per day'">$10 per day</p>
+                        </div>
+                    </a>
                 </div>
+            </div>
+        </div>
 
-          <!--      <div class="form-group"> -->
-                <!--          <label for="location">Location:</label>  -->
-          <!--                <input type="text" id="location" name="location" required>  -->
-           <!--           </div>  -->
-          <!--        </div>  -->
-
-                  <div class="form-group">
-                      <label for="image">Item Image:</label>
-                      <input type="file" id="image" name="imageFile" accept="image/*">
-                  </div>
-
-                  <button type="submit" class="btn-primary">List Item</button>
-              </form>
-          </section>
-
-          <!-- Current Listings Section -->
-    <section class="dashboard-section">
-        <h2>Your Current Listings</h2>
-
-        <div th:if="${availableItems != null and !availableItems.empty}">
-            <div th:each="item : ${availableItems}" class="item-card">
-                <div class="item-header">
-                    <img th:src="${item.itemPhotoUrl != null} ? ${item.itemPhotoUrl} : '/images/default.png'" alt="Item Image" class="item-image"/>
-                    <div>
-                        <h3 th:text="${item.title}">Item Name</h3>
-                        <p th:text="${item.description}">Item description</p>
-                        <p><strong>Price:</strong> <span th:text="'$' + ${item.pricePerDay} + ' per day'">$0 per day</span></p>
-                        <p><strong>Status:</strong> <span th:text="${item.isAvailable} ? 'Available' : 'Rented'">Available</span></p>
+<!--    Your booked items-->
+    <div class="booking-list-wrapper">
+        <h2 style="color: #378BBE;">Your Booked Items</h2>
+        <div class="booking-list">
+            <div class="booking-card" th:each="booking : ${bookedItems}">
+                <a th:href="@{'/tool/' + ${booking.item.id}}" style="display: flex; text-decoration: none; color: inherit;">
+                    <div class="booking-item-section">
+                        <h3 style="color: #378BBE;" th:text="${booking.item.title}">Tool Name</h3>
+                        <img class="booking-item-image"
+                             th:src="${booking.item.itemPhotoUrl != null} ? ${booking.item.itemPhotoUrl} : '/images/default.png'"
+                             alt="Tool Image">
                     </div>
-                </div>
-                <div class="item-actions">
-                    <button class="btn-secondary" th:onclick="'editItem(\'' + ${item.id} + '\')'">Edit</button>
-                    <form th:action="@{'/owner/item/delete/' + ${item.id}}" method="post"
-                          onsubmit="return confirm('Are you sure you want to delete this item?');">
-                        <button type="submit" class="btn-danger">Delete</button>
-                    </form>
-                </div>
-            </div>
-        </div>
 
-        <div th:if="${availableItems == null or availableItems.empty}">
-            <p>You have no items listed at the moment.</p>
-        </div>
-    </section>
-
-    <!-- Current Bookings Section -->
-    <section class="dashboard-section">
-        <h2>Current Bookings</h2>
-
-        <div th:if="${bookings != null and !bookings.empty}">
-            <div th:each="booking : ${bookings}" class="booking-card">
-                <div class="booking-header">
-                    <img th:src="${booking.item.itemPhotoUrl != null} ? ${booking.item.itemPhotoUrl} : '/images/default.png'"
-                         alt="Item Image" class="item-image"/>
-                    <div>
-                        <h3 th:text="${booking.item.title}">Item Name</h3>
-                        <p><strong>Rented by:</strong> <span th:text="${booking.borrower.firstName + ' ' + booking.borrower.lastName}">Borrower Name</span></p>
-                        <p><strong>Dates:</strong> <span th:text="${#temporals.format(booking.startDate, 'MMM dd')} + ' to ' + ${#temporals.format(booking.endDate, 'MMM dd, yyyy')}">Dates</span></p>
-                        <p><strong>Status:</strong> <span th:text="${booking.status}">Status</span></p>
+                    <div class="booking-details-section">
+                        <p><strong>Rented by:</strong> <span th:text="${booking.borrower.firstName + ' ' + booking.borrower.lastName}">Name</span></p>
+                        <p><strong>Start Date:</strong> <span th:text="${#temporals.format(booking.startDate, 'dd/MM/yyyy')}">Date</span></p>
+                        <p><strong>End Date:</strong> <span th:text="${#temporals.format(booking.endDate, 'dd/MM/yyyy')}">Date</span></p>
                     </div>
-                </div>
-                <div class="booking-actions">
-                    <button class="btn-contact" onclick="showMessageModal('${booking.borrower.id}', '${booking.borrower.firstName}')">Message</button>
-                    <button th:if="${booking.status == 'PENDING'}" class="btn-approve"
-                            th:onclick="'approveBooking(\'' + ${booking.id} + '\')'">Approve</button>
-                    <button th:if="${booking.status == 'PENDING'}" class="btn-danger"
-                            th:onclick="'rejectBooking(\'' + ${booking.id} + '\')'">Reject</button>
-                </div>
-            </div>
-        </div>
 
-        <div th:if="${bookings == null or bookings.empty}">
-            <p>You have no current bookings.</p>
-        </div>
-    </section>
-
-    <!-- Ratings Section -->
-    <section class="dashboard-section">
-        <h2>Your Ratings</h2>
-        <div th:if="${ratings != null and !ratings.empty}">
-            <div th:each="rating : ${ratings}" class="rating-card">
-                <div class="rating-header">
-                    <p><strong>Item:</strong> <span th:text="${rating.item.title}">Item Name</span></p>
-                    <div class="rating-stars">
-                        <span th:each="i : ${#numbers.sequence(1, 5)}">
-                            <span th:if="${i <= rating.score}">★</span>
-                            <span th:if="${i > rating.score}">☆</span>
-                        </span>
+                    <div class="booking-owner-image">
+                        <img th:src="${booking.borrower.profilePhotoUrl != null} ? ${booking.borrower.profilePhotoUrl} : '/images/defaultUserProfile.png'"
+                             alt="Borrower Image">
                     </div>
-                </div>
-                <p th:text="${rating.comment} ?: 'No comment provided'">Rating comment</p>
-                <p><small th:text="'From ' + ${rating.borrower.firstName} + ' on ' + ${#temporals.format(rating.createdAt, 'MMM dd, yyyy')}">From User on Date</small></p>
+
+                    <div class="booking-action-section">
+                        <div class="booking-status-badge" th:text="${booking.status}">Confirmed</div>
+                        <p class="booking-price" th:text="'$' + ${booking.item.pricePerDay} + ' per day'">$10 per day</p>
+                    </div>
+                </a>
             </div>
         </div>
-        <div th:if="${ratings == null or ratings.empty}">
-            <p>You have no ratings yet.</p>
-        </div>
-    </section>
+    </div>
 </main>
 
 <!-- Footer -->

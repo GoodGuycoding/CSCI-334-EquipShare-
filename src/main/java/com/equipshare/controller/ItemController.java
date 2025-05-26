@@ -1,13 +1,18 @@
 package com.equipshare.controller;
 import com.equipshare.model.Item;
+import com.equipshare.model.User;
 import com.equipshare.security.CustomUserDetails;
 import com.equipshare.service.ItemService;
+import com.equipshare.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.security.Principal;
+import java.sql.Timestamp;
 
 @Controller
 public class ItemController {
@@ -44,29 +49,27 @@ public class ItemController {
     }
 
 
-    @PostMapping("/add")
-    public String addItem(
-            @RequestParam String title,
-            @RequestParam String description,
-            @RequestParam double pricePerDay,
-            @RequestParam String location,
-            @RequestParam("imageFile") MultipartFile imageFile,
-            @AuthenticationPrincipal CustomUserDetails userDetails) {
+    @GetMapping("/add-item")
+    public String showAddItemForm() {
+        return "add-item";
+    }
+    @Autowired
+    private UserService userService;
 
-        Item item = new Item();
-        item.setTitle(title);
-        item.setDescription(description);
-        item.setPricePerDay(pricePerDay);
-        item.setLocation(location);
+    @PostMapping("/add-item")
+    public String handleAddItem(@ModelAttribute Item item, Principal principal) {
+        String email = principal.getName();
+        User owner = userService.getUserByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        item.setOwner(owner);
+        item.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         item.setAvailable(true);
 
-        try {
-            itemService.addItem(item, imageFile, userDetails.getUser());
-            return "redirect:/owner-dashboard?success";
-        } catch (Exception e) {
-            return "redirect:/owner-dashboard?error";
-        }
+        itemService.addItem(item, owner);
+        return "redirect:/ownerDashboard";
     }
+
 
 
 }
