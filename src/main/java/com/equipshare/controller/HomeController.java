@@ -80,6 +80,12 @@ public class HomeController {
         return "redirect:" + (referer != null ? referer : "/");
     }
 
+    @GetMapping("/notification-redirect")
+    public String handleNotificationRedirect(@RequestParam("target") String target, HttpSession session) {
+        session.setAttribute("showNotifications", false);
+        return "redirect:" + target;
+    }
+
 
 
 
