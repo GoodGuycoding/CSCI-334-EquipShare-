@@ -168,7 +168,9 @@
                 <input type="hidden" name="step" value="start" />
                 <button type="submit" class="btn-book">Book Now</button>
             </form>
-            <button class="btn-contact">Contact Owner</button>
+            <form th:action="@{'/messages/conversation/' + ${item.owner.id}}" method="get">
+                <button type="submit" class="btn-contact">Contact Owner</button>
+            </form>
         </div>
 
         <div th:if="${step == 'start'}" style="background:#003B5A; padding: 24px; border-radius: 12px; margin-top: 20px;">

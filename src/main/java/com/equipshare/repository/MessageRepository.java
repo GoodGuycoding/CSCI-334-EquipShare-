@@ -23,16 +23,15 @@ public interface MessageRepository extends JpaRepository<Message, String> {
     List<Message> findMessagesBetweenUsers(@Param("user1Id") String user1Id,
                                            @Param("user2Id") String user2Id);
 
-    // ✅ Native SQL: safer for Hibernate 6+
     @Query(value = """
-        SELECT DISTINCT 
-            CASE 
-                WHEN sender_id = :userId THEN recipient_id 
-                ELSE sender_id 
-            END AS other_user_id
-        FROM message
-        WHERE sender_id = :userId OR recipient_id = :userId
-    """, nativeQuery = true)
+    SELECT DISTINCT 
+        CASE 
+            WHEN sender_id = :userId THEN recipient_id 
+            ELSE sender_id 
+        END AS other_user_id
+    FROM messages
+    WHERE sender_id = :userId OR recipient_id = :userId
+""", nativeQuery = true)
     List<String> findConversationPartnerIds(@Param("userId") String userId);
 
     // Count unread messages from any sender
