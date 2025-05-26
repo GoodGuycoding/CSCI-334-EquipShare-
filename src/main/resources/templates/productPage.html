@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" />
     <title>Product Info – EquipShare</title>
@@ -102,11 +103,20 @@
         </li>
         <li><a th:href="@{/about}">About Us</a></li>
         <li><a th:href="@{/tools}">Tools</a></li>
-        <li><a th:href="@{/contact}">Contact Us</a></li>
         <li><a th:href="@{/profile}">Profile Page</a></li>
-        <li><a th:href="@{/cart}">View Cart</a></li>
-        <li class="login-link"><a th:href="@{/login}" class="btn-login">Log In</a></li>
-        <li><a th:href="@{/signup}" class="btn-signup">Sign Up</a></li>
+        <li><a th:href="@{/messages}">Messages</a></li>
+        <!-- Only show if user NOT logged in -->
+        <li sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}" class="btn-login">Log In</a>
+        </li>
+        <li sec:authorize="!isAuthenticated()">
+            <a th:href="@{/signup}" class="btn-signup">Sign Up</a>
+        </li>
+
+        <!-- Only show if user IS logged in -->
+        <li sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}" class="btn-login">Log Out</a>
+        </li>
     </ul>
 </nav>
 
@@ -171,7 +181,7 @@
     </div>
 
     <div class="product-image">
-        <img th:src="${item.itemPhotoUrl}" alt="Product Image" />
+        <img th:src="${item.itemPhotoUrl != null} ? ${item.itemPhotoUrl} : '/images/defaultToolImage.png'" alt="Product Image" />
     </div>
 </div>
 

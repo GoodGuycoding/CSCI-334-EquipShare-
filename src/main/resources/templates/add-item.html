@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+>
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -54,14 +56,32 @@
 <nav>
     <ul>
         <li class="brand">
-            <a th:href="@{/}">
-                <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image"/>
+            <a th:href="@{/homepage}">
+                <img th:src="@{/images/eqs-logo.png}" alt="Logo" class="logo-image" />
             </a>
         </li>
         <li><a th:href="@{/about}">About Us</a></li>
-        <li><a th:href="@{/contact}">Contact Us</a></li>
-        <li><a th:href="@{/add-item}">Add a new Item</a></li>
-        <li class="login-link"><a th:href="@{/logout}" class="btn-login">Log Out</a></li>
+        <li sec:authorize="!hasRole('OWNER')">
+            <a th:href="@{/tools}">Tools</a>
+        </li>
+        <li><a th:href="@{/profile}">Profile Page</a></li>
+        <li sec:authorize="hasRole('OWNER')">
+            <a th:href="@{/add-item}">Add an Item</a>
+        </li>
+        <li><a th:href="@{/messages}">Messages</a></li>
+
+        <!-- Only show if user NOT logged in -->
+        <li sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}" class="btn-login">Log In</a>
+        </li>
+        <li sec:authorize="!isAuthenticated()">
+            <a th:href="@{/signup}" class="btn-signup">Sign Up</a>
+        </li>
+
+        <!-- Only show if user IS logged in -->
+        <li sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}" class="btn-login">Log Out</a>
+        </li>
     </ul>
 </nav>
 

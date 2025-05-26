@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -17,9 +18,21 @@
             </a>
         </li>
         <li><a th:href="@{/about}">About Us</a></li>
-        <li><a th:href="@{/contact}">Contact Us</a></li>
+        <li><a th:href="@{/profile}">Profile Page</a></li>
         <li><a th:href="@{/add-item}">Add a new Item</a></li>
-        <li class="login-link"><a th:href="@{/logout}" class="btn-login">Log Out</a></li>
+        <li><a th:href="@{/messages}">Messages</a></li>
+
+        <li sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}" class="btn-login">Log In</a>
+        </li>
+        <li sec:authorize="!isAuthenticated()">
+            <a th:href="@{/signup}" class="btn-signup">Sign Up</a>
+        </li>
+
+        <!-- Only show if user IS logged in -->
+        <li sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}" class="btn-login">Log Out</a>
+        </li>
     </ul>
 </nav>
 
@@ -27,7 +40,11 @@
 <main class="main-content">
     <section class="dashboard-header">
         <h1>Owner Dashboard</h1>
-        <p class="subtitle" th:text="'Welcome, ' + ${user.firstName} + '!'">Welcome, Owner!</p>
+        <p class="subtitle" style="color: #ffff;">Welcome to your profile</p>
+        <div class="profile-image">
+            <img th:src="${user.profilePhotoUrl != null} ? ${user.profilePhotoUrl} : @{/images/defaultUserProfile.png}" alt="Profile Image" class="profile-pic" />
+        </div>
+        <p class="subtitle" style="color: #ffff;" th:text="'Welcome, ' + ${user.firstName} + '!'"></p>
     </section>
 
         <div class="booking-list-wrapper">
