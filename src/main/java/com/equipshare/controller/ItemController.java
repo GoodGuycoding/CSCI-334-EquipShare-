@@ -43,11 +43,11 @@ public class ItemController {
         model.addAttribute("step", step); // "start" or "end"
         model.addAttribute("startDate", startDate);
 
-        // ✅ Add reviews
+        // reviews added
         List<Review> reviews = reviewService.getReviewsByItemId(item.getId());
         model.addAttribute("reviews", reviews);
 
-        // ✅ Add current user and their booking (if logged in)
+        // adding current user if logged in
         if (principal != null) {
             User currentUser = userService.getUserByEmail(principal.getName()).orElseThrow();
             model.addAttribute("currentUser", currentUser);
@@ -57,7 +57,7 @@ public class ItemController {
             model.addAttribute("booking", booking);
         }
 
-        return "productPage"; // This matches product.html
+        return "productPage";
     }
 
     @GetMapping("/payment")
@@ -69,7 +69,7 @@ public class ItemController {
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
         if ("true".equals(success)) {
-            model.addAttribute("success", true); // ✅ pass flag to show modal
+            model.addAttribute("success", true);
         }
         return "payment"; // payment.html
     }

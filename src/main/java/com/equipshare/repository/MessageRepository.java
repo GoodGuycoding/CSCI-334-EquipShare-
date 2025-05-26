@@ -1,5 +1,4 @@
 package com.equipshare.repository;
-
 import com.equipshare.model.Booking;
 import com.equipshare.model.Message;
 import com.equipshare.model.User;
@@ -23,7 +22,7 @@ public interface MessageRepository extends JpaRepository<Message, String> {
     List<Message> findMessagesBetweenUsers(@Param("user1Id") String user1Id,
                                            @Param("user2Id") String user2Id);
 
-    // ✅ Native SQL: safer for Hibernate 6+
+ // find matching sender and recipient ids
     @Query(value = """
         SELECT DISTINCT 
             CASE 
@@ -55,7 +54,7 @@ public interface MessageRepository extends JpaRepository<Message, String> {
 """, nativeQuery = true)
     void markMessagesAsRead(@Param("userId") String userId, @Param("senderId") String senderId);
 
-    // Latest message between users (return top 1 by timestamp)
+    // Latest message between users (return top 1 based on timestamp)
     @Query("SELECT m FROM Message m WHERE " +
             "(m.sender = :user1 AND m.recipient = :user2) OR " +
             "(m.sender = :user2 AND m.recipient = :user1) " +

@@ -41,45 +41,20 @@ public class AuthController {
 
         if (error != null) {
             switch (error) {
-                case "auth_failed":
+                case "auth_failed":  // tell user if authorization fails
                     model.addAttribute("error", "Invalid email or password");
                     break;
-                case "role_mismatch":
+                case "role_mismatch": // tell user role is incorrect
                     model.addAttribute("error", "Incorrect role selected.");
                     break;
                 default:
                     model.addAttribute("error", "Login failed");
             }
         }
-        if (email != null) {
+        if (email != null) {  // check if email empty
             model.addAttribute("email", email);
         }
         return "login";
-    }
-
-    @PostMapping("/user-login")
-    public String loginUser(
-            @RequestParam String email,
-            @RequestParam String password,
-            @RequestParam String role,
-            Model model) {
-
-        System.out.println("Login attempt received:");
-        System.out.println("Email: " + email);
-        System.out.println("Role: " + role);
-
-        var user = userService.authenticateUser(email, password, role);
-
-        if (user.isPresent()) {
-            System.out.println("Authentication successful for user: " + user.get().getEmail());
-            String redirectPage = "borrower".equals(role) ? "borrowerDashboard" : "ownerDashboard";
-            System.out.println("Redirecting to: " + redirectPage);
-            return "redirect:/" + redirectPage;
-        } else {
-            System.out.println("Authentication failed: invalid credentials or role mismatch");
-            model.addAttribute("error", "Invalid credentials or role mismatch");
-            return "login";
-        }
     }
 
     @GetMapping("/signup")

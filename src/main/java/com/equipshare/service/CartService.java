@@ -30,20 +30,21 @@ public class CartService {
     }
 
     public List<CartItem> getItems() {
+
         return new ArrayList<>(cart.values());
     }
 
     public double getTotal() {
-        return cart.values().stream()
-                .mapToDouble(CartItem::getTotalPrice)
-                .sum();
+        return cart.values().stream().mapToDouble(CartItem::getTotalPrice).sum();
     }
 
     public void removeItem(String itemId) {
+
         cart.remove(itemId);
     }
 
     public void clearCart() {
+
         cart.clear();
     }
 }

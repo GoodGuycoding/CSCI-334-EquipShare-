@@ -39,19 +39,11 @@ public class RatingController {
             @RequestParam(required = false) String comment,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        // check if the booking exists and is completed
-        // check if the user is part of the booking
-        // create and save the rating
-
         Rating rating = new Rating();
         rating.setId(java.util.UUID.randomUUID().toString());
         rating.setScore(score);
         rating.setComment(comment);
         rating.setCreatedAt(new java.sql.Timestamp(System.currentTimeMillis()));
-
-        //  set item and borrower from the booking
-        // rating.setItem(booking.getItem());
-        // rating.setBorrower(userDetails.getUser());
 
         Rating savedRating = ratingRepository.save(rating);
         return ResponseEntity.ok(savedRating);

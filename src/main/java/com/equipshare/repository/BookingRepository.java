@@ -17,4 +17,14 @@ public interface BookingRepository extends JpaRepository<Booking, String> {
 
     @Query("SELECT b FROM Booking b WHERE b.borrower.id = :userId AND b.item.id = :itemId")
     List<Booking> findAllByUserAndItem(@Param("userId") String userId, @Param("itemId") String itemId);
+
+    // calculating bookings per day
+    @Query(
+            value = "SELECT DATE(start_date) AS bookingDate, COUNT(*) AS totalBookings " +
+                    "FROM booking " +
+                    "GROUP BY bookingDate " +
+                    "ORDER BY bookingDate DESC",
+            nativeQuery = true)
+    List<Object[]> findTotalBookingsGroupedByDay();
+
 }

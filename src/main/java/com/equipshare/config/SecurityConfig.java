@@ -20,6 +20,7 @@ public class SecurityConfig {
     private final CustomUserDetailsService userDetailsService;
 
     public SecurityConfig(CustomUserDetailsService userDetailsService) {
+
         this.userDetailsService = userDetailsService;
     }
 
@@ -29,7 +30,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/", "/login", "/signup", "/user-login", "/payment",
                                 "/borrowerDashboard","/confirm-booking", "/ownerDashboard", "/cart",
-                                "/css/**", "/js/**", "/images/**").permitAll()
+                                "/css/**", "/js/**", "/images/**", "/homepage", "tools", "tool**", "about").permitAll()
                         .requestMatchers("/owner/**").hasRole("OWNER")
                         .requestMatchers("/borrower/**").hasRole("BORROWER")
                         .anyRequest().authenticated()
@@ -37,9 +38,11 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/user-login")
-                        .usernameParameter("username")  // Map to your form field
-                        .passwordParameter("password")  // Map to your form field
+                        .usernameParameter("username")
+                        .passwordParameter("password")
                         .successHandler((request, response, authentication) -> {
+
+                            // validate type of role a user has
                             String selectedRole = request.getParameter("selectedRole");
                             boolean isOwnerRequest = "owner".equalsIgnoreCase(selectedRole);
 
@@ -62,7 +65,7 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login?logout=true")
                         .permitAll()
                 )
-                .csrf(csrf -> csrf.disable()); // Temporarily disable CSRF for development
+                .csrf(csrf -> csrf.disable()); // disable CSRF temp for development
 
         return http.build();
     }
@@ -71,7 +74,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-
         return new BCryptPasswordEncoder();
     }
 }

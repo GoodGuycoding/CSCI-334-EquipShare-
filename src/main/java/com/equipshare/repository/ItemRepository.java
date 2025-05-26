@@ -16,11 +16,12 @@ public interface ItemRepository extends JpaRepository<Item, String> {
     List<Item>findByTitle(String title);
     List<Item>findByOwner(User owner);
     List<Item>findByOwnerAndIsAvailable(User owner, boolean isAvailable);
-    // 🔍 Search by keyword in title or description
+
+    // Search by keyword in title or description
     @Query("SELECT i FROM Item i WHERE LOWER(i.title) LIKE %:keyword% OR LOWER(i.description) LIKE %:keyword%")
     Page<Item> searchByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
-    // 🔃 Filters
+    // Filters
     Page<Item> findAllByOrderByPricePerDayAsc(Pageable pageable);
     Page<Item> findAllByOrderByLocationAsc(Pageable pageable);
 }

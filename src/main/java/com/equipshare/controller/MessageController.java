@@ -60,11 +60,11 @@ public class MessageController {
         String currentUserId = userDetails.getId();
         List<Message> messages = messageRepository.findMessagesBetweenUsers(currentUserId, otherUserId);
 
-        // Mark messages as read
+        // mark messages as read
         messageRepository.markMessagesAsRead(currentUserId, otherUserId);
 
         if (Boolean.TRUE.equals(redirect)) {
-            return "redirect:/messages"; // ✅ redirect back to list
+            return "redirect:/messages"; // go back to list
         }
 
         User currentUser = userRepository.findById(currentUserId).orElseThrow();
@@ -83,6 +83,7 @@ public class MessageController {
     public String sendMessage(@PathVariable String recipientId,
                               @RequestParam String content,
                               @AuthenticationPrincipal CustomUserDetails userDetails) {
+        // get user IDS
         User sender = userRepository.findById(userDetails.getId()).orElseThrow();
         User recipient = userRepository.findById(recipientId).orElseThrow();
 

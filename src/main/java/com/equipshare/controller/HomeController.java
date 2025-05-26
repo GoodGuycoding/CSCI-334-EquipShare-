@@ -1,10 +1,8 @@
 package com.equipshare.controller;
-
 import com.equipshare.model.Item;
 import com.equipshare.model.User;
 import com.equipshare.service.ItemService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+import com.equipshare.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -23,17 +22,23 @@ public class HomeController {
     @Autowired
     private UserRepository userRepository;
     private final ItemService itemService;
+    private final ItemRepository itemRepository;
 
-    public HomeController(UserRepository userRepository, ItemService itemService) {
+    public HomeController(UserRepository userRepository, ItemService itemService, ItemRepository itemRepository) {
         this.userRepository = userRepository;
         this.itemService = itemService;
+        this.itemRepository = itemRepository;
     }
 
     @GetMapping("/")
     public String homePage(Model model) {
+        List<Item> allItems = itemRepository.findAll();
+        // only display like 5 items
+        List<Item> featuredItems = allItems.stream().limit(5).toList();
         List<User> users = userRepository.findAll();
+        model.addAttribute("featuredItems", featuredItems);
         model.addAttribute("users", users);
-        return "cart"; // whatever html page name is written here would be the starting point of our app.
+        return "homepage"; // whatever html page name is written here would be the starting point of our app.
     }
     @GetMapping("/cart")
     public String userCart(Model model) {
@@ -67,23 +72,9 @@ public class HomeController {
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+        // filter items
 
         return "tools";
-    }
-
-    @GetMapping("/toggle-notifications")
-    public String toggleNotifications(HttpServletRequest request, HttpSession session) {
-        Boolean current = (Boolean) session.getAttribute("showNotifications");
-        session.setAttribute("showNotifications", current == null ? true : !current);
-
-        String referer = request.getHeader("Referer");
-        return "redirect:" + (referer != null ? referer : "/");
-    }
-
-    @GetMapping("/notification-redirect")
-    public String handleNotificationRedirect(@RequestParam("target") String target, HttpSession session) {
-        session.setAttribute("showNotifications", false);
-        return "redirect:" + target;
     }
 
 
