@@ -22,6 +22,31 @@
         <li><a th:href="@{/add-item}">Add a new Item</a></li>
         <li><a th:href="@{/messages}">Messages</a></li>
 
+        <li sec:authorize="isAuthenticated()" class="notification-wrapper">
+            <a th:href="@{/toggle-notifications}" class="btn-notification">🔔 Notifications</a>
+            <div class="notification-dialog" th:if="${session.showNotifications}">
+                <h3 style="color: #378BBE;">Your Notifications:</h3>
+                <div th:if="${#lists.isEmpty(userNotifications)}">
+                    <p class="notification-empty">No notifications yet.</p>
+                </div>
+                <div th:each="n : ${userNotifications}">
+                    <div th:if="${n.type.name() == 'BOOKING'}">
+                        <a th:href="@{'/notification-redirect?target=/profile'}" class="notification-item" th:text="${n.message}"></a>
+                    </div>
+                    <div th:if="${n.type.name() == 'REVIEW'}" th:with="itemId=${#strings.split(n.message, ':')[1]}">
+                        <a th:href="@{'/notification-redirect?target=/item/' + ${itemId}}" class="notification-item" th:text="${n.message}"></a>
+                    </div>
+                    <div th:if="${n.type.name() == 'REMINDER'}">
+                        <a th:href="@{'/notification-redirect?target=/profile'}" class="notification-item" th:text="${n.message}"></a>
+                    </div>
+                    <div th:if="${n.type.name() == 'MESSAGE'}">
+                        <a th:href="@{'/notification-redirect?target=/messages'}" class="notification-item" th:text="${n.message}"></a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </li>
+
         <li sec:authorize="!isAuthenticated()">
             <a th:href="@{/login}" class="btn-login">Log In</a>
         </li>

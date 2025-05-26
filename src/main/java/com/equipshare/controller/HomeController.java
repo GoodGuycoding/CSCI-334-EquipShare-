@@ -3,6 +3,8 @@ package com.equipshare.controller;
 import com.equipshare.model.Item;
 import com.equipshare.model.User;
 import com.equipshare.service.ItemService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -67,6 +69,21 @@ public class HomeController {
         model.addAttribute("endPage", endPage);
 
         return "tools";
+    }
+
+    @GetMapping("/toggle-notifications")
+    public String toggleNotifications(HttpServletRequest request, HttpSession session) {
+        Boolean current = (Boolean) session.getAttribute("showNotifications");
+        session.setAttribute("showNotifications", current == null ? true : !current);
+
+        String referer = request.getHeader("Referer");
+        return "redirect:" + (referer != null ? referer : "/");
+    }
+
+    @GetMapping("/notification-redirect")
+    public String handleNotificationRedirect(@RequestParam("target") String target, HttpSession session) {
+        session.setAttribute("showNotifications", false);
+        return "redirect:" + target;
     }
 
 

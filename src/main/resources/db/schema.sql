@@ -57,7 +57,7 @@ CREATE TABLE `notification` (
   `id` VARCHAR(36) NOT NULL,
   `user_id` VARCHAR(36),
   `message` TEXT,
-  `type` ENUM('booking','review','reminder'),
+  `type` ENUM('booking','review','reminder','message'),
   `read_status` TINYINT(1) DEFAULT 0,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

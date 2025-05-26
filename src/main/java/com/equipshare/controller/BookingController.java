@@ -1,11 +1,14 @@
 package com.equipshare.controller;
 
+import com.equipshare.model.NotificationType;
 import com.equipshare.model.User;
 import com.equipshare.model.Booking;
 import com.equipshare.model.Item;
 import com.equipshare.repository.BookingRepository;
 import com.equipshare.repository.ItemRepository;
 import com.equipshare.security.CustomUserDetails;
+import com.equipshare.service.NotificationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,6 +21,9 @@ public class BookingController {
 
     private final BookingRepository bookingRepository;
     private final ItemRepository itemRepository;
+
+    @Autowired
+    private NotificationService notificationService;
 
     public BookingController(BookingRepository bookingRepository, ItemRepository itemRepository) {
         this.bookingRepository = bookingRepository;
@@ -52,6 +58,8 @@ public class BookingController {
             return "redirect:/tools";
         }
 
+        Item actualItem = item.get();
+
         Booking booking = new Booking();
         booking.setItem(item.get());
         booking.setBorrower(borrower);
@@ -62,6 +70,20 @@ public class BookingController {
 
         bookingRepository.save(booking);
         System.out.println("✅ Booking saved successfully with ID: " + booking.getId());
+
+        System.out.println("Notification was hit");
+        notificationService.sendNotification(
+                borrower,
+                "Booking confirmed for: " + actualItem.getTitle(),
+                NotificationType.BOOKING
+        );
+
+        System.out.println("Notification was hit");
+        notificationService.sendNotification(
+                actualItem.getOwner(),
+                "Your item '" + actualItem.getTitle() + "' has been booked.",
+                NotificationType.BOOKING
+        );
 
         return "redirect:/payment?success=true&itemId=" + request.getItemId()
                 + "&startDate=" + request.getStartDate()
