@@ -77,6 +77,10 @@ public class UserService {
         return email == null ? Optional.empty() : userRepository.findByEmail(email);
     }
 
+    public Optional<User> getUserById(String id) {
+        return userRepository.findById(id);
+    }
+
     // updating users, called in BorrowerProflieController
     public void updateUser(User user) {
         User existingUser = userRepository.findById(user.getId())

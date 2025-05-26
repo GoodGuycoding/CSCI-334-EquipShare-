@@ -663,5 +663,98 @@ input
   border-radius: 12px;
 }
 
+/* Owner + Borrower Page Style */
+
+.booking-list-wrapper {
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+.booking-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+.booking-card {
+      justify-content: space-between;
+      padding: 16px;
+      border-radius: 10px;
+      background-color: #f8f8f8;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+.booking-item-section {
+      flex: 1;
+      margin-right: 20px;
+    }
+
+.booking-item-image {
+      width: 200px;
+      height: 150px;
+      border-radius: 6px;
+      object-fit: cover;
+      margin-top: 8px;
+    }
+
+.booking-details-section {
+      flex: 2;
+      padding: 0 20px;
+    }
+
+.booking-owner-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+.booking-owner-image img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ccc;
+    }
+
+.booking-action-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+.booking-status-badge {
+      background-color: #1e88e5;
+      color: #fff;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+
+.booking-contact-button {
+      background-color: #2e7d32;
+      color: #fff;
+      font-weight: bold;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+.booking-contact-button img {
+      width: 16px;
+      height: 16px;
+    }
+
+.booking-price {
+      font-weight: bold;
+      color: #000;
+    }
 
   

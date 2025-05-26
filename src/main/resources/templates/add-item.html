@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Add an Item – EquipShare</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <style>
+        .item-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 24px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .item-form .form-group {
+            margin-bottom: 16px;
+        }
+
+        .item-form label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .item-form input[type="text"],
+        .item-form input[type="number"],
+        .item-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .item-form textarea {
+            resize: vertical;
+        }
+
+        .item-form .btn-login {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+    <ul>
+        <li class="brand">
+            <a th:href="@{/homepage}">
+                <img th:src="@{/images/eqs-logo.png}" alt="Logo" class="logo-image" />
+            </a>
+        </li>
+        <li><a th:href="@{/about}">About Us</a></li>
+        <li sec:authorize="!hasRole('OWNER')">
+            <a th:href="@{/tools}">Tools</a>
+        </li>
+        <li><a th:href="@{/profile}">Profile Page</a></li>
+        <li sec:authorize="hasRole('OWNER')">
+            <a th:href="@{/add-item}">Add an Item</a>
+        </li>
+        <li><a th:href="@{/messages}">Messages</a></li>
+
+        <!-- Only show if user NOT logged in -->
+        <li sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}" class="btn-login">Log In</a>
+        </li>
+        <li sec:authorize="!isAuthenticated()">
+            <a th:href="@{/signup}" class="btn-signup">Sign Up</a>
+        </li>
+
+        <!-- Only show if user IS logged in -->
+        <li sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}" class="btn-login">Log Out</a>
+        </li>
+    </ul>
+</nav>
+
+<main class="main-content">
+    <section class="dashboard-section">
+        <h2 style="color: #378BBE; text-align: center;">Add New Item</h2>
+        <form class="item-form" th:action="@{/add-item}" method="post">
+            <div class="form-group">
+                <label for="title">Item Name:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <input type="text" id="category" name="category" required>
+            </div>
+
+            <div class="form-group">
+                <label for="pricePerDay">Price per day ($):</label>
+                <input type="number" id="pricePerDay" name="pricePerDay" step="0.01" min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required>
+            </div>
+
+            <button type="submit" class="btn-login">List Item</button>
+        </form>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-stripe"></div>
+    <div class="footer-content">
+        <div class="brand-info">
+            <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image" />
+        </div>
+        <div class="quick-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a th:href="@{/about}">About Us</a></li>
+                <li><a th:href="@{/tools}">Tools</a></li>
+                <li><a th:href="@{/contact}">Contact Us</a></li>
+                <li><a th:href="@{/profile}">Profile</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

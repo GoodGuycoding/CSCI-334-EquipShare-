@@ -87,6 +87,12 @@
             width: 24px;
             height: 24px;
         }
+        .back-btn{
+            margin-right: 10px;
+            color: #ffff;
+        }
+
+
     </style>
 </head>
 <body>
@@ -98,10 +104,6 @@
             <img th:src="${recipient != null and recipient.profilePhotoUrl != null} ? ${recipient.profilePhotoUrl} : @{/images/defaultUserProfile.png}" alt="User">
             <span th:text="${recipient.firstName}">John</span>
         </div>
-        <div>
-            <img src="/images/call-icon.png" alt="Call" style="margin-right: 10px;">
-            <img src="/images/video-icon.png" alt="Video">
-        </div>
     </div>
     <div class="chat-body">
         <div th:each="msg : ${messages}" th:classappend="${msg.sender.id == currentUser.id} ? 'chat-message' : 'chat-message from-other'">
@@ -112,7 +114,7 @@
     <form class="chat-footer" th:action="@{'/messages/send/' + ${recipient.id}}" method="post">
         <input type="text" name="content" placeholder="Type here..." required>
         <button type="submit">
-            <img src="/images/send-icon.png" alt="Send">
+            <img src="/images/sentIcon.png" alt="Send">
         </button>
     </form>
 </div>
