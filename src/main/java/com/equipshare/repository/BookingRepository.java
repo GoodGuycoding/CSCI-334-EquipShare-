@@ -10,8 +10,6 @@ import java.util.List;
 public interface BookingRepository extends JpaRepository<Booking, String> {
 
     List<Booking> findByBorrower(User borrower);
-    List<Booking> findByBorrowerAndStatus(User borrower, String status);
-    List<Booking> findByStatus(String status);
 
     List<Booking> findByItemOwner(User user);
 
