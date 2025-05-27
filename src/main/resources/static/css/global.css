@@ -806,4 +806,75 @@ input
   font-style: italic;
   color: #888;
 }
-  
+
+/*About Us Page*/
+/*Title Card*/
+.title-card {
+  width: 1440px;
+  height: 500px;
+  background-color: #378BBE;
+  margin: 0 auto;
+}
+.title-card h1 {
+  color: white;
+  font-size: 48px;
+  text-align: center;
+  padding-top: 200px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.title-card h2 {
+  color: white;
+  font-size: 36px;
+  text-align: left;
+  padding-top: 20px;
+  padding-left: 40px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.title-card-content {
+  width: 1440px;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  padding-top: 40px;
+  gap: 40px;
+  padding-bottom: 60px;
+}
+.title-card-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+/*Key Achievements*/
+.title-card-titles {
+  align-items: flex-end;
+  padding-right: 40px;
+}
+/*Smaller titles*/
+.title-card-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 32px;
+  color: #fff;
+  margin-bottom: 40px;
+  text-align: left;
+  min-height: 48px;
+  /* Adjust min-height to match line height of description */
+}
+.title-card-title:last-child {
+  margin-bottom: 0;
+}
+.title-card-descriptions {
+  align-items: flex-start;
+  padding-left: 40px;
+}
+.title-card-description {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 40px;
+  text-align: left;
+  min-height: 48px;
+}
+.title-card-description:last-child {
+  margin-bottom: 0;
+}
