@@ -71,7 +71,7 @@
         </div>
         <p class="subtitle" style="color: #ffff;" th:text="'Welcome, ' + ${user.firstName} + '!'"></p>
     </section>
-
+    <!--    This is the place where all your available items will be displayed-->
         <div class="booking-list-wrapper">
             <h2 style="color: #378BBE;">Your Active Listings</h2>
             <div class="booking-list">
@@ -104,7 +104,9 @@
             </div>
         </div>
 
-<!--    Your booked items-->
+
+
+<!--    This is the place where all your booked items will be displayed-->
     <div class="booking-list-wrapper">
         <h2 style="color: #378BBE;">Your Booked Items</h2>
         <div class="booking-list">
@@ -155,106 +157,10 @@
             </ul>
         </div>
         <div class="footer-bottom-text">
-            <p>© 2024 EquipShare. All rights reserved. </p>
+            <p>© 2025 EquipShare. All rights reserved. </p>
         </div>
     </div>
 </footer>
 
-<!-- Modal for messages-->
-<div id="messageModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h3 id="modalRecipientName">Message to [Name]</h3>
-        <textarea id="modalMessageText" placeholder="Type your message here..."></textarea>
-        <button class="btn-primary" onclick="sendModalMessage()">Send</button>
-    </div>
-</div>
-
-<script>
-    // Booking
-    function approveBooking(bookingId) {
-        fetch('/api/bookings/' + bookingId + '/approve', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then(response => {
-                if (response.ok) {
-                    location.reload();
-                } else {
-                    alert('Failed to approve booking');
-                }
-            });
-    }
-
-    function rejectBooking(bookingId) {
-        if (confirm('Are you sure you want to reject this booking?')) {
-            fetch('/api/bookings/' + bookingId + '/reject', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-                .then(response => {
-                    if (response.ok) {
-                        location.reload();
-                    } else {
-                        alert('Failed to reject booking');
-                    }
-                });
-        }
-    }
-
-    // Modal
-    function showMessageModal(borrowerId, borrowerName) {
-        document.getElementById('modalRecipientName').textContent = 'Message to ' + borrowerName;
-        document.getElementById('messageModal').style.display = 'block';
-        // Store borrowerId in a data attribute
-        document.getElementById('messageModal').setAttribute('data-borrower-id', borrowerId);
-    }
-
-    function closeModal() {
-        document.getElementById('messageModal').style.display = 'none';
-    }
-
-    function sendModalMessage() {
-        const borrowerId = document.getElementById('messageModal').getAttribute('data-borrower-id');
-        const messageText = document.getElementById('modalMessageText').value;
-
-        if (messageText.trim() === '') {
-            alert('Please enter a message');
-            return;
-        }
-
-        fetch('/api/messages/send', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                recipientId: borrowerId,
-                content: messageText
-            })
-        })
-            .then(response => {
-                if (response.ok) {
-                    closeModal();
-                    document.getElementById('modalMessageText').value = '';
-                    alert('Message sent successfully');
-                } else {
-                    alert('Failed to send message');
-                }
-            });
-    }
-
-    // Close modal when clicking outside it
-    window.onclick = function(event) {
-        const modal = document.getElementById('messageModal');
-        if (event.target == modal) {
-            closeModal();
-        }
-    }
-</script>
 </body>
 </html>
