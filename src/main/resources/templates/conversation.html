@@ -106,6 +106,9 @@
         </div>
     </div>
     <div class="chat-body">
+        <div th:if="${#lists.isEmpty(messages)}">
+            <p style="color: white; text-align: center; margin-top: 20px;">No messages yet. Start the conversation!</p>
+        </div>
         <div th:each="msg : ${messages}" th:classappend="${msg.sender.id == currentUser.id} ? 'chat-message' : 'chat-message from-other'">
             <span th:text="${msg.content}">Hi</span><br>
             <small th:text="${#dates.format(msg.timestamp, 'HH:mm')}">12:00</small>

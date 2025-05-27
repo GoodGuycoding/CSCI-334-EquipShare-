@@ -47,6 +47,11 @@ public class MessageController {
             user.setUnreadCount((int) unread);
         }
 
+        // 🔍 ADD THESE DEBUG PRINTS HERE:
+        System.out.println("Found user IDs in conversation: " + userIds);
+        System.out.println("Conversation Users Count: " + conversationUsers.size());
+
+
         model.addAttribute("conversationUsers", conversationUsers);
         return "messages";
     }
@@ -58,6 +63,8 @@ public class MessageController {
                                   Model model,
                                   @AuthenticationPrincipal CustomUserDetails userDetails) {
         String currentUserId = userDetails.getId();
+
+        System.out.print("conversation was initated");
         List<Message> messages = messageRepository.findMessagesBetweenUsers(currentUserId, otherUserId);
 
         // mark messages as read
@@ -66,6 +73,7 @@ public class MessageController {
         if (Boolean.TRUE.equals(redirect)) {
             return "redirect:/messages"; // go back to list
         }
+        System.out.print("Problem is here");
 
         User currentUser = userRepository.findById(currentUserId).orElseThrow();
         User recipient = userRepository.findById(otherUserId).orElse(null);
