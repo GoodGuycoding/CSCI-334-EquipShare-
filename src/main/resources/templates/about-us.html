@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8" />
+  <title>About Us – EquipShare</title>
+  <link rel="stylesheet" th:href="@{/css/global.css}" />
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <ul>
+    <li class="brand">
+      <a th:href="@{/homepage}">
+        <img th:src="@{/images/eqs-logo.png}" alt="Logo" class="logo-image" />
+      </a>
+    </li>
+    <li><a th:href="@{/about}">About Us</a></li>
+    <li sec:authorize="!hasRole('OWNER')">
+      <a th:href="@{/tools}">Tools</a>
+    </li>
+    <li><a th:href="@{/profile}">Profile Page</a></li>
+    <li sec:authorize="hasRole('OWNER')">
+      <a th:href="@{/add-item}">Add an Item</a>
+    </li>
+    <li><a th:href="@{/messages}">Messages</a></li>
+
+    <li sec:authorize="isAuthenticated()" class="notification-wrapper">
+      <a th:href="@{/toggle-notifications}" class="btn-notification">🔔 Notifications</a>
+      <div class="notification-dialog" th:if="${session.showNotifications}">
+        <h3 style="color: #378BBE;">Your Notifications:</h3>
+        <div th:if="${#lists.isEmpty(userNotifications)}">
+          <p class="notification-empty">No notifications yet.</p>
+        </div>
+        <div th:each="n : ${userNotifications}">
+          <div th:if="${n.type.name() == 'BOOKING'}">
+            <a th:href="@{'/notification-redirect?target=/profile'}" class="notification-item" th:text="${n.message}"></a>
+          </div>
+          <div th:if="${n.type.name() == 'REVIEW'}" th:with="itemId=${#strings.split(n.message, ':')[1]}">
+            <a th:href="@{'/notification-redirect?target=/item/' + ${itemId}}" class="notification-item" th:text="${n.message}"></a>
+          </div>
+          <div th:if="${n.type.name() == 'REMINDER'}">
+            <a th:href="@{'/notification-redirect?target=/profile'}" class="notification-item" th:text="${n.message}"></a>
+          </div>
+          <div th:if="${n.type.name() == 'MESSAGE'}">
+            <a th:href="@{'/notification-redirect?target=/messages'}" class="notification-item" th:text="${n.message}"></a>
+          </div>
+        </div>
+      </div>
+      </div>
+    </li>
+
+    <!-- Only show if user NOT logged in -->
+    <li sec:authorize="!isAuthenticated()">
+      <a th:href="@{/login}" class="btn-login">Log In</a>
+    </li>
+    <li sec:authorize="!isAuthenticated()">
+      <a th:href="@{/signup}" class="btn-signup">Sign Up</a>
+    </li>
+
+    <!-- Only show if user IS logged in -->
+    <li sec:authorize="isAuthenticated()">
+      <a th:href="@{/logout}" class="btn-login">Log Out</a>
+    </li>
+  </ul>
+</nav>
+
+<!-- Title Section -->
+<section class="title-card">
+  <h1>Our Journey</h1>
+  <h2>Key Achievements</h2>
+</section>
+
+<section class="main-content">
+  <div class="main-content-column">
+  </div>
+  <div class="main-content-column">
+    <h3>Created Dash2Door - 2023</h3>
+    <p>
+      Dash to Door was our first project focused on hiring delivery drivers to deliver fast food to our clients.
+    </p>
+    <h3>Created Food4U - 2024</h3>
+    <p>
+      Food sharing service allowing cooks to share recipes and ingredients with customers.
+    </p>
+    <h3>Created EquipShare - 2025</h3>
+    <p>
+      Platform to allow users to borrow or rent out tools for specific projects.
+    </p>
+  </div>
+</section>
+
+<!-- footer -->
+<footer>
+  <div class="footer-stripe"></div>
+  <div class="footer-content">
+    <div class="brand-info">
+      <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image" />
+    </div>
+    <div class="quick-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a th:href="@{/about}">About Us</a></li>
+        <li><a th:href="@{/tools}">Tools</a></li>
+        <li><a th:href="@{/profile}">Profile Page</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom-text">
+      © 2025 EquipShare. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

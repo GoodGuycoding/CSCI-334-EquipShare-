@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <title>Messages – EquipShare</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <style>
+        .messages-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .message-header {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #005989;
+        }
+
+        .conversation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .conversation-card {
+            display: flex;
+            align-items: center;
+            background-color: #f2f7fc;
+            border-radius: 10px;
+            padding: 12px 16px;
+            text-decoration: none;
+            color: inherit;
+            transition: background 0.2s ease;
+        }
+
+        .conversation-card:hover {
+            background-color: #e0efff;
+        }
+
+        .conversation-profile {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 16px;
+            border: 2px solid #ccc;
+        }
+
+        .conversation-details {
+            flex-grow: 1;
+        }
+
+        .conversation-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .conversation-preview {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .unread-badge {
+            background-color: #2e7d32;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+    <ul>
+        <li class="brand">
+            <a th:href="@{/homepage}">
+                <img th:src="@{/images/eqs-logo.png}" alt="Logo" class="logo-image" />
+            </a>
+        </li>
+        <li><a th:href="@{/about}">About Us</a></li>
+        <li sec:authorize="!hasRole('OWNER')">
+            <a th:href="@{/tools}">Tools</a>
+        </li>
+        <li><a th:href="@{/profile}">Profile Page</a></li>
+        <li sec:authorize="hasRole('OWNER')">
+            <a th:href="@{/add-item}">Add an Item</a>
+        </li>
+        <li><a th:href="@{/messages}">Messages</a></li>
+
+        <li sec:authorize="isAuthenticated()" class="notification-wrapper">
+            <a th:href="@{/toggle-notifications}" class="btn-notification">🔔 Notifications</a>
+            <div class="notification-dialog" th:if="${session.showNotifications}">
+                <h3 style="color: #378BBE;">Your Notifications:</h3>
+                <div th:if="${#lists.isEmpty(userNotifications)}">
+                    <p class="notification-empty">No notifications yet.</p>
+                </div>
+                <div th:each="n : ${userNotifications}">
+                    <div th:if="${n.type.name() == 'BOOKING'}">
+                        <a th:href="@{'/notification-redirect?target=/profile'}" class="notification-item" th:text="${n.message}"></a>
+                    </div>
+                    <div th:if="${n.type.name() == 'REVIEW'}" th:with="itemId=${#strings.split(n.message, ':')[1]}">
+                        <a th:href="@{'/notification-redirect?target=/item/' + ${itemId}}" class="notification-item" th:text="${n.message}"></a>
+                    </div>
+                    <div th:if="${n.type.name() == 'REMINDER'}">
+                        <a th:href="@{'/notification-redirect?target=/profile'}" class="notification-item" th:text="${n.message}"></a>
+                    </div>
+                    <div th:if="${n.type.name() == 'MESSAGE'}">
+                        <a th:href="@{'/notification-redirect?target=/messages'}" class="notification-item" th:text="${n.message}"></a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </li>
+
+        <!-- Only show if user NOT logged in -->
+        <li sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}" class="btn-login">Log In</a>
+        </li>
+        <li sec:authorize="!isAuthenticated()">
+            <a th:href="@{/signup}" class="btn-signup">Sign Up</a>
+        </li>
+
+        <!-- Only show if user IS logged in -->
+        <li sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}" class="btn-login">Log Out</a>
+        </li>
+    </ul>
+</nav>
+
+<!-- MESSAGES CONTENT -->
+<div class="messages-container">
+    <h1 class="message-header">Your Conversations</h1>
+    <div class="conversation-list">
+        <a th:each="user : ${conversationUsers}"
+           th:href="@{'/messages/conversation/' + ${user.id}}"
+           class="conversation-card">
+            <img class="conversation-profile"
+                 th:src="${user.profilePhotoUrl != null} ? ${user.profilePhotoUrl} : '/images/defaultUserProfile.png'"
+                 alt="Profile Picture" />
+            <div class="conversation-details">
+                <div class="conversation-name" th:text="${user.firstName + ' ' + user.lastName}">User Name</div>
+                <div class="conversation-preview" th:text="${user.lastMessage}">Last message preview...</div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-stripe"></div>
+    <div class="footer-content">
+        <div class="brand-info">
+            <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image" />
+        </div>
+        <div class="quick-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a th:href="@{/about}">About Us</a></li>
+                <li><a th:href="@{/tools}">Tools</a></li>
+                <li><a th:href="@{/profile}">Profile Page</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 EquipShare. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="#">G</a>
+            <a href="#">in</a>
+            <a href="#">f</a>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Owner Dashboard – EquipShare</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+</head>
+<body>
+
+<!-- navigation tab -->
+<nav>
+    <ul>
+        <li class="brand">
+            <a th:href="@{/}">
+                <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image"/>
+            </a>
+        </li>
+        <li><a th:href="@{/about}">About Us</a></li>
+        <li><a th:href="@{/profile}">Profile Page</a></li>
+        <li><a th:href="@{/add-item}">Add a new Item</a></li>
+        <li><a th:href="@{/messages}">Messages</a></li>
+
+        <li sec:authorize="isAuthenticated()" class="notification-wrapper">
+            <a th:href="@{/toggle-notifications}" class="btn-notification">🔔 Notifications</a>
+            <div class="notification-dialog" th:if="${session.showNotifications}">
+                <h3 style="color: #378BBE;">Your Notifications:</h3>
+                <div th:if="${#lists.isEmpty(userNotifications)}">
+                    <p class="notification-empty">No notifications yet.</p>
+                </div>
+                <div th:each="n : ${userNotifications}">
+                    <div th:if="${n.type.name() == 'BOOKING'}">
+                        <a th:href="@{'/notification-redirect?target=/profile'}" class="notification-item" th:text="${n.message}"></a>
+                    </div>
+                    <div th:if="${n.type.name() == 'REVIEW'}" th:with="itemId=${#strings.split(n.message, ':')[1]}">
+                        <a th:href="@{'/notification-redirect?target=/item/' + ${itemId}}" class="notification-item" th:text="${n.message}"></a>
+                    </div>
+                    <div th:if="${n.type.name() == 'REMINDER'}">
+                        <a th:href="@{'/notification-redirect?target=/profile'}" class="notification-item" th:text="${n.message}"></a>
+                    </div>
+                    <div th:if="${n.type.name() == 'MESSAGE'}">
+                        <a th:href="@{'/notification-redirect?target=/messages'}" class="notification-item" th:text="${n.message}"></a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </li>
+
+        <li sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}" class="btn-login">Log In</a>
+        </li>
+        <li sec:authorize="!isAuthenticated()">
+            <a th:href="@{/signup}" class="btn-signup">Sign Up</a>
+        </li>
+
+        <!-- Only show if user IS logged in -->
+        <li sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}" class="btn-login">Log Out</a>
+        </li>
+    </ul>
+</nav>
+
+<!-- Main Content -->
+<main class="main-content">
+    <section class="dashboard-header">
+        <h1>Owner Dashboard</h1>
+        <p class="subtitle" style="color: #ffff;">Welcome to your profile</p>
+        <div class="profile-image">
+            <img th:src="${user.profilePhotoUrl != null} ? ${user.profilePhotoUrl} : @{/images/defaultUserProfile.png}" alt="Profile Image" class="profile-pic" />
+        </div>
+        <p class="subtitle" style="color: #ffff;" th:text="'Welcome, ' + ${user.firstName} + '!'"></p>
+    </section>
+    <!--    This is the place where all your available items will be displayed-->
+        <div class="booking-list-wrapper">
+            <h2 style="color: #378BBE;">Your Active Listings</h2>
+            <div class="booking-list">
+                <div class="booking-card" th:each="item : ${availableItems}">
+                    <a th:href="@{'/tool/' + ${item.id}}" style="display: flex; text-decoration: none; color: inherit;">
+                        <div class="booking-item-section">
+                            <h3 style="color: #378BBE;" th:text="${item.title}">Tool Name</h3>
+                            <img class="booking-item-image"
+                                 th:src="${item.itemPhotoUrl != null} ? item.itemPhotoUrl : '/images/defaultToolImage.png'"
+                                 alt="Tool Image">
+                        </div>
+
+                        <div class="booking-details-section">
+                            <span th:text="${#dates.format(item.createdAt, 'dd/MM/yyyy')}">Date</span>
+                            <p><strong>Location:</strong> <span th:text="${item.location}">Location</span></p>
+                            <p><strong>Category:</strong> <span th:text="${item.category}">Category</span></p>
+                        </div>
+
+                        <div class="booking-owner-image">
+                            <img th:src="${user.profilePhotoUrl != null} ? ${user.profilePhotoUrl} : '/images/defaultUserProfile.png'"
+                                 alt="Owner Image">
+                        </div>
+
+                        <div class="booking-action-section">
+                            <div class="booking-status-badge" style="background-color: #4CAF50;">Available</div>
+                            <p class="booking-price" th:text="'$' + ${item.pricePerDay} + ' per day'">$10 per day</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+
+<!--    This is the place where all your booked items will be displayed-->
+    <div class="booking-list-wrapper">
+        <h2 style="color: #378BBE;">Your Booked Items</h2>
+        <div class="booking-list">
+            <div class="booking-card" th:each="booking : ${bookedItems}">
+                <a th:href="@{'/tool/' + ${booking.item.id}}" style="display: flex; text-decoration: none; color: inherit;">
+                    <div class="booking-item-section">
+                        <h3 style="color: #378BBE;" th:text="${booking.item.title}">Tool Name</h3>
+                        <img class="booking-item-image"
+                             th:src="${booking.item.itemPhotoUrl != null} ? ${booking.item.itemPhotoUrl} : '/images/default.png'"
+                             alt="Tool Image">
+                    </div>
+
+                    <div class="booking-details-section">
+                        <p><strong>Rented by:</strong> <span th:text="${booking.borrower.firstName + ' ' + booking.borrower.lastName}">Name</span></p>
+                        <p><strong>Start Date:</strong> <span th:text="${#temporals.format(booking.startDate, 'dd/MM/yyyy')}">Date</span></p>
+                        <p><strong>End Date:</strong> <span th:text="${#temporals.format(booking.endDate, 'dd/MM/yyyy')}">Date</span></p>
+                    </div>
+
+                    <div class="booking-owner-image">
+                        <img th:src="${booking.borrower.profilePhotoUrl != null} ? ${booking.borrower.profilePhotoUrl} : '/images/defaultUserProfile.png'"
+                             alt="Borrower Image">
+                    </div>
+
+                    <div class="booking-action-section">
+                        <div class="booking-status-badge" th:text="${booking.status}">Confirmed</div>
+                        <p class="booking-price" th:text="'$' + ${booking.item.pricePerDay} + ' per day'">$10 per day</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- footer -->
+<footer>
+    <div class="footer-stripe"></div>
+    <div class="footer-content">
+        <div class="brand-info">
+            <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image" />
+        </div>
+        <div class="quick-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a th:href="@{/about}">About Us</a></li>
+                <li><a th:href="@{/tools}">Tools</a></li>
+                <li><a th:href="@{/contact}">Contact Us</a></li>
+                <li><a th:href="@{/profile}">Profile Page</a></li>
+            </ul>
+        </div>
+        <div class="footer-bottom-text">
+            <p>© 2025 EquipShare. All rights reserved. </p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

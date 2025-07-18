@@ -1,0 +1,809 @@
+/* ── RESET & TYPOGRAPHY ── */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: "Space Mono", monospace;
+    background: #378BBE;      /* from cart.css */
+    color: #000;              /* from cart.css */
+    line-height: 1.4;
+  }
+  
+  /* ── NAVIGATION ── */
+  nav {
+    background: #005989;      /* from cart.css (.navbar) */
+    padding: 12px 24px;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+  }
+  nav ul li {
+    margin-right: 20px;
+  }
+  nav ul li.brand {
+    margin-right: auto;
+  }
+  nav a {
+    color: #FFF;              /* from cart.css */
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-family: "Space Mono", monospace;
+  }
+  .navbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px; /* adjust spacing as needed */
+  }
+  
+  /* ── AUTH BUTTONS (use same as cart.css) ── */
+  .btn-login {
+    background: #3F8C5F;      /* from cart.css */
+    padding: 8px 16px;
+    border-radius: 12px;
+    color: #FFF;              /* from cart.css */
+    font-weight: 600;
+    font-family: "Space Mono", monospace;
+  }
+  .btn-signup {
+    background: #F2F7FC;      /* from cart.css */
+    padding: 8px 16px;
+    border-radius: 12px;
+    color: #000;              /* from cart.css */
+    border: 2px solid #1A1A1A;
+    font-weight: 600;
+    font-family: "Space Mono", monospace;
+  }
+  
+  /* ── LOGO IMAGE ── */
+  .logo-image {
+    height: 40px;
+    width: auto;
+    vertical-align: middle;
+  }
+  
+  /* ── LOGIN CARD & FORM ── */
+  .card {
+    background: #FFF;
+    border-radius: 20px;
+    padding: 32px;
+    max-width: 400px;
+    margin: 48px auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    text-align: center;
+  }
+  .user-icon-large {
+    font-size: 80px;
+    color: #4A90E2;           /* matches footer stripe */
+    margin-bottom: 24px;
+  }
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: left;
+    font-family: "Space Mono", monospace;
+  }
+  input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1rem;
+    border: 2px solid #CCC;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    background: #FBFBFB;
+    font-family: "Space Mono", monospace;
+  }
+  input:focus {
+    outline: none;
+    border-color: #4A90E2;
+    box-shadow: 0 0 0 3px rgba(74,144,226,0.2);
+  }
+  
+  /* ── FORGOT PASSWORD LINK ── */
+  .forgot-pw {
+    display: block;
+    color: #000;
+    text-decoration: underline;
+    margin-bottom: 16px;
+    font-family: "Space Mono", monospace;
+  }
+  
+  /* ── CARD BUTTONS ── */
+  .card button.btn,
+  .card a.btn {
+    display: block;
+    width: 100%;
+    padding: 14px 0;
+    margin: 10px 0;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    font-family: "Space Mono", monospace;
+  }
+  .card button.btn.primary {
+    background: #3F8C5F;      /* from cart.css */
+    color: #FFF;              /* from cart.css */
+  }
+  .card button.btn.primary:hover {
+    background: #367951;
+  }
+  .card a.btn.secondary {
+    background: #4A90E2;      /* from cart.css stripe */
+    color: #FFF;
+  }
+  .card a.btn.secondary:hover {
+    background: #417EC4;
+  }
+  
+  /* ── FOOTER ── */
+  footer {
+    width: 100%;
+    background: #374843;      /* same as cart.css */
+    color: #F2F7FC;           /* same as cart.css */
+    font-family: "JetBrains Mono", monospace;
+  }
+  /* Blue stripe on top */
+  .footer-stripe {
+    height: 16px;
+    background: #4A90E2;      /* from cart.css */
+  }
+  /* Upper footer */
+  .footer-content {
+    display: flex;
+    align-items: flex-start;
+    padding: 48px 80px 0;
+    gap: 80px;
+    flex-wrap: wrap;
+  }
+  .footer-content .brand-info {
+    flex: 0 0 auto;
+  }
+  .footer-content .quick-links {
+    flex: 1;
+  }
+  .footer-content .quick-links h4 {
+    margin-bottom: 16px;
+    font-size: 24px;
+    line-height: 32px;
+  }
+  .footer-content .quick-links ul {
+    list-style: none;
+  }
+  .footer-content .quick-links ul li {
+    margin-bottom: 12px;
+    font-size: 20px;
+    line-height: 28px;
+  }
+  .footer-content .quick-links ul li a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  /* Lower footer */
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 80px 48px;
+    font-size: 20px;
+    line-height: 32px;
+  }
+  .footer-bottom p {
+    margin: 0;
+    flex: 1;
+    text-align: center;
+  }
+  .footer-bottom .social-icons {
+    display: flex;
+    gap: 24px;
+  }
+  .footer-bottom .social-icons a {
+    color: inherit;
+    text-decoration: none;
+    font-size: 24px;
+    line-height: 1;
+  }
+  
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 24px 0;
+      gap: 24px;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      text-align: center;
+      padding: 16px 24px 32px;
+      gap: 16px;
+    }
+  }
+
+  /* CSS for payments page */
+
+  /* ── MAIN CONTENT ── */
+  .main-content {
+    padding: 48px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* ── PAYMENT CARD ── */
+  .payment-card {
+    background: #FFF;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    font-family: "Space Mono", monospace;
+  }
+
+  .payment-card h1 {
+    font-size: 2rem;
+    margin-bottom: 32px;
+    color: #005989;
+    text-align: center;
+  }
+
+  /* ── FORM GRID ── */
+  .form-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+
+  .column {
+    flex: 1;
+    min-width: 280px;
+  }
+
+  /* ── SELECT DROPDOWN ── */
+  .select-wrap {
+    position: relative;
+  }
+
+  .select-wrap select {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1rem;
+    border: 2px solid #CCC;
+    border-radius: 20px;
+    background: #FBFBFB;
+    appearance: none;
+    font-family: "Space Mono", monospace;
+  }
+
+  .select-wrap .arrow {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 1.2rem;
+    color: #333;
+  }
+
+  /* ── PAYMENT ACTION BUTTON ─ */
+  .payment-actions {
+    text-align: right;
+  }
+
+  .btn-next {
+    background: #3F8C5F;
+    color: #FFF;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: "Space Mono", monospace;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .btn-next:hover {
+    background: #367951;
+  }
+
+  /* ── SMALL NOTE ─ */
+  small {
+    font-size: 0.85rem;
+    color: #555;
+    margin-top: 8px;
+    display: inline-block;
+  }
+
+  /* Cart */
+
+  .cart-card {
+      background: #FFF;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .cart-card p {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .cart-card hr {
+      border: none;
+      border-top: 1px solid #CCC;
+      margin: 1rem 0;
+    }
+    .cart-card .total {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+     /* ────────── PAYMENT BUTTON ────────── */
+     .payment-btn {
+       display: inline-block;
+       background: #3F8C5F;
+       color: #000;
+       font-family: "Space Mono", monospace;
+       font-weight: 700;
+       padding: 0.75rem 1.5rem;
+       border: none;
+       border-radius: 1rem;
+       font-size: 1rem;
+       cursor: pointer;
+     }
+     .payment-btn:hover {
+       background: #367951;
+     }
+     /* borrower dashboard */
+h1
+{
+  color: white;
+  font-family: 'Trebuchet MS', sans-serif;
+  text-align: center;
+}
+h2,h3
+{
+  color: white;
+  font-family: 'Trebuchet MS', sans-serif;
+  text-align: left;
+}
+
+
+#RentalProfileBody
+{
+  background-color: #378BBE;
+}
+#RentalProfileD1
+{
+  /* width: 400px; */
+  padding-top: 40px;
+  height: 450px;
+  width: 1450px;
+  background-color: #005989;
+  border-radius: 40px;
+  margin: auto;
+}
+
+#RentalProfileD1_1
+{
+  color: white;
+  width: 300px;
+  height: 100px;
+  margin-left: 570px ;
+  /* text-align: center; */
+  font-family: 'Trebuchet MS', sans-serif;
+  /* background-color: rgb(216, 227, 216); */
+}
+
+#RentalProfileD1Logo
+{
+  margin-left: 550px ;
+  width: 250px;
+  height: 150px;
+
+}
+
+#RentalProfileD1ProfileImage
+{
+  margin-left: 50px ;
+  width: 150px;
+  height: 150px;
+  border-radius: 100px;
+  margin-left: 70px ;
+  background-color: white;
+}
+
+#RentalProfileD1ProfileImageReal
+{
+  margin-left: 0px ;
+  width: 155px;
+  height: 150px;
+  border-radius: 120px;
+  /* margin-left: 70px ; */
+}
+
+#RentalProfileD1_2
+{
+  color: white;
+  margin-left: 300px ;
+  margin-top: -120px;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+#RentalProfileBookingList
+{
+  padding-top: 20px;
+  height: 550px;
+  width: 1450px;
+  background-color: white;
+  border-radius: 40px;
+  overflow: auto;
+  margin: auto;
+}
+
+#RentalProfileBookingList1
+{
+  background-color: #F2F7FC;
+  height: 150px;
+  width: 1450px;
+  border-radius: 40px;
+  margin: auto;
+}
+
+#RentalOwnerProfile
+{
+  margin-left: 800px ;
+  margin-top: -150px;
+}
+
+#RentalOwnerProfile1
+{
+  margin-left: -10px ;
+  width: 100px;
+  height: 100px;
+  margin-top: 20px;
+  border-radius: 120px;
+}
+
+#RentalItemImage
+{
+  padding: 20px;
+  margin-left: 30px;
+  color: black;
+}
+
+#RentalOwnerDetails
+{
+  font-size: 18px;
+  margin-left: 170px;
+  margin-top: -130px;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+#RentalItemImage1
+{
+  /* padding: 20px; */
+  margin-left: 20px ;
+  margin-top: -5px;
+  width: 100px;
+  height: 100px;
+
+
+}
+
+#RentalOwnerDetails2
+{
+  font-size: 15px;
+  margin-left: -100px;
+  width: 300px;
+  margin-top: -10px;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+#RentedItemPriceAndRating
+{
+  font-size: 20px;
+  margin-left: 500px;
+  width: 250px;
+  margin-top: -100px;
+  font-family: 'Trebuchet MS', sans-serif;
+
+}
+
+#RentedItemPriceAndRating1
+{
+  margin-top: 5px;
+  height: 20px;
+  width: 120px;
+}
+
+#RentedItemPriceAndRating2
+{
+  margin-top: -100px;
+  margin-left: 50px;
+  font-size: 15px;
+  width: 15px;
+  height: 15px;
+
+}
+
+/* #RatingSubmitButton
+[
+
+] */
+
+
+#RentalProfilePersonalDetails
+{
+  padding: 100px;
+  padding-left: 200px;
+  padding-right: 200px;
+  padding-top: 40px;
+  height: 150px;
+  width: 1050px;
+  background-color: white;
+  border-radius: 40px;
+  margin: auto;
+}
+
+#ButtonReturnNotic
+{
+  height: 60px;
+  width: 300px;
+  margin-left: 1050px;
+  margin-top: -130px;
+}
+
+#ButtonReturnNotic1
+{
+  height: 40px;
+  width: 200px;
+  border-radius: 15px;
+  margin-top: 10px;
+  color: white;
+  font-size: 15px;
+  background-color: #378BBE;
+  font-family: 'Trebuchet MS', sans-serif;
+
+}
+
+#ButtonReturnNotic2
+{
+  height: 40px;
+  width: 150px;
+  border-radius: 15px;
+  margin-left: 25px;
+  margin-top: 10px;
+  color: white;
+  font-size: 15px;
+  background-color: #389375;
+  font-family: 'Trebuchet MS', sans-serif;
+
+}
+
+#call_Icon
+{
+  height: 25px;
+  width: 25px;
+  margin-left: -20px;
+}
+
+label
+{
+  padding-left: 50px;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+input
+{
+  height: 25px;
+  width: 300px;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+#ButtonSaveChangeDetail
+{
+  height: 60px;
+  width: 300px;
+  border-radius: 15px;
+  margin-left: 100px;
+  color: white;
+  font-size: 20px;
+  background-color: #378BBE;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 per row */
+  gap: 40px;
+  padding: 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.tool-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  transition: transform 0.2s;
+  height: 360px;
+}
+
+.tool-card:hover {
+  transform: scale(1.02);
+}
+
+.tool-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Owner + Borrower Page Style */
+
+.booking-list-wrapper {
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+.booking-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+.booking-card {
+      justify-content: space-between;
+      padding: 16px;
+      border-radius: 10px;
+      background-color: #f8f8f8;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+.booking-item-section {
+      flex: 1;
+      margin-right: 20px;
+    }
+
+.booking-item-image {
+      width: 200px;
+      height: 150px;
+      border-radius: 6px;
+      object-fit: cover;
+      margin-top: 8px;
+    }
+
+.booking-details-section {
+      flex: 2;
+      padding: 0 20px;
+    }
+
+.booking-owner-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+.booking-owner-image img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ccc;
+    }
+
+.booking-action-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+.booking-status-badge {
+      background-color: #1e88e5;
+      color: #fff;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+
+.booking-contact-button {
+      background-color: #2e7d32;
+      color: #fff;
+      font-weight: bold;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+.booking-contact-button img {
+      width: 16px;
+      height: 16px;
+    }
+
+.booking-price {
+      font-weight: bold;
+      color: #000;
+    }
+
+/* Notification Bell and Dialog */
+.notification-wrapper {
+  position: relative;
+  margin-right: 20px;
+}
+
+.btn-notification {
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  background: none;
+  border: none;
+  font-family: "Space Mono", monospace;
+}
+
+.notification-dialog {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  width: 300px;
+  max-height: 400px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  padding: 12px;
+  z-index: 999;
+  overflow-y: auto;
+}
+
+
+
+.notification-item {
+  display: block;
+  padding: 10px;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #eee;
+  color: black;
+  text-decoration: none;
+}
+
+.notification-item:hover {
+  background-color: #f5f5f5;
+}
+
+.notification-empty {
+  padding: 10px;
+  font-style: italic;
+  color: #888;
+}
+  

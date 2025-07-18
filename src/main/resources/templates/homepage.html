@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>EquipShare - Home Page</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <style>
+        /* import fonts */
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+        /* For the cover image */
+        .homepage-cover {
+            width: 1440px;
+            height: 514px;
+            margin: 0 auto;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .homepage-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        /* Explore Card */
+        .explore-card {
+            width: 1440px;
+            height: 323px;
+            background-color: #005989;
+            margin: 0 auto;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+        }
+        .explore-card-columns {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        .explore-card-col {
+            flex: 1;
+        }
+        .explore-card-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 64px;
+            color: #fff;
+            display: block;
+            margin: 0;
+            padding: 0 0 0 70px;
+            line-height: 1.1;
+            max-width: 90%;
+            word-break: break-word;
+        }
+        /* To center the text vertically */
+        .explore-card-left {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        .explore-card-right {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+            padding-right: 70px;
+        }
+        .explore-card-right-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+        }
+        .explore-card-desc {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 36px;
+            color: #fff;
+            margin-top: 0;
+            margin-bottom: 0;
+            display: flex;
+            align-items: flex-start;
+            height: 66.66%;
+            padding-top: 70px;
+            padding-right: 0;
+            line-height: 1.2;
+        }
+        .explore-card-actions {
+            display: flex;
+            gap: 30px;
+            align-items: flex-end;
+            height: 33.33%;
+            padding-bottom: 40px;
+        }
+        .explore-btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px;
+            border: none;
+            border-radius: 12px;
+            padding: 18px 40px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background 0.2s, color 0.2s;
+        }
+        .rent-btn {
+            background-color: #F2F7FC;
+            color: #005989;
+        }
+        .learn-btn {
+            background-color: #389375;
+            color: #fff;
+        }
+        /* Featured Tools Section */
+        .featured-tools {
+            width: 1440px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .featured-tools h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 36px;
+            color: #005989;
+            margin-bottom: 30px;
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .tool-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+        .tool-card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .tool-card-info {
+            padding: 20px;
+        }
+        .tool-card-info h3 {
+            margin: 0 0 10px 0;
+            color: #005989;
+        }
+        .tool-card-info p {
+            margin: 5px 0;
+            color: #333;
+        }
+        .tool-card-price {
+            font-weight: bold;
+            color: #389375;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <!-- nav bar -->
+    <nav>
+        <ul>
+            <li class="brand">
+                <a th:href="@{/}">
+                    <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image"/>
+                </a>
+            </li>
+            <li><a th:href="@{/about}">About Us</a></li>
+            <li><a th:href="@{/tools}">Tools</a></li>
+            <li><a th:href="@{/profile}">Profile Page</a></li>
+            <li class="login-link"><a th:href="@{/login}" class="btn-login">Log In</a></li>
+            <li><a th:href="@{/signup}" class="btn-signup">Sign Up</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- cover image -->
+<div class="homepage-cover">
+    <img th:src="@{/images/Homepage-cover.png}" alt="Homepage Cover" />
+</div>
+
+<!-- explore card-->
+<div class="explore-card">
+    <div class="explore-card-columns">
+        <div class="explore-card-col explore-card-left">
+            <span class="explore-card-title">Rent Tools for reasonable prices</span>
+        </div>
+        <div class="explore-card-col explore-card-right">
+            <div class="explore-card-right-content">
+                <div class="explore-card-desc">
+                    Easy and affordable way to find tools for your personal project
+                </div>
+                <div class="explore-card-actions">
+                    <a class="explore-btn rent-btn" th:href="@{/tools}">Browse Tools</a>
+                    <a class="explore-btn learn-btn" th:href="@{/about}">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- featured tools section -->
+<div class="featured-tools">
+    <h2>Featured Tools</h2>
+    <div class="tools-grid">
+        <div class="tool-card" th:each="item : ${featuredItems}">
+            <a th:href="@{'/tool/' + ${item.id}}">
+                <img th:src="${item.itemPhotoUrl != null} ? ${item.itemPhotoUrl} : '/images/defaultToolImage.png'"
+                     alt="Tool Image" class="tool-card-img"/>
+                <div class="tool-card-info">
+                    <h3 th:text="${item.title}">Tool Name</h3>
+                    <p class="tool-card-price" th:text="'$' + ${#numbers.formatDecimal(item.pricePerDay, 1, 2)} + '/day'">$50/day</p>
+                    <p th:text="${item.location}">Location</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<footer>
+    <div class="footer-stripe"></div>
+    <div class="footer-content">
+        <div class="brand-info">
+            <img th:src="@{/images/eqs-logo.png}" alt="EQS Logo" class="logo-image" />
+        </div>
+        <div class="quick-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a th:href="@{/about}">About Us</a></li>
+                <li><a th:href="@{/tools}">Tools</a></li>
+                <li><a th:href="@{/profile}">Profile Page</a></li>
+            </ul>
+        </div>
+        <div class="footer-bottom-text">
+            <p>© 2025 EquipShare. All rights reserved. </p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
